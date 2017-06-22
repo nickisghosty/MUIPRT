@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{05AEEB02-2C03-48D8-800B-DB91DE6B6CDE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MUIPRT</RootNamespace>
+    <AssemblyName>MUIPRT</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MUIPRT.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Geckofx-Core, Version=45.0.28.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geckofx45.64.Linux.45.0.28\lib\net40\Geckofx-Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckofx-Winforms, Version=45.0.28.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <HintPath>..\packages\Geckofx45.64.Linux.45.0.28\lib\net40\Geckofx-Winforms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Firefox-Linux64\application.ini" />
+    <None Include="Firefox-Linux64\crashreporter.ini" />
+    <None Include="Firefox-Linux64\libfreebl3.chk" />
+    <None Include="Firefox-Linux64\libfreebl3.so" />
+    <None Include="Firefox-Linux64\libgeckofix.so" />
+    <None Include="Firefox-Linux64\liblgpllibs.so" />
+    <None Include="Firefox-Linux64\libmozsqlite3.so" />
+    <None Include="Firefox-Linux64\libnspr4.so" />
+    <None Include="Firefox-Linux64\libnss3.so" />
+    <None Include="Firefox-Linux64\libnssckbi.so" />
+    <None Include="Firefox-Linux64\libnssdbm3.chk" />
+    <None Include="Firefox-Linux64\libnssdbm3.so" />
+    <None Include="Firefox-Linux64\libnssutil3.so" />
+    <None Include="Firefox-Linux64\libplc4.so" />
+    <None Include="Firefox-Linux64\libplds4.so" />
+    <None Include="Firefox-Linux64\libsmime3.so" />
+    <None Include="Firefox-Linux64\libsoftokn3.chk" />
+    <None Include="Firefox-Linux64\libsoftokn3.so" />
+    <None Include="Firefox-Linux64\libssl3.so" />
+    <None Include="Firefox-Linux64\libxul.so" />
+    <None Include="Firefox-Linux64\omni.ja" />
+    <None Include="Firefox-Linux64\platform.ini" />
+    <None Include="Firefox-Linux64\plugin-container" />
+    <None Include="Firefox-Linux64\update-settings.ini" />
+    <None Include="Firefox-Linux64\updater.ini" />
+    <None Include="Firefox\omni.ja" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="xulrunner\chrome\classic.manifest" />
+    <None Include="xulrunner\chrome\comm.manifest" />
+    <None Include="xulrunner\chrome\en-US.manifest" />
+    <None Include="xulrunner\chrome\pippki.manifest" />
+    <None Include="xulrunner\chrome\toolkit.manifest" />
+    <None Include="xulrunner\components\accessibility-msaa.xpt" />
+    <None Include="xulrunner\components\accessibility.xpt" />
+    <None Include="xulrunner\components\alerts.xpt" />
+    <None Include="xulrunner\components\appshell.xpt" />
+    <None Include="xulrunner\components\appstartup.xpt" />
+    <None Include="xulrunner\components\autocomplete.xpt" />
+    <None Include="xulrunner\components\autoconfig.xpt" />
+    <None Include="xulrunner\components\caps.xpt" />
+    <None Include="xulrunner\components\chardet.xpt" />
+    <None Include="xulrunner\components\chrome.xpt" />
+    <None Include="xulrunner\components\commandhandler.xpt" />
+    <None Include="xulrunner\components\commandlines.xpt" />
+    <None Include="xulrunner\components\composer.xpt" />
+    <None Include="xulrunner\components\compreg.dat" />
+    <None Include="xulrunner\components\content_base.xpt" />
+    <None Include="xulrunner\components\content_html.xpt" />
+    <None Include="xulrunner\components\content_htmldoc.xpt" />
+    <None Include="xulrunner\components\content_xmldoc.xpt" />
+    <None Include="xulrunner\components\content_xslt.xpt" />
+    <None Include="xulrunner\components\content_xtf.xpt" />
+    <None Include="xulrunner\components\directory.xpt" />
+    <None Include="xulrunner\components\docshell_base.xpt" />
+    <None Include="xulrunner\components\dom.xpt" />
+    <None Include="xulrunner\components\dom_base.xpt" />
+    <None Include="xulrunner\components\dom_canvas.xpt" />
+    <None Include="xulrunner\components\dom_core.xpt" />
+    <None Include="xulrunner\components\dom_css.xpt" />
+    <None Include="xulrunner\components\dom_events.xpt" />
+    <None Include="xulrunner\components\dom_html.xpt" />
+    <None Include="xulrunner\components\dom_loadsave.xpt" />
+    <None Include="xulrunner\components\dom_range.xpt" />
+    <None Include="xulrunner\components\dom_sidebar.xpt" />
+    <None Include="xulrunner\components\dom_storage.xpt" />
+    <None Include="xulrunner\components\dom_stylesheets.xpt" />
+    <None Include="xulrunner\components\dom_svg.xpt" />
+    <None Include="xulrunner\components\dom_traversal.xpt" />
+    <None Include="xulrunner\components\dom_views.xpt" />
+    <None Include="xulrunner\components\dom_xbl.xpt" />
+    <None Include="xulrunner\components\dom_xpath.xpt" />
+    <None Include="xulrunner\components\dom_xul.xpt" />
+    <None Include="xulrunner\components\downloads.xpt" />
+    <None Include="xulrunner\components\editor.xpt" />
+    <None Include="xulrunner\components\embed_base.xpt" />
+    <None Include="xulrunner\components\extensions.xpt" />
+    <None Include="xulrunner\components\exthandler.xpt" />
+    <None Include="xulrunner\components\fastfind.xpt" />
+    <None Include="xulrunner\components\feeds.xpt" />
+    <None Include="xulrunner\components\find.xpt" />
+    <None Include="xulrunner\components\gfx.xpt" />
+    <None Include="xulrunner\components\gksvgrenderer.xpt" />
+    <None Include="xulrunner\components\history.xpt" />
+    <None Include="xulrunner\components\htmlparser.xpt" />
+    <None Include="xulrunner\components\imgicon.xpt" />
+    <None Include="xulrunner\components\imglib2.xpt" />
+    <None Include="xulrunner\components\inspector.xpt" />
+    <None Include="xulrunner\components\intl.xpt" />
+    <None Include="xulrunner\components\intlcmpt.xpt" />
+    <None Include="xulrunner\components\jar.xpt" />
+    <None Include="xulrunner\components\jsconsole.xpt" />
+    <None Include="xulrunner\components\jsdservice.xpt" />
+    <None Include="xulrunner\components\layout_base.xpt" />
+    <None Include="xulrunner\components\layout_printing.xpt" />
+    <None Include="xulrunner\components\layout_xul.xpt" />
+    <None Include="xulrunner\components\layout_xul_tree.xpt" />
+    <None Include="xulrunner\components\locale.xpt" />
+    <None Include="xulrunner\components\lwbrk.xpt" />
+    <None Include="xulrunner\components\mimetype.xpt" />
+    <None Include="xulrunner\components\mozbrwsr.xpt" />
+    <None Include="xulrunner\components\mozfind.xpt" />
+    <None Include="xulrunner\components\necko.xpt" />
+    <None Include="xulrunner\components\necko_about.xpt" />
+    <None Include="xulrunner\components\necko_cache.xpt" />
+    <None Include="xulrunner\components\necko_cookie.xpt" />
+    <None Include="xulrunner\components\necko_data.xpt" />
+    <None Include="xulrunner\components\necko_dns.xpt" />
+    <None Include="xulrunner\components\necko_file.xpt" />
+    <None Include="xulrunner\components\necko_ftp.xpt" />
+    <None Include="xulrunner\components\necko_http.xpt" />
+    <None Include="xulrunner\components\necko_res.xpt" />
+    <None Include="xulrunner\components\necko_socket.xpt" />
+    <None Include="xulrunner\components\necko_strconv.xpt" />
+    <None Include="xulrunner\components\necko_viewsource.xpt" />
+    <None Include="xulrunner\components\oji.xpt" />
+    <None Include="xulrunner\components\passwordmgr.xpt" />
+    <None Include="xulrunner\components\pipboot.xpt" />
+    <None Include="xulrunner\components\pipnss.xpt" />
+    <None Include="xulrunner\components\pippki.xpt" />
+    <None Include="xulrunner\components\plugin.xpt" />
+    <None Include="xulrunner\components\pref.xpt" />
+    <None Include="xulrunner\components\prefetch.xpt" />
+    <None Include="xulrunner\components\profile.xpt" />
+    <None Include="xulrunner\components\progressDlg.xpt" />
+    <None Include="xulrunner\components\proxyObject.xpt" />
+    <None Include="xulrunner\components\rdf.xpt" />
+    <None Include="xulrunner\components\satchel.xpt" />
+    <None Include="xulrunner\components\saxparser.xpt" />
+    <None Include="xulrunner\components\shistory.xpt" />
+    <None Include="xulrunner\components\storage.xpt" />
+    <None Include="xulrunner\components\toolkitprofile.xpt" />
+    <None Include="xulrunner\components\txmgr.xpt" />
+    <None Include="xulrunner\components\txtsvc.xpt" />
+    <None Include="xulrunner\components\uconv.xpt" />
+    <None Include="xulrunner\components\unicharutil.xpt" />
+    <None Include="xulrunner\components\update.xpt" />
+    <None Include="xulrunner\components\uriloader.xpt" />
+    <None Include="xulrunner\components\urlformatter.xpt" />
+    <None Include="xulrunner\components\webbrowserpersist.xpt" />
+    <None Include="xulrunner\components\webBrowser_core.xpt" />
+    <None Include="xulrunner\components\webshell_idls.xpt" />
+    <None Include="xulrunner\components\websrvcs.xpt" />
+    <None Include="xulrunner\components\widget.xpt" />
+    <None Include="xulrunner\components\windowds.xpt" />
+    <None Include="xulrunner\components\windowwatcher.xpt" />
+    <None Include="xulrunner\components\xml-rpc.xpt" />
+    <None Include="xulrunner\components\xpcom_base.xpt" />
+    <None Include="xulrunner\components\xpcom_components.xpt" />
+    <None Include="xulrunner\components\xpcom_ds.xpt" />
+    <None Include="xulrunner\components\xpcom_io.xpt" />
+    <None Include="xulrunner\components\xpcom_obsolete.xpt" />
+    <None Include="xulrunner\components\xpcom_thread.xpt" />
+    <None Include="xulrunner\components\xpcom_xpti.xpt" />
+    <None Include="xulrunner\components\xpconnect.xpt" />
+    <None Include="xulrunner\components\xpinstall.xpt" />
+    <None Include="xulrunner\components\xpti.dat" />
+    <None Include="xulrunner\components\xulapp.xpt" />
+    <None Include="xulrunner\components\xulapp_setup.xpt" />
+    <None Include="xulrunner\components\xuldoc.xpt" />
+    <None Include="xulrunner\components\xulrunner.xpt" />
+    <None Include="xulrunner\components\xultmpl.xpt" />
+    <None Include="xulrunner\defaults\profile\localstore.rdf" />
+    <None Include="xulrunner\defaults\profile\US\localstore.rdf" />
+    <None Include="xulrunner\dependentlibs.list" />
+    <None Include="xulrunner\freebl3.chk" />
+    <None Include="xulrunner\LICENSE" />
+    <None Include="xulrunner\res\charsetalias.properties" />
+    <None Include="xulrunner\res\charsetData.properties" />
+    <None Include="xulrunner\res\dtd\mathml.dtd" />
+    <None Include="xulrunner\res\dtd\xhtml11.dtd" />
+    <None Include="xulrunner\res\entityTables\html40Latin1.properties" />
+    <None Include="xulrunner\res\entityTables\html40Special.properties" />
+    <None Include="xulrunner\res\entityTables\html40Symbols.properties" />
+    <None Include="xulrunner\res\entityTables\htmlEntityVersions.properties" />
+    <None Include="xulrunner\res\entityTables\mathml20.properties" />
+    <None Include="xulrunner\res\entityTables\transliterate.properties" />
+    <None Include="xulrunner\res\fonts\fontEncoding.properties" />
+    <None Include="xulrunner\res\fonts\fontNameMap.properties" />
+    <None Include="xulrunner\res\fonts\mathfont.properties" />
+    <None Include="xulrunner\res\fonts\mathfontCMEX10.properties" />
+    <None Include="xulrunner\res\fonts\mathfontCMSY10.properties" />
+    <None Include="xulrunner\res\fonts\mathfontMath1.properties" />
+    <None Include="xulrunner\res\fonts\mathfontMath2.properties" />
+    <None Include="xulrunner\res\fonts\mathfontMath4.properties" />
+    <None Include="xulrunner\res\fonts\mathfontMTExtra.properties" />
+    <None Include="xulrunner\res\fonts\mathfontPUA.properties" />
+    <None Include="xulrunner\res\fonts\mathfontSymbol.properties" />
+    <None Include="xulrunner\res\langGroups.properties" />
+    <None Include="xulrunner\res\language.properties" />
+    <None Include="xulrunner\res\viewer.properties" />
+    <None Include="xulrunner\res\wincharset.properties" />
+    <None Include="xulrunner\softokn3.chk" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forward.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BACKWARD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FORWARD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HEADER.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refreshfin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Firefox\AccessibleMarshal.dll" />
+    <Content Include="Firefox\breakpadinjector.dll" />
+    <Content Include="Firefox\d3dcompiler_47.dll" />
+    <Content Include="Firefox\freebl3.dll" />
+    <Content Include="Firefox\icudt56.dll" />
+    <Content Include="Firefox\icuin56.dll" />
+    <Content Include="Firefox\icuuc56.dll" />
+    <Content Include="Firefox\lgpllibs.dll" />
+    <Content Include="Firefox\libEGL.dll" />
+    <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozglue.dll" />
+    <Content Include="Firefox\nss3.dll" />
+    <Content Include="Firefox\nssckbi.dll" />
+    <Content Include="Firefox\nssdbm3.dll" />
+    <Content Include="Firefox\plugin-container.exe" />
+    <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\softokn3.dll" />
+    <Content Include="Firefox\xul.dll" />
+    <Content Include="main.js" />
+    <Content Include="xulrunner\AccessibleMarshal.dll" />
+    <Content Include="xulrunner\chrome\chromelist.txt" />
+    <Content Include="xulrunner\chrome\classic.jar" />
+    <Content Include="xulrunner\chrome\comm.jar" />
+    <Content Include="xulrunner\chrome\en-US.jar" />
+    <Content Include="xulrunner\chrome\pippki.jar" />
+    <Content Include="xulrunner\chrome\toolkit.jar" />
+    <Content Include="xulrunner\components\auth.dll" />
+    <Content Include="xulrunner\components\autoconfig.dll" />
+    <Content Include="xulrunner\components\FeedProcessor.js" />
+    <Content Include="xulrunner\components\jsconsole-clhandler.js" />
+    <Content Include="xulrunner\components\nsCloseAllWindows.js" />
+    <Content Include="xulrunner\components\nsDefaultCLH.js" />
+    <Content Include="xulrunner\components\nsDictionary.js" />
+    <Content Include="xulrunner\components\nsExtensionManager.js" />
+    <Content Include="xulrunner\components\nsHelperAppDlg.js" />
+    <Content Include="xulrunner\components\nsInterfaceInfoToIDL.js" />
+    <Content Include="xulrunner\components\nsKillAll.js" />
+    <Content Include="xulrunner\components\nsPostUpdateWin.js" />
+    <Content Include="xulrunner\components\nsProgressDialog.js" />
+    <Content Include="xulrunner\components\nsProxyAutoConfig.js" />
+    <Content Include="xulrunner\components\nsResetPref.js" />
+    <Content Include="xulrunner\components\nsUpdateService.js" />
+    <Content Include="xulrunner\components\nsURLFormatter.js" />
+    <Content Include="xulrunner\components\nsXmlRpcClient.js" />
+    <Content Include="xulrunner\components\nsXULAppInstall.js" />
+    <Content Include="xulrunner\components\pipboot.dll" />
+    <Content Include="xulrunner\components\pipnss.dll" />
+    <Content Include="xulrunner\components\pippki.dll" />
+    <Content Include="xulrunner\components\transformiix.dll" />
+    <Content Include="xulrunner\components\universalchardet.dll" />
+    <Content Include="xulrunner\components\websrvcs.dll" />
+    <Content Include="xulrunner\components\xmlextras.dll" />
+    <Content Include="xulrunner\components\xulutil.dll" />
+    <Content Include="xulrunner\defaults\autoconfig\platform.js" />
+    <Content Include="xulrunner\defaults\autoconfig\prefcalls.js" />
+    <Content Include="xulrunner\defaults\pref\xulrunner.js" />
+    <Content Include="xulrunner\defaults\profile\chrome\userChrome-example.css" />
+    <Content Include="xulrunner\defaults\profile\chrome\userContent-example.css" />
+    <Content Include="xulrunner\defaults\profile\US\chrome\userChrome-example.css" />
+    <Content Include="xulrunner\defaults\profile\US\chrome\userContent-example.css" />
+    <Content Include="xulrunner\freebl3.dll" />
+    <Content Include="xulrunner\greprefs\all.js" />
+    <Content Include="xulrunner\greprefs\security-prefs.js" />
+    <Content Include="xulrunner\greprefs\xpinstall.js" />
+    <Content Include="xulrunner\javaxpcom-src.jar" />
+    <Content Include="xulrunner\javaxpcom.jar" />
+    <Content Include="xulrunner\javaxpcomglue.dll" />
+    <Content Include="xulrunner\js3250.dll" />
+    <Content Include="xulrunner\mozctl.dll" />
+    <Content Include="xulrunner\mozctlx.dll" />
+    <Content Include="xulrunner\nspr4.dll" />
+    <Content Include="xulrunner\nss3.dll" />
+    <Content Include="xulrunner\nssckbi.dll" />
+    <Content Include="xulrunner\PATCHES.txt" />
+    <Content Include="xulrunner\plc4.dll" />
+    <Content Include="xulrunner\plds4.dll" />
+    <Content Include="xulrunner\plugins\npnul32.dll" />
+    <Content Include="xulrunner\README.txt" />
+    <Content Include="xulrunner\res\arrow.gif" />
+    <Content Include="xulrunner\res\arrowd.gif" />
+    <Content Include="xulrunner\res\bloatcycle.html" />
+    <Content Include="xulrunner\res\broken-image.gif" />
+    <Content Include="xulrunner\res\cmessage.txt" />
+    <Content Include="xulrunner\res\EditorOverride.css" />
+    <Content Include="xulrunner\res\forms.css" />
+    <Content Include="xulrunner\res\grabber.gif" />
+    <Content Include="xulrunner\res\hiddenWindow.html" />
+    <Content Include="xulrunner\res\html.css" />
+    <Content Include="xulrunner\res\html\gopher-audio.gif" />
+    <Content Include="xulrunner\res\html\gopher-binary.gif" />
+    <Content Include="xulrunner\res\html\gopher-find.gif" />
+    <Content Include="xulrunner\res\html\gopher-image.gif" />
+    <Content Include="xulrunner\res\html\gopher-menu.gif" />
+    <Content Include="xulrunner\res\html\gopher-movie.gif" />
+    <Content Include="xulrunner\res\html\gopher-sound.gif" />
+    <Content Include="xulrunner\res\html\gopher-telnet.gif" />
+    <Content Include="xulrunner\res\html\gopher-text.gif" />
+    <Content Include="xulrunner\res\html\gopher-unknown.gif" />
+    <Content Include="xulrunner\res\loading-image.gif" />
+    <Content Include="xulrunner\res\mathml.css" />
+    <Content Include="xulrunner\res\quirk.css" />
+    <Content Include="xulrunner\res\svg.css" />
+    <Content Include="xulrunner\res\table-add-column-after-active.gif" />
+    <Content Include="xulrunner\res\table-add-column-after-hover.gif" />
+    <Content Include="xulrunner\res\table-add-column-after.gif" />
+    <Content Include="xulrunner\res\table-add-column-before-active.gif" />
+    <Content Include="xulrunner\res\table-add-column-before-hover.gif" />
+    <Content Include="xulrunner\res\table-add-column-before.gif" />
+    <Content Include="xulrunner\res\table-add-row-after-active.gif" />
+    <Content Include="xulrunner\res\table-add-row-after-hover.gif" />
+    <Content Include="xulrunner\res\table-add-row-after.gif" />
+    <Content Include="xulrunner\res\table-add-row-before-active.gif" />
+    <Content Include="xulrunner\res\table-add-row-before-hover.gif" />
+    <Content Include="xulrunner\res\table-add-row-before.gif" />
+    <Content Include="xulrunner\res\table-remove-column-active.gif" />
+    <Content Include="xulrunner\res\table-remove-column-hover.gif" />
+    <Content Include="xulrunner\res\table-remove-column.gif" />
+    <Content Include="xulrunner\res\table-remove-row-active.gif" />
+    <Content Include="xulrunner\res\table-remove-row-hover.gif" />
+    <Content Include="xulrunner\res\table-remove-row.gif" />
+    <Content Include="xulrunner\res\ua.css" />
+    <Content Include="xulrunner\res\viewsource.css" />
+    <Content Include="xulrunner\smime3.dll" />
+    <Content Include="xulrunner\softokn3.dll" />
+    <Content Include="xulrunner\ssl3.dll" />
+    <Content Include="xulrunner\updater.exe" />
+    <Content Include="xulrunner\xpcom.dll" />
+    <Content Include="xulrunner\xpicleanup.exe" />
+    <Content Include="xulrunner\xul.dll" />
+    <Content Include="xulrunner\xulrunner-stub.exe" />
+    <Content Include="xulrunner\xulrunner.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets" Condition="Exists('..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets'))" />
+  </Target>
+</Project>
