@@ -71,12 +71,14 @@
             this.textbox_agent = new System.Windows.Forms.TextBox();
             this.list_agents = new System.Windows.Forms.ListBox();
             this.panel_proxies = new System.Windows.Forms.Panel();
+            this.label_currentproxnum = new System.Windows.Forms.Label();
             this.list_proxies = new System.Windows.Forms.ListBox();
             this.label_proxiesformat = new System.Windows.Forms.Label();
             this.button_clearproxies = new System.Windows.Forms.Button();
             this.button_loadproxies = new System.Windows.Forms.Button();
             this.label_proxiesnum = new System.Windows.Forms.Label();
             this.label_proxies = new System.Windows.Forms.Label();
+            this.outof = new System.Windows.Forms.Label();
             this.panel_browser = new System.Windows.Forms.Panel();
             this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
             this.statusstip_browser = new System.Windows.Forms.StatusStrip();
@@ -95,6 +97,7 @@
             this.timer_cleardata = new System.Windows.Forms.Timer(this.components);
             this.timer_setcoords = new System.Windows.Forms.Timer(this.components);
             this.timer_clickcoords = new System.Windows.Forms.Timer(this.components);
+            this.timer_refreshproxylist = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picture_programbanner)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -132,7 +135,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(778, 544);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(782, 553);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // picture_programbanner
@@ -143,7 +146,7 @@
             this.picture_programbanner.Location = new System.Drawing.Point(7, 8);
             this.picture_programbanner.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.picture_programbanner.Name = "picture_programbanner";
-            this.picture_programbanner.Size = new System.Drawing.Size(764, 92);
+            this.picture_programbanner.Size = new System.Drawing.Size(768, 94);
             this.picture_programbanner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picture_programbanner.TabIndex = 47;
             this.picture_programbanner.TabStop = false;
@@ -157,12 +160,12 @@
             this.tableLayoutPanel2.Controls.Add(this.panel_browser, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 111);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 113);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(766, 427);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(770, 434);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -186,7 +189,7 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 238F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(756, 225);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(760, 229);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -203,7 +206,7 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(141, 229);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(142, 229);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // panel_status
@@ -224,7 +227,7 @@
             this.label_statustext.Location = new System.Drawing.Point(4, 4);
             this.label_statustext.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_statustext.Name = "label_statustext";
-            this.label_statustext.Size = new System.Drawing.Size(59, 19);
+            this.label_statustext.Size = new System.Drawing.Size(52, 17);
             this.label_statustext.TabIndex = 14;
             this.label_statustext.Text = "Status:";
             // 
@@ -246,7 +249,7 @@
             this.label_status.Location = new System.Drawing.Point(73, 4);
             this.label_status.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_status.Name = "label_status";
-            this.label_status.Size = new System.Drawing.Size(35, 19);
+            this.label_status.Size = new System.Drawing.Size(30, 17);
             this.label_status.TabIndex = 13;
             this.label_status.Text = "Idle";
             // 
@@ -271,7 +274,7 @@
             this.label_interval.Location = new System.Drawing.Point(2, 62);
             this.label_interval.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_interval.Name = "label_interval";
-            this.label_interval.Size = new System.Drawing.Size(67, 19);
+            this.label_interval.Size = new System.Drawing.Size(58, 17);
             this.label_interval.TabIndex = 11;
             this.label_interval.Text = "Interval:";
             // 
@@ -282,7 +285,7 @@
             this.label_views.Location = new System.Drawing.Point(5, 7);
             this.label_views.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_views.Name = "label_views";
-            this.label_views.Size = new System.Drawing.Size(51, 19);
+            this.label_views.Size = new System.Drawing.Size(44, 17);
             this.label_views.TabIndex = 10;
             this.label_views.Text = "Views";
             // 
@@ -308,7 +311,7 @@
             0,
             0});
             this.numupdown_interval.Name = "numupdown_interval";
-            this.numupdown_interval.Size = new System.Drawing.Size(88, 27);
+            this.numupdown_interval.Size = new System.Drawing.Size(88, 23);
             this.numupdown_interval.TabIndex = 2;
             this.numupdown_interval.Value = new decimal(new int[] {
             10000,
@@ -358,7 +361,7 @@
             0,
             0});
             this.numupdown_views.Name = "numupdown_views";
-            this.numupdown_views.Size = new System.Drawing.Size(88, 27);
+            this.numupdown_views.Size = new System.Drawing.Size(88, 23);
             this.numupdown_views.TabIndex = 1;
             // 
             // tableLayoutPanel5
@@ -369,7 +372,7 @@
             this.tableLayoutPanel5.Controls.Add(this.panel_scrape, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.panel_referral, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(606, 6);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(610, 6);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -417,7 +420,7 @@
             this.textbox_y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textbox_y.Location = new System.Drawing.Point(42, 43);
             this.textbox_y.Name = "textbox_y";
-            this.textbox_y.Size = new System.Drawing.Size(31, 27);
+            this.textbox_y.Size = new System.Drawing.Size(31, 23);
             this.textbox_y.TabIndex = 2;
             // 
             // textbox_x
@@ -425,7 +428,7 @@
             this.textbox_x.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.textbox_x.Location = new System.Drawing.Point(3, 43);
             this.textbox_x.Name = "textbox_x";
-            this.textbox_x.Size = new System.Drawing.Size(31, 27);
+            this.textbox_x.Size = new System.Drawing.Size(31, 23);
             this.textbox_x.TabIndex = 1;
             // 
             // label_autoclick
@@ -483,7 +486,7 @@
             this.referral_txtdrop.Location = new System.Drawing.Point(36, 11);
             this.referral_txtdrop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.referral_txtdrop.Name = "referral_txtdrop";
-            this.referral_txtdrop.Size = new System.Drawing.Size(94, 27);
+            this.referral_txtdrop.Size = new System.Drawing.Size(94, 24);
             this.referral_txtdrop.TabIndex = 7;
             this.referral_txtdrop.Text = "Referrer";
             this.referral_txtdrop.TextChanged += new System.EventHandler(this.referral_txtdrop_TextChanged);
@@ -496,7 +499,7 @@
             this.referalurl_label.Location = new System.Drawing.Point(1, 16);
             this.referalurl_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.referalurl_label.Name = "referalurl_label";
-            this.referalurl_label.Size = new System.Drawing.Size(43, 19);
+            this.referalurl_label.Size = new System.Drawing.Size(40, 17);
             this.referalurl_label.TabIndex = 0;
             this.referalurl_label.Text = "URL:";
             // 
@@ -508,16 +511,16 @@
             this.panel_urls.Controls.Add(this.textbox_url);
             this.panel_urls.Controls.Add(this.list_urls);
             this.panel_urls.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_urls.Location = new System.Drawing.Point(156, 6);
+            this.panel_urls.Location = new System.Drawing.Point(157, 6);
             this.panel_urls.Name = "panel_urls";
-            this.panel_urls.Size = new System.Drawing.Size(141, 229);
+            this.panel_urls.Size = new System.Drawing.Size(142, 229);
             this.panel_urls.TabIndex = 0;
             // 
             // button_clearurl
             // 
             this.button_clearurl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_clearurl.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_clearurl.Location = new System.Drawing.Point(77, 117);
+            this.button_clearurl.Location = new System.Drawing.Point(78, 117);
             this.button_clearurl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_clearurl.Name = "button_clearurl";
             this.button_clearurl.Size = new System.Drawing.Size(55, 30);
@@ -543,7 +546,7 @@
             // 
             this.button_addurl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button_addurl.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_addurl.Location = new System.Drawing.Point(43, 151);
+            this.button_addurl.Location = new System.Drawing.Point(44, 151);
             this.button_addurl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_addurl.Name = "button_addurl";
             this.button_addurl.Size = new System.Drawing.Size(55, 30);
@@ -559,7 +562,7 @@
             this.textbox_url.Location = new System.Drawing.Point(4, 191);
             this.textbox_url.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textbox_url.Name = "textbox_url";
-            this.textbox_url.Size = new System.Drawing.Size(134, 27);
+            this.textbox_url.Size = new System.Drawing.Size(135, 23);
             this.textbox_url.TabIndex = 3;
             this.textbox_url.Text = "URLs to be viewed";
             this.textbox_url.TextChanged += new System.EventHandler(this.textbox_url_TextChanged);
@@ -574,11 +577,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.list_urls.BackColor = System.Drawing.Color.Turquoise;
             this.list_urls.FormattingEnabled = true;
-            this.list_urls.ItemHeight = 19;
+            this.list_urls.ItemHeight = 16;
             this.list_urls.Location = new System.Drawing.Point(0, -3);
             this.list_urls.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_urls.Name = "list_urls";
-            this.list_urls.Size = new System.Drawing.Size(141, 118);
+            this.list_urls.Size = new System.Drawing.Size(142, 116);
             this.list_urls.TabIndex = 10;
             // 
             // panel_agents
@@ -589,16 +592,16 @@
             this.panel_agents.Controls.Add(this.textbox_agent);
             this.panel_agents.Controls.Add(this.list_agents);
             this.panel_agents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_agents.Location = new System.Drawing.Point(306, 6);
+            this.panel_agents.Location = new System.Drawing.Point(308, 6);
             this.panel_agents.Name = "panel_agents";
-            this.panel_agents.Size = new System.Drawing.Size(141, 229);
+            this.panel_agents.Size = new System.Drawing.Size(142, 229);
             this.panel_agents.TabIndex = 0;
             // 
             // button_clearuseragents
             // 
             this.button_clearuseragents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_clearuseragents.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_clearuseragents.Location = new System.Drawing.Point(79, 116);
+            this.button_clearuseragents.Location = new System.Drawing.Point(80, 116);
             this.button_clearuseragents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_clearuseragents.Name = "button_clearuseragents";
             this.button_clearuseragents.Size = new System.Drawing.Size(55, 30);
@@ -624,7 +627,7 @@
             // 
             this.button_adduseragent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button_adduseragent.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_adduseragent.Location = new System.Drawing.Point(45, 150);
+            this.button_adduseragent.Location = new System.Drawing.Point(46, 150);
             this.button_adduseragent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_adduseragent.Name = "button_adduseragent";
             this.button_adduseragent.Size = new System.Drawing.Size(55, 30);
@@ -640,7 +643,7 @@
             this.textbox_agent.Location = new System.Drawing.Point(11, 190);
             this.textbox_agent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textbox_agent.Name = "textbox_agent";
-            this.textbox_agent.Size = new System.Drawing.Size(129, 27);
+            this.textbox_agent.Size = new System.Drawing.Size(130, 23);
             this.textbox_agent.TabIndex = 5;
             this.textbox_agent.Text = "Useragents to use";
             this.textbox_agent.TextChanged += new System.EventHandler(this.textbox_agent_TextChanged);
@@ -655,26 +658,40 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.list_agents.BackColor = System.Drawing.Color.Turquoise;
             this.list_agents.FormattingEnabled = true;
-            this.list_agents.ItemHeight = 19;
+            this.list_agents.ItemHeight = 16;
             this.list_agents.Location = new System.Drawing.Point(0, -4);
             this.list_agents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_agents.Name = "list_agents";
-            this.list_agents.Size = new System.Drawing.Size(140, 118);
+            this.list_agents.Size = new System.Drawing.Size(141, 116);
             this.list_agents.TabIndex = 15;
             // 
             // panel_proxies
             // 
+            this.panel_proxies.Controls.Add(this.label_currentproxnum);
             this.panel_proxies.Controls.Add(this.list_proxies);
             this.panel_proxies.Controls.Add(this.label_proxiesformat);
             this.panel_proxies.Controls.Add(this.button_clearproxies);
             this.panel_proxies.Controls.Add(this.button_loadproxies);
             this.panel_proxies.Controls.Add(this.label_proxiesnum);
             this.panel_proxies.Controls.Add(this.label_proxies);
+            this.panel_proxies.Controls.Add(this.outof);
             this.panel_proxies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_proxies.Location = new System.Drawing.Point(456, 6);
+            this.panel_proxies.Location = new System.Drawing.Point(459, 6);
             this.panel_proxies.Name = "panel_proxies";
-            this.panel_proxies.Size = new System.Drawing.Size(141, 229);
+            this.panel_proxies.Size = new System.Drawing.Size(142, 229);
             this.panel_proxies.TabIndex = 0;
+            // 
+            // label_currentproxnum
+            // 
+            this.label_currentproxnum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_currentproxnum.AutoSize = true;
+            this.label_currentproxnum.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.label_currentproxnum.Location = new System.Drawing.Point(81, 122);
+            this.label_currentproxnum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_currentproxnum.Name = "label_currentproxnum";
+            this.label_currentproxnum.Size = new System.Drawing.Size(16, 17);
+            this.label_currentproxnum.TabIndex = 17;
+            this.label_currentproxnum.Text = "0";
             // 
             // list_proxies
             // 
@@ -683,11 +700,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.list_proxies.BackColor = System.Drawing.Color.Turquoise;
             this.list_proxies.FormattingEnabled = true;
-            this.list_proxies.ItemHeight = 19;
+            this.list_proxies.ItemHeight = 16;
             this.list_proxies.Location = new System.Drawing.Point(0, -4);
             this.list_proxies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_proxies.Name = "list_proxies";
-            this.list_proxies.Size = new System.Drawing.Size(141, 118);
+            this.list_proxies.Size = new System.Drawing.Size(142, 116);
             this.list_proxies.TabIndex = 16;
             // 
             // label_proxiesformat
@@ -698,7 +715,7 @@
             this.label_proxiesformat.Location = new System.Drawing.Point(4, 183);
             this.label_proxiesformat.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_proxiesformat.Name = "label_proxiesformat";
-            this.label_proxiesformat.Size = new System.Drawing.Size(142, 41);
+            this.label_proxiesformat.Size = new System.Drawing.Size(143, 41);
             this.label_proxiesformat.TabIndex = 11;
             this.label_proxiesformat.Text = "(Proxies must be in [IP:Port] format)";
             // 
@@ -706,7 +723,7 @@
             // 
             this.button_clearproxies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_clearproxies.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_clearproxies.Location = new System.Drawing.Point(73, 150);
+            this.button_clearproxies.Location = new System.Drawing.Point(74, 150);
             this.button_clearproxies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button_clearproxies.Name = "button_clearproxies";
             this.button_clearproxies.Size = new System.Drawing.Size(55, 30);
@@ -733,10 +750,10 @@
             this.label_proxiesnum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_proxiesnum.AutoSize = true;
             this.label_proxiesnum.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.label_proxiesnum.Location = new System.Drawing.Point(112, 122);
+            this.label_proxiesnum.Location = new System.Drawing.Point(106, 122);
             this.label_proxiesnum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_proxiesnum.Name = "label_proxiesnum";
-            this.label_proxiesnum.Size = new System.Drawing.Size(18, 19);
+            this.label_proxiesnum.Size = new System.Drawing.Size(16, 17);
             this.label_proxiesnum.TabIndex = 8;
             this.label_proxiesnum.Text = "0";
             // 
@@ -745,12 +762,24 @@
             this.label_proxies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_proxies.AutoSize = true;
             this.label_proxies.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.label_proxies.Location = new System.Drawing.Point(6, 123);
+            this.label_proxies.Location = new System.Drawing.Point(2, 123);
             this.label_proxies.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_proxies.Name = "label_proxies";
-            this.label_proxies.Size = new System.Drawing.Size(98, 19);
+            this.label_proxies.Size = new System.Drawing.Size(86, 17);
             this.label_proxies.TabIndex = 7;
             this.label_proxies.Text = "# of Proxies:";
+            // 
+            // outof
+            // 
+            this.outof.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.outof.AutoSize = true;
+            this.outof.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.outof.Location = new System.Drawing.Point(100, 122);
+            this.outof.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.outof.Name = "outof";
+            this.outof.Size = new System.Drawing.Size(12, 17);
+            this.outof.TabIndex = 18;
+            this.outof.Text = "/";
             // 
             // panel_browser
             // 
@@ -758,9 +787,9 @@
             this.panel_browser.Controls.Add(this.statusstip_browser);
             this.panel_browser.Controls.Add(this.toolStrip1);
             this.panel_browser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_browser.Location = new System.Drawing.Point(5, 238);
+            this.panel_browser.Location = new System.Drawing.Point(5, 242);
             this.panel_browser.Name = "panel_browser";
-            this.panel_browser.Size = new System.Drawing.Size(756, 184);
+            this.panel_browser.Size = new System.Drawing.Size(760, 187);
             this.panel_browser.TabIndex = 0;
             // 
             // geckoWebBrowser1
@@ -772,7 +801,7 @@
             this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 31);
             this.geckoWebBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(756, 123);
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(760, 126);
             this.geckoWebBrowser1.TabIndex = 15;
             this.geckoWebBrowser1.UseHttpActivityObserver = false;
             this.geckoWebBrowser1.Navigating += new System.EventHandler<Gecko.Events.GeckoNavigatingEventArgs>(this.geckoWebBrowser1_Navigating);
@@ -793,11 +822,11 @@
             this.statusstip_browser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressbar_browser,
             this.label_statusbrowser});
-            this.statusstip_browser.Location = new System.Drawing.Point(0, 154);
+            this.statusstip_browser.Location = new System.Drawing.Point(0, 157);
             this.statusstip_browser.Name = "statusstip_browser";
             this.statusstip_browser.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
             this.statusstip_browser.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusstip_browser.Size = new System.Drawing.Size(756, 30);
+            this.statusstip_browser.Size = new System.Drawing.Size(760, 30);
             this.statusstip_browser.TabIndex = 0;
             this.statusstip_browser.Text = "statusStrip1";
             // 
@@ -815,7 +844,7 @@
             // label_statusbrowser
             // 
             this.label_statusbrowser.Name = "label_statusbrowser";
-            this.label_statusbrowser.Size = new System.Drawing.Size(179, 25);
+            this.label_statusbrowser.Size = new System.Drawing.Size(151, 25);
             this.label_statusbrowser.Text = "toolStripStatusLabel1";
             // 
             // toolStrip1
@@ -835,7 +864,7 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(756, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(760, 31);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -891,7 +920,7 @@
             // 
             this.textbox_navigate.AutoSize = false;
             this.textbox_navigate.Name = "textbox_navigate";
-            this.textbox_navigate.Size = new System.Drawing.Size(480, 33);
+            this.textbox_navigate.Size = new System.Drawing.Size(480, 28);
             this.textbox_navigate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_navigate_KeyDown);
             // 
             // button_navigate
@@ -926,18 +955,22 @@
             // 
             this.timer_setcoords.Tick += new System.EventHandler(this.timer_setcoords_Tick);
             // 
-            // timer2
+            // timer_clickcoords
             // 
             this.timer_clickcoords.Tick += new System.EventHandler(this.timer_clickcoords_Tick);
             // 
+            // timer_refreshproxylist
+            // 
+            this.timer_refreshproxylist.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
-            this.ClientSize = new System.Drawing.Size(778, 544);
+            this.ClientSize = new System.Drawing.Size(782, 553);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Font = new System.Drawing.Font("Roboto", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Main";
@@ -1042,6 +1075,9 @@
         private System.Windows.Forms.Label label_autoclick;
         private System.Windows.Forms.Timer timer_setcoords;
         private System.Windows.Forms.Timer timer_clickcoords;
+        private System.Windows.Forms.Label label_currentproxnum;
+        private System.Windows.Forms.Label outof;
+        private System.Windows.Forms.Timer timer_refreshproxylist;
     }
 }
 
