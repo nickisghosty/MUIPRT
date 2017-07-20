@@ -2,12 +2,6 @@
 <br>Multi URL IP Rotator Tool, Ad bot / traffic generator. Mostly automatic. 
 <Br>
 <br>
-<Br>
-<br>You will need 7zip as I had to archive a few folders to lower the folder count. 
-<br>
-<br>1. Inside the MUIPRT folder there is a Firefox.7z that needs to be unpacked, so there is a folder inside MUIPRT called Firefox.
-<br>2. Inside MUIPRT > Bin > Debug there is a Firefox.7z and a Xulrunner.7z, same deal.
-<br>
 <br>Now you should be able to load the solution and compile with no problems. I;ve included a Useragents.txt for the useragents section.
 <br>You will need to scrape your own proxies. It should be self explanitory, but for those who can't think for themselves...<br>
 
@@ -31,6 +25,25 @@ Any questions feel free to message me or shoot me an email at nickisghosty@gmail
 Also feel free to edit, manipulate, redistribute as you please, just be kind enough to leave a little credit where due. Enjoy.
 <br>
 <br>
+Features:
+<Br>
+<br>
+* Set as many URL's as you want. It will run through the proxy list and once it reaches the end it will move onto the next url and start from the top of proxy's
+<br>
+* If you wish to set a specific amount of views to stop at set the views. Else put a high number.
+<br>
+* Interval is how long it will spend at the website before clearing cache and other temp files and changing proxies.
+<br>
+* If you don't set a useragent. It will use Firefox's
+<br>
+* You can set a referrer link that will show up in the HTTP header.
+<Br>
+* If you wish to implement the auto click on page load, search the main.cs for "aads" and change it to whatever the ID of your iframe element is. Or change the ID of your iframe to aads.
+<br>
+* If you have a proxy list text file that is updated as the program is doing its thing, it will automatically update in the listbox.
+<br>
+
+<Br>
 <Br>
 Screenshot:
 <Br>

@@ -92,31 +92,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Firefox-Linux64\application.ini" />
-    <None Include="Firefox-Linux64\crashreporter.ini" />
-    <None Include="Firefox-Linux64\libfreebl3.chk" />
-    <None Include="Firefox-Linux64\libfreebl3.so" />
-    <None Include="Firefox-Linux64\libgeckofix.so" />
-    <None Include="Firefox-Linux64\liblgpllibs.so" />
-    <None Include="Firefox-Linux64\libmozsqlite3.so" />
-    <None Include="Firefox-Linux64\libnspr4.so" />
-    <None Include="Firefox-Linux64\libnss3.so" />
-    <None Include="Firefox-Linux64\libnssckbi.so" />
-    <None Include="Firefox-Linux64\libnssdbm3.chk" />
-    <None Include="Firefox-Linux64\libnssdbm3.so" />
-    <None Include="Firefox-Linux64\libnssutil3.so" />
-    <None Include="Firefox-Linux64\libplc4.so" />
-    <None Include="Firefox-Linux64\libplds4.so" />
-    <None Include="Firefox-Linux64\libsmime3.so" />
-    <None Include="Firefox-Linux64\libsoftokn3.chk" />
-    <None Include="Firefox-Linux64\libsoftokn3.so" />
-    <None Include="Firefox-Linux64\libssl3.so" />
-    <None Include="Firefox-Linux64\libxul.so" />
-    <None Include="Firefox-Linux64\omni.ja" />
-    <None Include="Firefox-Linux64\platform.ini" />
-    <None Include="Firefox-Linux64\plugin-container" />
-    <None Include="Firefox-Linux64\update-settings.ini" />
-    <None Include="Firefox-Linux64\updater.ini" />
     <None Include="Firefox\omni.ja" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -469,9 +444,6 @@
     <Content Include="xulrunner\xul.dll" />
     <Content Include="xulrunner\xulrunner-stub.exe" />
     <Content Include="xulrunner\xulrunner.exe" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets" Condition="Exists('..\packages\Geckofx45.64.Linux.45.0.28\build\Geckofx45.64.Linux.targets')" />
