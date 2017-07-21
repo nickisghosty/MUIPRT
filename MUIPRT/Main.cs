@@ -1,9 +1,11 @@
 ﻿using Gecko;
+using Gecko.Cache;
 using Gecko.Events;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -43,8 +45,12 @@ namespace MUIPRT
             Gecko.GeckoPreferences.User["network.http.pipelining"] = true;
             GeckoPreferences.User["browser.xul.error_pages.enabled"] = true;
             GeckoPreferences.Default["browser.xul.error_pages.enabled"] = true;
-            geckoWebBrowser1.Navigate("http://google.com", Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null); //home page
             textbox_navigate.Items.Equals(geckoWebBrowser1.History);
+            var field = typeof(GeckoWebBrowser).GetField("WebBrowser", BindingFlags.Instance | BindingFlags.NonPublic);
+            nsIWebBrowser nsIWebBrowser = (nsIWebBrowser)field.GetValue(geckoWebBrowser1); //this might be null if called right before initialization of browser
+            Xpcom.QueryInterface<nsILoadContext>(nsIWebBrowser).SetPrivateBrowsing(true);
+            geckoWebBrowser1.Navigate("http://google.com", (Gecko.GeckoLoadFlags.ReplaceHistory | Gecko.GeckoLoadFlags.BypassCache | Gecko.GeckoLoadFlags.BypassProxy), referrer, null, null); //home page
+
 
             // disable buttons
             button_clearurl.Enabled = false;
@@ -248,8 +254,9 @@ namespace MUIPRT
             GeckoPreferences.User["network.proxy.http_remote_dns"] = true;
             GeckoPreferences.User["network.proxy.ssl_remote_dns"] = true;
             GeckoPreferences.User["general.useragent.override"] = agent;
-            geckoWebBrowser1.Refresh();
-            geckoWebBrowser1.Navigate(url, Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null);
+           // geckoWebBrowser1.Refresh();
+            geckoWebBrowser1.Navigate(url, (Gecko.GeckoLoadFlags.ReplaceHistory | Gecko.GeckoLoadFlags.BypassCache | Gecko.GeckoLoadFlags.BypassProxy), referrer, null, null); //home page
+          
             timer_load.Interval = (int)numupdown_interval.Value;
         }
 
@@ -258,15 +265,19 @@ namespace MUIPRT
             nsIBrowserHistory historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
             historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
             historyMan.RemoveAllPages();
+            
 
             nsICookieManager CookieMan;
             CookieMan = Xpcom.GetService<nsICookieManager>("@mozilla.org/cookiemanager;1");
             CookieMan = Xpcom.QueryInterface<nsICookieManager>(CookieMan);
             CookieMan.RemoveAll();
+            
 
             // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
             Gecko.Cache.ImageCache.ClearCache(true);
             Gecko.Cache.ImageCache.ClearCache(false);
+            Gecko.Cache.CacheService.Clear(new CacheStoragePolicy());
+            
 
             timer_cleardata.Stop();
         }
@@ -579,7 +590,9 @@ namespace MUIPRT
 
         private void button_navigate_Click(object sender, EventArgs e)
         {
-            geckoWebBrowser1.Navigate(textbox_navigate.Text, Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null);
+            geckoWebBrowser1.Navigate(textbox_navigate.Text, (Gecko.GeckoLoadFlags.ReplaceHistory | Gecko.GeckoLoadFlags.BypassCache | Gecko.GeckoLoadFlags.BypassProxy), referrer, null, null); //home page
+
+            //geckoWebBrowser1.Navigate(textbox_navigate.Text, Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null);
             textbox_navigate.Items.Add(textbox_navigate.Text);
         }
 

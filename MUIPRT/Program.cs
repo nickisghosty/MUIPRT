@@ -16,7 +16,7 @@ namespace MUIPRT
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
-            Xpcom.Initialize("Firefox");
+            //Xpcom.Initialize("Firefox");
             GeckoPreferences.User["security.warn_viewing_mixed"] = false;
             GeckoPreferences.User["plugin.state.flash"] = 0;
         }
