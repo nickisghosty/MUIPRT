@@ -2,6 +2,8 @@
 <br>Multi URL IP Rotator Tool, Ad bot / traffic generator. Mostly automatic. 
 <Br>
 <br>
+In order to build the source you may or may not need to do a few things. Such as copying the XUL Runner and Firefox folders into the Bin>Debug folder. Also for the designer to work open the solution, try to open the Main.cs. If you get a design time error, close all of the tabs. Go to Build>Clean Solution. Then Rebuild Solution. Now try again. If it is still not working try googling the error you get, and if all else fails go ahead and create an issue on here.<br><bR>
+<br>
 <br>Now you should be able to load the solution and compile with no problems. I;ve included a Useragents.txt for the useragents section.
 <br>You will need to scrape your own proxies. It should be self explanitory, but for those who can't think for themselves...<br>
 
