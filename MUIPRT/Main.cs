@@ -64,10 +64,12 @@ namespace MUIPRT
             progressbar_appprogress.Maximum = (int)numupdown_views.Value;
             progressbar_appprogress.Minimum = 0;
             button_stop.Enabled = true;
+            timer_load.Interval = 100;
             button_start.Enabled = false;
             button_clearproxies.Enabled = false;
             button_clearurl.Enabled = false;
             button_clearuseragents.Enabled = false;
+            // list_proxies.SelectedIndex = (list_proxies.SelectedIndex + 1);
 
             if (list_urls.Items.Count == 0) //if urls list box empty and start is clicked
             {
@@ -88,12 +90,9 @@ namespace MUIPRT
                 agent = list_agents.GetItemText(list_agents.SelectedItem);
 
                 GeckoPreferences.User["general.useragent.override"] = agent;
-                timer_loadurl.Interval = 100;
-                timer_loadurl.Start();                         
-                timer_changeproxy.Interval = 100;
-                timer_changeproxy.Start();
-                list_urls.SelectedIndex = (list_urls.SelectedIndex + 1);
-                //list_proxies.SelectedIndex = (list_proxies.SelectedIndex + 1);
+                timer_load.Start();
+                list_urls.SelectedIndex = list_urls.SelectedIndex + 1;
+
                 label_status.Text = "Running";
                 if (list_agents.Items.Count == 0)
                 {
@@ -102,7 +101,7 @@ namespace MUIPRT
                 }
                 else
                 {
-                   // list_agents.SelectedIndex = (list_agents.SelectedIndex + 1);
+                    //    list_agents.SelectedIndex = (list_agents.SelectedIndex + 1);
                     agent = list_agents.GetItemText(list_agents.SelectedItem);
                 }
             }
@@ -112,11 +111,8 @@ namespace MUIPRT
                 agent = list_agents.GetItemText(list_agents.SelectedItem);
 
                 GeckoPreferences.User["general.useragent.override"] = agent;
-                timer_loadurl.Start();
-                int interval = (int)numupdown_interval.Value;
-                timer_changeproxy.Interval = interval;
-                timer_changeproxy.Start();
-              //  list_proxies.SelectedIndex = (list_proxies.SelectedIndex + 1);
+                timer_load.Start();
+                // list_proxies.SelectedIndex = (list_proxies.SelectedIndex + 1);
                 label_status.Text = "Running";
                 if (list_agents.Items.Count == 0) // if user agents list is empty set a default user agent
                 {
@@ -125,9 +121,10 @@ namespace MUIPRT
                 }
                 else  // if user agents list is full move down the list and set the useragent
                 {
-                   // list_agents.SelectedIndex = (list_agents.SelectedIndex + 1);
+                    // list_agents.SelectedIndex = (list_agents.SelectedIndex + 1);
                     GeckoPreferences.User["general.useragent.override"] = agent;
                 }
+                geckoWebBrowser1.Navigate(list_urls.GetItemText(list_urls.SelectedIndex));
             }
             else //proxies list is empty
             {
@@ -138,75 +135,18 @@ namespace MUIPRT
             }
         }
 
-        private void timer_loadurl_Tick(object sender, EventArgs e)  // navigate
+        private void timer_load_Tick(object sender, EventArgs e)
         {
-            timer_loadurl.Interval = ((int)numupdown_interval.Value);
+            timer_cleardata.Start();
 
-            url = list_urls.GetItemText(list_urls.SelectedItem);
-            agent = list_agents.GetItemText(list_agents.SelectedItem);
-            if (referral_txtdrop.Text != "Referrer")
-            { 
-            referrer = referral_txtdrop.Text;
-                }
-
-            proxy = list_proxies.SelectedItem.ToString().Split(":".ToCharArray());       //split proxies at  :
-            if (proxy.Length != 2)                   //if proxies arent in the ip : port format
-            {
-                throw new Exception("Wrong format");
-            }
-            // proxy settings
-            Gecko.GeckoPreferences.Default["network.proxy.type"] = 1;
-            Gecko.GeckoPreferences.Default["network.proxy.http"] = proxy[0];
-            Gecko.GeckoPreferences.Default["network.proxy.http_port"] = Convert.ToInt32(proxy[1]);
-            Gecko.GeckoPreferences.Default["network.proxy.ssl"] = proxy[0];
-            GeckoPreferences.Default["network.proxy.ssl_port"] = Convert.ToInt32(proxy[1]);
-            GeckoPreferences.Default["network.proxy.remote_dns"] = true;
-            GeckoPreferences.Default["network.proxy.http_remote_dns"] = true;
-            GeckoPreferences.Default["network.proxy.ssl_remote_dns"] = true;
-            Gecko.GeckoPreferences.User["network.proxy.type"] = 1;
-            Gecko.GeckoPreferences.User["network.proxy.http"] = proxy[0];
-            Gecko.GeckoPreferences.User["network.proxy.http_port"] = Convert.ToInt32(proxy[1]);
-            Gecko.GeckoPreferences.User["network.proxy.ssl"] = proxy[0];
-            GeckoPreferences.User["network.proxy.ssl_port"] = Convert.ToInt32(proxy[1]);
-            GeckoPreferences.User["network.proxy.remote_dns"] = true;
-            GeckoPreferences.User["network.proxy.http_remote_dns"] = true;
-            GeckoPreferences.User["network.proxy.ssl_remote_dns"] = true;
-            GeckoPreferences.User["general.useragent.override"] = agent;
-            geckoWebBrowser1.Refresh();
-            geckoWebBrowser1.Navigate(url, Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null);
-            timer_loadurl.Stop();
-            timer_changeproxy.Start();
-
-        }
-
-        private void timer_cleardata_Tick(object sender, EventArgs e) // clear cache cookies history etc
-        {
-            nsIBrowserHistory historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
-            historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
-            historyMan.RemoveAllPages();
-
-            nsICookieManager CookieMan;
-            CookieMan = Xpcom.GetService<nsICookieManager>("@mozilla.org/cookiemanager;1");
-            CookieMan = Xpcom.QueryInterface<nsICookieManager>(CookieMan);
-            CookieMan.RemoveAll();
-
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
-            Gecko.Cache.ImageCache.ClearCache(true);
-            Gecko.Cache.ImageCache.ClearCache(false);
-
-            timer_cleardata.Stop();
-        }
-
-        private void timer_changeproxy_Tick(object sender, EventArgs e) //move down the proxy list
-        {
-            
             progressbar_appprogress.Value++;
-            label_currentproxnum.Text = list_proxies.SelectedIndex.ToString();
+            var x = Convert.ToInt32(label_currentproxnum.Text);
+            x++;
+            label_currentproxnum.Text = Convert.ToString(x);
             if (progressbar_appprogress.Value >= progressbar_appprogress.Maximum)      //if app finished job
             {
-                timer_changeproxy.Stop();
                 timer_refreshproxylist.Stop();
-                timer_loadurl.Stop();
+                timer_load.Stop();
                 timer_cleardata.Stop();
                 label_status.Text = "Finished!";
                 button_start.Enabled = true;
@@ -227,9 +167,8 @@ namespace MUIPRT
                     string MessageBoxContent = "Program has finished every URL in the list using the selected proxies and useragents.";
                     DialogResult dialogResult = MessageBox.Show(MessageBoxContent, MessageBoxTitle, MessageBoxButtons.OK);
                     label_status.Text = "Finished!";
-                    timer_changeproxy.Stop();
-                    timer_loadurl.Stop();
-                  //  timer_refreshproxylist.Stop();
+                    timer_load.Stop();
+                    timer_refreshproxylist.Stop();
                     timer_cleardata.Stop();
                 }
                 else if (list_urls.SelectedIndex == list_urls.Items.Count - 1)    //if url is last in the list, stop program is finished
@@ -238,9 +177,8 @@ namespace MUIPRT
                     string MessageBoxContent = "Program has finished every URL in the list using the selected proxies and useragents.";
                     DialogResult dialogResult = MessageBox.Show(MessageBoxContent, MessageBoxTitle, MessageBoxButtons.OK);
                     label_status.Text = "Finished!";
-                    timer_changeproxy.Stop();
-                    timer_loadurl.Stop();
-                   // timer_refreshproxylist.Stop();
+                    timer_load.Stop();
+                    timer_refreshproxylist.Stop();
                     timer_cleardata.Stop();
                 }
                 else if (list_agents.Items.Count == 0)   //if agents are empty set default
@@ -280,10 +218,57 @@ namespace MUIPRT
                     GeckoPreferences.User["general.useragent.override"] = agent;
                 }
             }
-            timer_loadurl.Interval = ((int)numupdown_interval.Value);
-            timer_cleardata.Interval = 1000;
-            timer_loadurl.Start();
-            timer_changeproxy.Stop();
+
+            if (referral_txtdrop.Text != "Referrer")
+            {
+                referrer = referral_txtdrop.Text;
+            }
+            url = list_urls.GetItemText(list_urls.SelectedItem);
+            agent = list_agents.GetItemText(list_agents.SelectedItem);
+            proxy = list_proxies.SelectedItem.ToString().Split(":".ToCharArray());       //split proxies at  :
+            if (proxy.Length != 2)                   //if proxies arent in the ip : port format
+            {
+                throw new Exception("Wrong format");
+            }
+            // proxy settings
+            Gecko.GeckoPreferences.Default["network.proxy.type"] = 1;
+            Gecko.GeckoPreferences.Default["network.proxy.http"] = proxy[0];
+            Gecko.GeckoPreferences.Default["network.proxy.http_port"] = Convert.ToInt32(proxy[1]);
+            Gecko.GeckoPreferences.Default["network.proxy.ssl"] = proxy[0];
+            GeckoPreferences.Default["network.proxy.ssl_port"] = Convert.ToInt32(proxy[1]);
+            GeckoPreferences.Default["network.proxy.remote_dns"] = true;
+            GeckoPreferences.Default["network.proxy.http_remote_dns"] = true;
+            GeckoPreferences.Default["network.proxy.ssl_remote_dns"] = true;
+            Gecko.GeckoPreferences.User["network.proxy.type"] = 1;
+            Gecko.GeckoPreferences.User["network.proxy.http"] = proxy[0];
+            Gecko.GeckoPreferences.User["network.proxy.http_port"] = Convert.ToInt32(proxy[1]);
+            Gecko.GeckoPreferences.User["network.proxy.ssl"] = proxy[0];
+            GeckoPreferences.User["network.proxy.ssl_port"] = Convert.ToInt32(proxy[1]);
+            GeckoPreferences.User["network.proxy.remote_dns"] = true;
+            GeckoPreferences.User["network.proxy.http_remote_dns"] = true;
+            GeckoPreferences.User["network.proxy.ssl_remote_dns"] = true;
+            GeckoPreferences.User["general.useragent.override"] = agent;
+            geckoWebBrowser1.Refresh();
+            geckoWebBrowser1.Navigate(url, Gecko.GeckoLoadFlags.BypassHistory, referrer, null, null);
+            timer_load.Interval = (int)numupdown_interval.Value;
+        }
+
+        private void timer_cleardata_Tick(object sender, EventArgs e) // clear cache cookies history etc
+        {
+            nsIBrowserHistory historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
+            historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
+            historyMan.RemoveAllPages();
+
+            nsICookieManager CookieMan;
+            CookieMan = Xpcom.GetService<nsICookieManager>("@mozilla.org/cookiemanager;1");
+            CookieMan = Xpcom.QueryInterface<nsICookieManager>(CookieMan);
+            CookieMan.RemoveAll();
+
+            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
+            Gecko.Cache.ImageCache.ClearCache(true);
+            Gecko.Cache.ImageCache.ClearCache(false);
+
+            timer_cleardata.Stop();
         }
 
         private void button_stop_Click(object sender, EventArgs e) //stop running
@@ -294,9 +279,8 @@ namespace MUIPRT
             button_clearurl.Enabled = true;
             button_clearuseragents.Enabled = true;
             label_status.Text = "Stopped.";
-            timer_changeproxy.Stop();
             timer_refreshproxylist.Stop();
-            timer_loadurl.Stop();
+            timer_load.Stop();
             timer_cleardata.Stop();
             label_status.Text = "Stopped";
             progressbar_appprogress.Value = 0;
@@ -472,7 +456,9 @@ namespace MUIPRT
         #endregion Useragent functions
 
         #region Proxy functions
+
         public string proxylistfile;
+
         private void button_loadproxies_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -495,7 +481,7 @@ namespace MUIPRT
                 }
 
                 streamReader.Close();
-                timer_refreshproxylist.Interval = (int)numupdown_interval.Value;
+                timer_refreshproxylist.Interval = (int)numupdown_interval.Value/4;
                 timer_refreshproxylist.Start();
             }
             else
@@ -511,9 +497,9 @@ namespace MUIPRT
                 button_clearproxies.Enabled = true;
             }
         }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             string[] lines = System.IO.File.ReadAllLines(proxylistfile);
 
             foreach (string str in lines)
@@ -721,17 +707,18 @@ namespace MUIPRT
             i.mi.dwFlags = MOUSEEVENTF_LEFTUP;
             SendInput(1, ref i, Marshal.SizeOf(i));
 
-            
             timer_clickcoords.Stop();
         }
-       /* private void autocaptcha()
-        {
-            GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
 
-            var audiobutton = geckoWebBrowser2.Document.GetElementsByClassName("rc-button goog-inline-block rc-button-audio");
-            Gecko.DOM.GeckoButtonElement next = new Gecko.DOM.GeckoButtonElement(audiobutton.ElementAt(1).DomObject);
-            next.Click();
-        }*/
+        /* private void autocaptcha()
+         {
+             GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
+
+             var audiobutton = geckoWebBrowser2.Document.GetElementsByClassName("rc-button goog-inline-block rc-button-audio");
+             Gecko.DOM.GeckoButtonElement next = new Gecko.DOM.GeckoButtonElement(audiobutton.ElementAt(1).DomObject);
+             next.Click();
+         }*/
+
         #endregion Browser automation
 
         #region Browser events
@@ -785,12 +772,11 @@ namespace MUIPRT
                 e.InitialHeight = rect.Height;
             }
         }
+
         private void geckoWebBrowser2_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
         {
-           
-
-
         }
+
         private void geckoWebBrowser1_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
         {
             label_statusbrowser.Text = "Done.. " + geckoWebBrowser1.StatusText;
@@ -840,30 +826,28 @@ namespace MUIPRT
                 }
             }
             else if (this.ActiveControl == geckoWebBrowser2)
-            { 
+            {
                 textbox_navigate.Text = geckoWebBrowser2.Url.AbsoluteUri;
-            label_statusbrowser.Text = geckoWebBrowser2.StatusText;
-            if (progressbar_browser.Value < 0)
-            {
-                progressbar_browser.Value = 0;
+                label_statusbrowser.Text = geckoWebBrowser2.StatusText;
+                if (progressbar_browser.Value < 0)
+                {
+                    progressbar_browser.Value = 0;
+                }
+                else if (progressbar_browser.Value > 100)
+                {
+                    progressbar_browser.Value = 100;
+                }
             }
-            else if (progressbar_browser.Value > 100)
-            {
-                progressbar_browser.Value = 100;
-            }
-
-        }
         }
 
         private void geckoWebBrowser1_NavigationError(object sender, GeckoNavigationErrorEventArgs e)
         {
             label_statusbrowser.Text = "Error loading page. Check proxy settings or URL.";
-   
         }
 
         private void geckoWebBrowser1_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
-            clickad();             
+            clickad();
             label_statusbrowser.Text = "Done.";
             progressbar_browser.Value = 0;
         }
@@ -951,11 +935,8 @@ namespace MUIPRT
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
         }
 
-
         #endregion Browser events
 
         #endregion Gecko browser
-        
-        
     }
 }
