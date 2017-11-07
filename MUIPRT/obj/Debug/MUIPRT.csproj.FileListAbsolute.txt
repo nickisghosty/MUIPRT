@@ -81,3 +81,17 @@ C:\Users\Nick\Source\Repos\finMUIPRT\MUIPRT\obj\Debug\MUIPRT.Properties.Resource
 C:\Users\Nick\Source\Repos\finMUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.GenerateResource.Cache
 C:\Users\Nick\Source\Repos\finMUIPRT\MUIPRT\obj\Debug\MUIPRT.exe
 C:\Users\Nick\Source\Repos\finMUIPRT\MUIPRT\obj\Debug\MUIPRT.pdb
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\MUIPRT.exe.config
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\MUIPRT.exe
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\MUIPRT.pdb
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\Geckofx-Core.dll
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\Geckofx-Winforms.dll
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\Geckofx-Core.pdb
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\bin\Debug\Geckofx-Winforms.pdb
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.Main.resources
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.Properties.Resources.resources
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.GenerateResource.Cache
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.CoreCompileInputs.cache
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.exe
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.pdb
+C:\Users\GH0STY\Source\Repos\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csprojResolveAssemblyReference.cache

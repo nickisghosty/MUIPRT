@@ -2,11 +2,13 @@
 using Gecko.Cache;
 using Gecko.Events;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 #region Main Form GUI
@@ -19,6 +21,7 @@ namespace MUIPRT
         public string agent;
         public string sUserAgent;
         public string url;
+        public int onepage;
         public string[] proxy;
         private Point clickLocation = new Point(0, 0);
 
@@ -44,6 +47,8 @@ namespace MUIPRT
             GeckoPreferences.User["browser.cache.disk.enable"] = false;
             Gecko.GeckoPreferences.User["network.http.pipelining"] = true;
             GeckoPreferences.User["browser.xul.error_pages.enabled"] = true;
+            Gecko.GeckoPreferences.Default["browser.cache.disk.enable"] = false;
+            Gecko.GeckoPreferences.User["browser.cache.disk.enable"] = false;
             GeckoPreferences.Default["browser.xul.error_pages.enabled"] = true;
             textbox_navigate.Items.Equals(geckoWebBrowser1.History);
             var field = typeof(GeckoWebBrowser).GetField("WebBrowser", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -61,6 +66,7 @@ namespace MUIPRT
             button_adduseragent.Enabled = false;
             button_setref.Enabled = false;
             button_stop.Enabled = false;
+            onepage = 0;
         }
 
         #region Main function
@@ -131,6 +137,7 @@ namespace MUIPRT
                     GeckoPreferences.User["general.useragent.override"] = agent;
                 }
                 geckoWebBrowser1.Navigate(list_urls.GetItemText(list_urls.SelectedIndex));
+                
             }
             else //proxies list is empty
             {
@@ -256,7 +263,7 @@ namespace MUIPRT
             GeckoPreferences.User["general.useragent.override"] = agent;
            // geckoWebBrowser1.Refresh();
             geckoWebBrowser1.Navigate(url, (Gecko.GeckoLoadFlags.ReplaceHistory | Gecko.GeckoLoadFlags.BypassCache | Gecko.GeckoLoadFlags.BypassProxy), referrer, null, null); //home page
-          
+            onepage=0;
             timer_load.Interval = (int)numupdown_interval.Value;
         }
 
@@ -276,7 +283,6 @@ namespace MUIPRT
             // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
             Gecko.Cache.ImageCache.ClearCache(true);
             Gecko.Cache.ImageCache.ClearCache(false);
-            Gecko.Cache.CacheService.Clear(new CacheStoragePolicy());
             
 
             timer_cleardata.Stop();
@@ -511,13 +517,35 @@ namespace MUIPRT
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            string[] lines = System.IO.File.ReadAllLines(proxylistfile);
+            using (var fs = new FileStream(proxylistfile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            using (var sr = new StreamReader(fs, Encoding.Default))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    if (!list_proxies.Items.Contains(line))
+                        list_proxies.Items.Add(line);
+                }
+            }
+            /*
+            List<string> lines = new List<string>();
+            using (StreamReader r = new StreamReader(proxylistfile))
+            {
+                string line;
+                while ((line = r.ReadLine()) != null)
+                {
+                    lines.Add(line);
+                }
+            }*/
+
+            /*    string[] lines = System.IO.File.ReadAllLines(proxylistfile);
 
             foreach (string str in lines)
             {
                 if (!list_proxies.Items.Contains(str))
                     list_proxies.Items.Add(str);
-            }
+            }            */
+
             label_proxiesnum.Text = list_proxies.Items.Count.ToString();
         }
 
@@ -631,6 +659,7 @@ namespace MUIPRT
         private void clickad()
         {
             var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads") as Gecko.DOM.GeckoIFrameElement;
+            onepage = 1;
             if (iframe != null)
             {
                 iframe.ScrollIntoView(true);
@@ -642,6 +671,15 @@ namespace MUIPRT
                 {
                     timer_clickcoords.Start();
                 }
+            }
+            else
+            {
+                timer_clickcoords.Interval = 2000;
+                if (textbox_y.Text != "" || textbox_x.Text != "")
+                {
+                    timer_clickcoords.Start();
+                }
+
             }
             /*if (textBox2.Text != "" || textBox1.Text != "")
             {
@@ -779,6 +817,8 @@ namespace MUIPRT
                 GeckoPreferences.User["network.proxy.remote_dns"] = true;
                 GeckoPreferences.User["network.proxy.http_remote_dns"] = true;
                 GeckoPreferences.User["network.proxy.ssl_remote_dns"] = true;
+                Gecko.GeckoPreferences.Default["browser.cache.disk.enable"] = false;
+                Gecko.GeckoPreferences.User["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["general.useragent.override"] = agent;
                 geckoWebBrowser2.Navigate(e.Uri);
                 e.InitialWidth = rect.Width;
@@ -795,7 +835,8 @@ namespace MUIPRT
             label_statusbrowser.Text = "Done.. " + geckoWebBrowser1.StatusText;
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             progressbar_browser.Value = 0;
-            clickad();
+            if (!geckoWebBrowser1.IsBusy && onepage == 0)
+            { clickad(); }
         }
 
         private void geckoWebBrowser1_DOMContentLoaded(object sender, DomEventArgs e)
@@ -813,7 +854,7 @@ namespace MUIPRT
         {
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             label_statusbrowser.Text = geckoWebBrowser1.StatusText;
-            clickad();
+          //  clickad();
         }
 
         private void geckoWebBrowser1_MouseHover(object sender, EventArgs e)
@@ -860,7 +901,8 @@ namespace MUIPRT
 
         private void geckoWebBrowser1_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
-            clickad();
+            
+            //clickad();
             label_statusbrowser.Text = "Done.";
             progressbar_browser.Value = 0;
         }
@@ -951,5 +993,10 @@ namespace MUIPRT
         #endregion Browser events
 
         #endregion Gecko browser
+
+        private void panel_controls_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
