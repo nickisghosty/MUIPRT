@@ -1,15 +1,33 @@
 ﻿using Gecko;
+using Gecko.DOM;
 using Gecko.Cache;
+using Gecko.Certificates;
+using Gecko.Collections;
+using Gecko.Cryptography;
+using Gecko.CustomMarshalers;
+using Gecko.Images;
+using Gecko.Interop;
+using Gecko.IO;
+using Gecko.JQuery;
+using Gecko.Net;
+using Gecko.Observers;
+using Gecko.Plugins;
+using Gecko.Search;
+using Gecko.Services;
+using Gecko.Utils;
+using Gecko.WebIDL;
+using Gecko.Windows;
 using Gecko.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 #region Main Form GUI
 
@@ -22,10 +40,76 @@ namespace MUIPRT
         public string sUserAgent;
         public string url;
         public int onepage;
-        public string[] proxy;
+        char[] delimiters;
+        string value;
+        string[] proxy;
+        
         private Point clickLocation = new Point(0, 0);
+        private Point clickLocation2 = new Point(0, 0);
+        Form Form2 = new Form();
 
-        public Main()
+        [DllImport("user32.dll")]
+        private static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [DllImport("User32", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int GetWindowText(IntPtr windowHandle, StringBuilder stringBuilder, int nMaxCount);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowTextLength", SetLastError = true)]
+        internal static extern int GetWindowTextLength(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern int FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(int hWnd, uint Msg, int wParam, int lParam);
+
+        public const int WM_SYSCOMMAND = 0x0112;
+        public const int SC_CLOSE = 0xF060;
+        private static List<IntPtr> windowList;
+        private static string _className;
+        private static StringBuilder apiResult = new StringBuilder(256); //256 Is max class name length.
+        private delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
+        private static List<IntPtr> WindowsFinder(string className, string process)
+        {
+            _className = className;
+            windowList = new List<IntPtr>();
+
+            Process[] chromeList = Process.GetProcessesByName(process);
+
+            if (chromeList.Length > 0)
+            {
+                foreach (Process chrome in chromeList)
+                {
+                    if (chrome.MainWindowHandle != IntPtr.Zero)
+                    {
+                        foreach (ProcessThread thread in chrome.Threads)
+                        {
+                            EnumThreadWindows((uint)thread.Id, new EnumThreadDelegate(EnumThreadCallback), IntPtr.Zero);
+                        }
+                    }
+                }
+            }
+
+            return windowList;
+        }
+
+        static bool EnumThreadCallback(IntPtr hWnd, IntPtr lParam)
+        {
+            if (GetClassName(hWnd, apiResult, apiResult.Capacity) != 0)
+            {
+                if (string.CompareOrdinal(apiResult.ToString(), _className) == 0)
+                {
+                    windowList.Add(hWnd);
+                }
+            }
+            return true;
+        }
+    
+
+
+public Main()
         {
             InitializeComponent();
             geckoWebBrowser1.CreateWindow += new EventHandler<GeckoCreateWindowEventArgs>(geckoWebBrowser1_CreateWindow);        //popup event
@@ -58,6 +142,7 @@ namespace MUIPRT
 
 
             // disable buttons
+            button_skip.Enabled = false;
             button_clearurl.Enabled = false;
             button_clearproxies.Enabled = false;
             button_clearuseragents.Enabled = false;
@@ -80,6 +165,7 @@ namespace MUIPRT
             button_start.Enabled = false;
             button_clearproxies.Enabled = false;
             button_clearurl.Enabled = false;
+            button_skip.Enabled = true;
             button_clearuseragents.Enabled = false;
             // list_proxies.SelectedIndex = (list_proxies.SelectedIndex + 1);
 
@@ -102,8 +188,8 @@ namespace MUIPRT
                 agent = list_agents.GetItemText(list_agents.SelectedItem);
 
                 GeckoPreferences.User["general.useragent.override"] = agent;
-                timer_load.Start();
                 list_urls.SelectedIndex = list_urls.SelectedIndex + 1;
+                timer_load.Start();
 
                 label_status.Text = "Running";
                 if (list_agents.Items.Count == 0)
@@ -137,7 +223,7 @@ namespace MUIPRT
                     GeckoPreferences.User["general.useragent.override"] = agent;
                 }
                 geckoWebBrowser1.Navigate(list_urls.GetItemText(list_urls.SelectedIndex));
-                
+
             }
             else //proxies list is empty
             {
@@ -161,6 +247,7 @@ namespace MUIPRT
                 timer_refreshproxylist.Stop();
                 timer_load.Stop();
                 timer_cleardata.Stop();
+                button_skip.Enabled = false;
                 label_status.Text = "Finished!";
                 button_start.Enabled = true;
                 button_stop.Enabled = false;
@@ -238,11 +325,10 @@ namespace MUIPRT
             }
             url = list_urls.GetItemText(list_urls.SelectedItem);
             agent = list_agents.GetItemText(list_agents.SelectedItem);
-            proxy = list_proxies.SelectedItem.ToString().Split(":".ToCharArray());       //split proxies at  :
-            if (proxy.Length != 2)                   //if proxies arent in the ip : port format
-            {
-                throw new Exception("Wrong format");
-            }
+            delimiters = new char[] { ':', '@' };
+            value = list_proxies.SelectedItem.ToString();
+            proxy = value.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);//split proxies at  :
+          
             // proxy settings
             Gecko.GeckoPreferences.Default["network.proxy.type"] = 1;
             Gecko.GeckoPreferences.Default["network.proxy.http"] = proxy[0];
@@ -261,9 +347,11 @@ namespace MUIPRT
             GeckoPreferences.User["network.proxy.http_remote_dns"] = true;
             GeckoPreferences.User["network.proxy.ssl_remote_dns"] = true;
             GeckoPreferences.User["general.useragent.override"] = agent;
-           // geckoWebBrowser1.Refresh();
+            geckoWebBrowser1.Refresh();
+            geckoWebBrowser1.Reload();
             geckoWebBrowser1.Navigate(url, (Gecko.GeckoLoadFlags.ReplaceHistory | Gecko.GeckoLoadFlags.BypassCache | Gecko.GeckoLoadFlags.BypassProxy), referrer, null, null); //home page
-            onepage=0;
+            onepage = 0;
+
             timer_load.Interval = (int)numupdown_interval.Value;
         }
 
@@ -272,29 +360,43 @@ namespace MUIPRT
             nsIBrowserHistory historyMan = Xpcom.GetService<nsIBrowserHistory>(Gecko.Contracts.NavHistoryService);
             historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
             historyMan.RemoveAllPages();
-            
+
 
             nsICookieManager CookieMan;
             CookieMan = Xpcom.GetService<nsICookieManager>("@mozilla.org/cookiemanager;1");
             CookieMan = Xpcom.QueryInterface<nsICookieManager>(CookieMan);
             CookieMan.RemoveAll();
-            
 
             // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
             Gecko.Cache.ImageCache.ClearCache(true);
             Gecko.Cache.ImageCache.ClearCache(false);
-            
+//            Gecko.Cache.CacheService.Clear(new CacheStoragePolicy());
 
+            nsICacheStorageService cache;
+            cache = Xpcom.GetService<nsICacheStorageService>("@mozilla.org/netwerk/cache-storage-service;1");
+             try { cache.Clear(); }
+            catch(Exception ex) { throw new ApplicationException("Could not clear cache:", ex); }
+
+            imgICache icache;
+            icache = Xpcom.GetService<imgITools>("@mozilla.org/image/tools;1").GetImgCacheForDocument(null);
+            try { icache.ClearCache(false); }
+            catch (Exception ex) { throw new ApplicationException("Could not clear image cache:", ex); }
+        
             timer_cleardata.Stop();
         }
 
         private void button_stop_Click(object sender, EventArgs e) //stop running
         {
+            list_urls.SelectedIndex = -1;
             button_stop.Enabled = false;
+            button_skip.Enabled = false;
             button_start.Enabled = true;
             button_clearproxies.Enabled = true;
             button_clearurl.Enabled = true;
-            button_clearuseragents.Enabled = true;
+            if (list_agents.Items.Count > 0)
+            {
+                button_clearuseragents.Enabled = true;
+            }
             label_status.Text = "Stopped.";
             timer_refreshproxylist.Stop();
             timer_load.Stop();
@@ -406,6 +508,8 @@ namespace MUIPRT
 
         private void button_loaduseragentslist_Click(object sender, EventArgs e)
         {
+            List<string> agents = new List<string>();
+
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "User Agents",
@@ -420,11 +524,16 @@ namespace MUIPRT
                 StreamReader streamReader = new StreamReader(openFileDialog.FileName);
                 while (streamReader.Peek() > -1)
                 {
-                    this.list_agents.Items.Add(streamReader.ReadLine());
+                    agents.Add(streamReader.ReadLine());
                 }
 
+
                 streamReader.Close();
+                agents.Shuffle();
+                this.list_agents.Items.AddRange(agents.ToArray());
+
             }
+
             if (list_agents.Items.Count >= 1)
             {
                 button_clearuseragents.Enabled = true;
@@ -478,6 +587,7 @@ namespace MUIPRT
 
         private void button_loadproxies_Click(object sender, EventArgs e)
         {
+            List<string> proxies = new List<string>();
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Proxies",
@@ -493,12 +603,15 @@ namespace MUIPRT
                 StreamReader streamReader = new StreamReader(proxylistfile);
                 while (streamReader.Peek() > -1)
                 {
-                    this.list_proxies.Items.Add(streamReader.ReadLine());
-                    this.label_proxiesnum.Text = Convert.ToString(list_proxies.Items.Count);
+                    proxies.Add(streamReader.ReadLine());
+
+                    this.label_proxiesnum.Text = Convert.ToString(proxies.Count);
                 }
 
                 streamReader.Close();
-                timer_refreshproxylist.Interval = (int)numupdown_interval.Value/4;
+                proxies.Shuffle();
+                this.list_proxies.Items.AddRange(proxies.ToArray());
+                timer_refreshproxylist.Interval = (int)numupdown_interval.Value / 4;
                 timer_refreshproxylist.Start();
             }
             else
@@ -517,7 +630,7 @@ namespace MUIPRT
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            using (var fs = new FileStream(proxylistfile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            using (var fs = new FileStream(proxylistfile, System.IO.FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
             using (var sr = new StreamReader(fs, Encoding.Default))
             {
                 string line;
@@ -552,6 +665,8 @@ namespace MUIPRT
         private void button_clearproxies_Click(object sender, EventArgs e)
         {
             list_proxies.Items.Clear();
+            label_currentproxnum.Text = "0";
+            label_proxiesnum.Text = "0";
             if (list_proxies.Items.Count == 0)
             {
                 button_clearproxies.Enabled = false;
@@ -658,14 +773,14 @@ namespace MUIPRT
 
         private void clickad()
         {
-            var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads") as Gecko.DOM.GeckoIFrameElement;
+            var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads") as Gecko.GeckoHtmlElement;
             onepage = 1;
             if (iframe != null)
             {
                 iframe.ScrollIntoView(true);
                 iframe.Click();
 
-                timer_clickcoords.Interval = 2000;
+                timer_clickcoords.Interval = 3000;
 
                 if (textbox_y.Text != "" || textbox_x.Text != "")
                 {
@@ -674,7 +789,7 @@ namespace MUIPRT
             }
             else
             {
-                timer_clickcoords.Interval = 2000;
+                timer_clickcoords.Interval = 3000;
                 if (textbox_y.Text != "" || textbox_x.Text != "")
                 {
                     timer_clickcoords.Start();
@@ -759,8 +874,47 @@ namespace MUIPRT
             SendInput(1, ref i, Marshal.SizeOf(i));
 
             timer_clickcoords.Stop();
+            timer_clickcoords2.Interval = 5000;
+            timer_clickcoords2.Start();
+
         }
 
+        private void timer_setcoords2_Tick(object sender, EventArgs e)
+        {
+            clickLocation2 = Cursor.Position;
+            //show the location on window title
+            textbox_x2.Text = clickLocation2.X.ToString();
+            textbox_y2.Text = clickLocation2.Y.ToString();
+            timer_setcoords2.Stop();
+        }
+
+        private void timer_clickcoords2_Tick(object sender, EventArgs e)
+        {
+            //set cursor position to memorized location
+            Cursor.Position = clickLocation2;
+            //set up the INPUT struct and fill it for the mouse down
+            INPUT i = new INPUT();
+            i.type = INPUT_MOUSE;
+            i.mi.dx = 0;
+            i.mi.dy = 0;
+            i.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            i.mi.dwExtraInfo = IntPtr.Zero;
+            i.mi.mouseData = 0;
+            i.mi.time = 0;
+            //send the input
+            SendInput(1, ref i, Marshal.SizeOf(i));
+            //set the INPUT for mouse up and send it
+            i.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+            SendInput(1, ref i, Marshal.SizeOf(i));
+
+            timer_clickcoords2.Stop();
+        }
+
+        private void Button_getcoords2_Click(object sender, EventArgs e)
+        {
+            timer_setcoords2.Interval = 5000;
+            timer_setcoords2.Start();
+        }
         /* private void autocaptcha()
          {
              GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
@@ -773,17 +927,17 @@ namespace MUIPRT
         #endregion Browser automation
 
         #region Browser events
-
         private void geckoWebBrowser1_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
             // Full Screen
-
+            var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads") as Gecko.GeckoHtmlElement;
+            var close = "data:text/html,<script>self.close()</script>";
+           
             GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
+
 
             Rectangle rect = System.Windows.Forms.Screen.GetWorkingArea(this);
 
-            Form Form2 = new Form();
-            Form2.CreateControl();
 
             geckoWebBrowser2.Navigating += new EventHandler<GeckoNavigatingEventArgs>(geckoWebBrowser1_Navigating);
             geckoWebBrowser2.DocumentCompleted += new EventHandler<GeckoDocumentCompletedEventArgs>(geckoWebBrowser2_DocumentCompleted);
@@ -793,11 +947,13 @@ namespace MUIPRT
             //TabPage tab1 = new TabPage("New WebBrowser");
             //tabBrowser.TabPages.Add(tab1);
             Form2.Controls.Add(geckoWebBrowser2);
+            Form2.CreateControl();
+
             if (list_proxies.Items.Count == 0)
             {
                 geckoWebBrowser2.Navigate(e.Uri);
-                e.InitialWidth = rect.Width;
-                e.InitialHeight = rect.Height;
+                e.InitialWidth = this.Width;
+                e.InitialHeight = this.Height;
             }
             else
             {
@@ -821,13 +977,60 @@ namespace MUIPRT
                 Gecko.GeckoPreferences.User["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["general.useragent.override"] = agent;
                 geckoWebBrowser2.Navigate(e.Uri);
-                e.InitialWidth = rect.Width;
-                e.InitialHeight = rect.Height;
+                if (iframe != null)
+                {
+                    e.InitialWidth = this.Width;
+                    e.InitialHeight = this.Height;
+                }
+                else
+                {
+                    e.InitialWidth = this.Width;
+                    e.InitialHeight = this.Height; ;
+                }
             }
-        }
 
+        }
+        private void closeWindow()
+        {
+
+            // retrieve the handler of the window  
+            int iHandle = FindWindow("MozillaWindowClass", "MUIPRT");
+            if (iHandle > 0)
+            {
+                // close the window using API        
+                SendMessage(iHandle, WM_SYSCOMMAND, SC_CLOSE, 0);
+            }
+
+        }
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        private const UInt32 WM_CLOSE = 0x0010;
+
+        void CloseWindow(IntPtr hwnd)
+        {
+            SendMessage(hwnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
         private void geckoWebBrowser2_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
         {
+            var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads") as Gecko.GeckoHtmlElement;
+
+            if (iframe == null)
+            {
+                List<IntPtr> ChromeWindows = WindowsFinder("MozillaWindowClass", "MUIPRT");
+                foreach (IntPtr windowHandle in ChromeWindows)
+                {
+                    int iHandle = FindWindow("MozillaWindowClass", "MUIPRT");
+                    int length = GetWindowTextLength(windowHandle);
+                    StringBuilder sb = new StringBuilder(length + 1);
+                    GetWindowText(windowHandle, sb, sb.Capacity);
+                    SendMessage(iHandle, WM_SYSCOMMAND, SC_CLOSE, 0);
+                    CloseWindow(windowHandle);
+                }
+            }
+
+            //else{
+        //    autocaptcha()}
         }
 
         private void geckoWebBrowser1_DocumentCompleted(object sender, Gecko.Events.GeckoDocumentCompletedEventArgs e)
@@ -835,8 +1038,15 @@ namespace MUIPRT
             label_statusbrowser.Text = "Done.. " + geckoWebBrowser1.StatusText;
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             progressbar_browser.Value = 0;
-            if (!geckoWebBrowser1.IsBusy && onepage == 0)
-            { clickad(); }
+            if (geckoWebBrowser1.Document.Title == "403 Forbidden"||geckoWebBrowser1.Document.TextContent == "429 Too Many Requests")
+            {
+                button_skip.PerformClick();
+            }
+            else
+            {
+                if (!geckoWebBrowser1.IsBusy && onepage == 0)
+                { clickad(); }
+            }
         }
 
         private void geckoWebBrowser1_DOMContentLoaded(object sender, DomEventArgs e)
@@ -854,7 +1064,7 @@ namespace MUIPRT
         {
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             label_statusbrowser.Text = geckoWebBrowser1.StatusText;
-          //  clickad();
+            //  clickad();
         }
 
         private void geckoWebBrowser1_MouseHover(object sender, EventArgs e)
@@ -901,7 +1111,7 @@ namespace MUIPRT
 
         private void geckoWebBrowser1_Navigated(object sender, GeckoNavigatedEventArgs e)
         {
-            
+
             //clickad();
             label_statusbrowser.Text = "Done.";
             progressbar_browser.Value = 0;
@@ -980,7 +1190,7 @@ namespace MUIPRT
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.Message);
             }
         }
 
@@ -994,9 +1204,12 @@ namespace MUIPRT
 
         #endregion Gecko browser
 
-        private void panel_controls_Paint(object sender, PaintEventArgs e)
-        {
+       
 
+        private void button_skip_Click(object sender, EventArgs e)
+        {
+            timer_load.Interval = 100;
         }
     }
 }
+
