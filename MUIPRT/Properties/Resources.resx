@@ -145,4 +145,55 @@
   <data name="FORWARD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\FORWARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Text_Running" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="Text_Finished" xml:space="preserve">
+    <value>Finished!</value>
+  </data>
+  <data name="Text_Referrer" xml:space="preserve">
+    <value>Referrer</value>
+  </data>
+  <data name="Text_Stopped" xml:space="preserve">
+    <value>Stopped.</value>
+  </data>
+  <data name="Text_Urls" xml:space="preserve">
+    <value>URLs</value>
+  </data>
+  <data name="Text_Text_Files" xml:space="preserve">
+    <value>Text files (*.txt*)|*.txt*</value>
+  </data>
+  <data name="Text_Urls_to_be_viewed" xml:space="preserve">
+    <value>URLs to be viewed</value>
+  </data>
+  <data name="Text_User_Agents" xml:space="preserve">
+    <value>User Agents</value>
+  </data>
+  <data name="Text_Useragents_to_use" xml:space="preserve">
+    <value>Useragents to use</value>
+  </data>
+  <data name="Text_Proxies" xml:space="preserve">
+    <value>Proxies</value>
+  </data>
+  <data name="Text_0" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Text_Referral" xml:space="preserve">
+    <value>Referral</value>
+  </data>
+  <data name="Text_Done" xml:space="preserve">
+    <value>Done.. </value>
+  </data>
+  <data name="Text_Moved" xml:space="preserve">
+    <value>Moved... </value>
+  </data>
+  <data name="Text_Error_loading" xml:space="preserve">
+    <value>Error loading page. Check proxy settings or URL.</value>
+  </data>
+  <data name="Text_Done_Loading" xml:space="preserve">
+    <value>Done Loading...</value>
+  </data>
+  <data name="Text_Redirecting" xml:space="preserve">
+    <value>Redirecting...</value>
+  </data>
 </root>

@@ -19,7 +19,7 @@ namespace MUIPRT.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -147,6 +147,159 @@ namespace MUIPRT.Properties {
             get {
                 object obj = ResourceManager.GetObject("stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.
+        /// </summary>
+        public static string Text_0 {
+            get {
+                return ResourceManager.GetString("Text_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.. .
+        /// </summary>
+        public static string Text_Done {
+            get {
+                return ResourceManager.GetString("Text_Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done Loading....
+        /// </summary>
+        public static string Text_Done_Loading {
+            get {
+                return ResourceManager.GetString("Text_Done_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error loading page. Check proxy settings or URL..
+        /// </summary>
+        public static string Text_Error_loading {
+            get {
+                return ResourceManager.GetString("Text_Error_loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished!.
+        /// </summary>
+        public static string Text_Finished {
+            get {
+                return ResourceManager.GetString("Text_Finished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moved... .
+        /// </summary>
+        public static string Text_Moved {
+            get {
+                return ResourceManager.GetString("Text_Moved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proxies.
+        /// </summary>
+        public static string Text_Proxies {
+            get {
+                return ResourceManager.GetString("Text_Proxies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirecting....
+        /// </summary>
+        public static string Text_Redirecting {
+            get {
+                return ResourceManager.GetString("Text_Redirecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referral.
+        /// </summary>
+        public static string Text_Referral {
+            get {
+                return ResourceManager.GetString("Text_Referral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referrer.
+        /// </summary>
+        public static string Text_Referrer {
+            get {
+                return ResourceManager.GetString("Text_Referrer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running.
+        /// </summary>
+        public static string Text_Running {
+            get {
+                return ResourceManager.GetString("Text_Running", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped..
+        /// </summary>
+        public static string Text_Stopped {
+            get {
+                return ResourceManager.GetString("Text_Stopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text files (*.txt*)|*.txt*.
+        /// </summary>
+        public static string Text_Text_Files {
+            get {
+                return ResourceManager.GetString("Text_Text_Files", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URLs.
+        /// </summary>
+        public static string Text_Urls {
+            get {
+                return ResourceManager.GetString("Text_Urls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URLs to be viewed.
+        /// </summary>
+        public static string Text_Urls_to_be_viewed {
+            get {
+                return ResourceManager.GetString("Text_Urls_to_be_viewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Agents.
+        /// </summary>
+        public static string Text_User_Agents {
+            get {
+                return ResourceManager.GetString("Text_User_Agents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Useragents to use.
+        /// </summary>
+        public static string Text_Useragents_to_use {
+            get {
+                return ResourceManager.GetString("Text_Useragents_to_use", resourceCulture);
             }
         }
     }

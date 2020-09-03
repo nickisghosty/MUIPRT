@@ -1,23 +1,4 @@
 ﻿using Gecko;
-using Gecko.DOM;
-using Gecko.Cache;
-using Gecko.Certificates;
-using Gecko.Collections;
-using Gecko.Cryptography;
-using Gecko.CustomMarshalers;
-using Gecko.Images;
-using Gecko.Interop;
-using Gecko.IO;
-using Gecko.JQuery;
-using Gecko.Net;
-using Gecko.Observers;
-using Gecko.Plugins;
-using Gecko.Search;
-using Gecko.Services;
-using Gecko.Utils;
-using Gecko.WebIDL;
-using Gecko.Windows;
-using Gecko.Events;
 using System;
 using System.Windows.Forms;
 

@@ -1,4 +1,8 @@
-﻿namespace MUIPRT
+﻿using System.Drawing;
+using System.Windows.Forms;
+using MUIPRT.Properties;
+
+namespace MUIPRT
 {
     partial class Main
     {
@@ -28,6 +32,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.picture_programbanner = new System.Windows.Forms.PictureBox();
@@ -94,13 +99,13 @@
             this.textbox_navigate = new System.Windows.Forms.ToolStripComboBox();
             this.button_navigate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.timer_cleardata = new System.Windows.Forms.Timer();
-            this.timer_setcoords = new System.Windows.Forms.Timer();
-            this.timer_clickcoords = new System.Windows.Forms.Timer();
-            this.timer_refreshproxylist = new System.Windows.Forms.Timer();
-            this.timer_load = new System.Windows.Forms.Timer();
-            this.timer_setcoords2 = new System.Windows.Forms.Timer();
-            this.timer_clickcoords2 = new System.Windows.Forms.Timer();
+            this.timer_cleardata = new System.Windows.Forms.Timer(this.components);
+            this.timer_setcoords = new System.Windows.Forms.Timer(this.components);
+            this.timer_clickcoords = new System.Windows.Forms.Timer(this.components);
+            this.timer_refreshproxylist = new System.Windows.Forms.Timer(this.components);
+            this.timer_load = new System.Windows.Forms.Timer(this.components);
+            this.timer_setcoords2 = new System.Windows.Forms.Timer(this.components);
+            this.timer_clickcoords2 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picture_programbanner)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -123,12 +128,14 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.DarkRed;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetPartial;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.picture_programbanner, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.ForeColor = System.Drawing.Color.DarkRed;
             this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -143,6 +150,7 @@
             // 
             // picture_programbanner
             // 
+            this.picture_programbanner.BackColor = System.Drawing.Color.CadetBlue;
             this.picture_programbanner.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picture_programbanner.Image = global::MUIPRT.Properties.Resources.HEADER;
             this.picture_programbanner.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -156,12 +164,14 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.DarkRed;
             this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel_browser, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.ForeColor = System.Drawing.Color.Black;
             this.tableLayoutPanel2.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 113);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -173,6 +183,7 @@
             // 
             // tableLayoutPanel3
             // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.DarkRed;
             this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.OutsetDouble;
             this.tableLayoutPanel3.ColumnCount = 5;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -197,6 +208,7 @@
             // 
             // tableLayoutPanel4
             // 
+            this.tableLayoutPanel4.BackColor = System.Drawing.Color.CadetBlue;
             this.tableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -214,6 +226,7 @@
             // 
             // panel_controls
             // 
+            this.panel_controls.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_controls.Controls.Add(this.button_skip);
             this.panel_controls.Controls.Add(this.numupdown_interval);
             this.panel_controls.Controls.Add(this.numupdown_views);
@@ -229,18 +242,26 @@
             // 
             // button_skip
             // 
+            this.button_skip.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_skip.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_skip.FlatAppearance.BorderSize = 3;
+            this.button_skip.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_skip.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_skip.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_skip.Location = new System.Drawing.Point(38, 110);
             this.button_skip.Name = "button_skip";
             this.button_skip.Size = new System.Drawing.Size(55, 30);
             this.button_skip.TabIndex = 12;
             this.button_skip.Text = "Skip";
-            this.button_skip.UseVisualStyleBackColor = true;
+            this.button_skip.UseVisualStyleBackColor = false;
             this.button_skip.Click += new System.EventHandler(this.button_skip_Click);
             // 
             // numupdown_interval
             // 
             this.numupdown_interval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.numupdown_interval.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.numupdown_interval.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numupdown_interval.Increment = new decimal(new int[] {
             1000,
             0,
@@ -259,7 +280,7 @@
             0,
             0});
             this.numupdown_interval.Name = "numupdown_interval";
-            this.numupdown_interval.Size = new System.Drawing.Size(77, 23);
+            this.numupdown_interval.Size = new System.Drawing.Size(77, 19);
             this.numupdown_interval.TabIndex = 2;
             this.numupdown_interval.Value = new decimal(new int[] {
             10000,
@@ -271,6 +292,8 @@
             // 
             this.numupdown_views.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.numupdown_views.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.numupdown_views.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numupdown_views.Increment = new decimal(new int[] {
             10,
             0,
@@ -284,7 +307,7 @@
             0,
             0});
             this.numupdown_views.Name = "numupdown_views";
-            this.numupdown_views.Size = new System.Drawing.Size(77, 23);
+            this.numupdown_views.Size = new System.Drawing.Size(77, 19);
             this.numupdown_views.TabIndex = 1;
             // 
             // label_interval
@@ -312,6 +335,12 @@
             // button_stop
             // 
             this.button_stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_stop.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_stop.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_stop.FlatAppearance.BorderSize = 3;
+            this.button_stop.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_stop.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_stop.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_stop.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_stop.Location = new System.Drawing.Point(73, 72);
             this.button_stop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -319,11 +348,17 @@
             this.button_stop.Size = new System.Drawing.Size(55, 30);
             this.button_stop.TabIndex = 8;
             this.button_stop.Text = "Stop";
-            this.button_stop.UseVisualStyleBackColor = true;
+            this.button_stop.UseVisualStyleBackColor = false;
             this.button_stop.Click += new System.EventHandler(this.button_stop_Click);
             // 
             // button_start
             // 
+            this.button_start.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_start.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_start.FlatAppearance.BorderSize = 3;
+            this.button_start.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_start.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_start.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_start.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_start.Location = new System.Drawing.Point(9, 72);
             this.button_start.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -331,11 +366,12 @@
             this.button_start.Size = new System.Drawing.Size(55, 30);
             this.button_start.TabIndex = 7;
             this.button_start.Text = "Start";
-            this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.UseVisualStyleBackColor = false;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
             // panel_status
             // 
+            this.panel_status.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_status.Controls.Add(this.label_statustext);
             this.panel_status.Controls.Add(this.progressbar_appprogress);
             this.panel_status.Controls.Add(this.label_status);
@@ -360,6 +396,7 @@
             // 
             this.progressbar_appprogress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressbar_appprogress.ForeColor = System.Drawing.Color.DarkRed;
             this.progressbar_appprogress.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.progressbar_appprogress.Location = new System.Drawing.Point(3, 23);
             this.progressbar_appprogress.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -380,6 +417,7 @@
             // 
             // tableLayoutPanel5
             // 
+            this.tableLayoutPanel5.BackColor = System.Drawing.Color.CadetBlue;
             this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -396,6 +434,7 @@
             // 
             // panel_scrape
             // 
+            this.panel_scrape.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_scrape.Controls.Add(this.Button_getcoords2);
             this.panel_scrape.Controls.Add(this.textbox_y2);
             this.panel_scrape.Controls.Add(this.textbox_x2);
@@ -412,55 +451,75 @@
             // Button_getcoords2
             // 
             this.Button_getcoords2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_getcoords2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Button_getcoords2.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Button_getcoords2.FlatAppearance.BorderSize = 3;
+            this.Button_getcoords2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.Button_getcoords2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Button_getcoords2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Button_getcoords2.Location = new System.Drawing.Point(75, 90);
             this.Button_getcoords2.Name = "Button_getcoords2";
             this.Button_getcoords2.Size = new System.Drawing.Size(52, 23);
             this.Button_getcoords2.TabIndex = 7;
             this.Button_getcoords2.Text = "Get";
-            this.Button_getcoords2.UseVisualStyleBackColor = true;
+            this.Button_getcoords2.UseVisualStyleBackColor = false;
             this.Button_getcoords2.Click += new System.EventHandler(this.Button_getcoords2_Click);
             // 
             // textbox_y2
             // 
             this.textbox_y2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_y2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_y2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textbox_y2.Location = new System.Drawing.Point(40, 90);
             this.textbox_y2.Name = "textbox_y2";
-            this.textbox_y2.Size = new System.Drawing.Size(31, 23);
+            this.textbox_y2.Size = new System.Drawing.Size(31, 16);
             this.textbox_y2.TabIndex = 6;
             // 
             // textbox_x2
             // 
             this.textbox_x2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_x2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_x2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textbox_x2.Location = new System.Drawing.Point(6, 90);
             this.textbox_x2.Name = "textbox_x2";
-            this.textbox_x2.Size = new System.Drawing.Size(31, 23);
+            this.textbox_x2.Size = new System.Drawing.Size(31, 16);
             this.textbox_x2.TabIndex = 5;
             // 
             // Button_getcoords
             // 
             this.Button_getcoords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_getcoords.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Button_getcoords.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Button_getcoords.FlatAppearance.BorderSize = 3;
+            this.Button_getcoords.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.Button_getcoords.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Button_getcoords.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Button_getcoords.Location = new System.Drawing.Point(75, 56);
             this.Button_getcoords.Name = "Button_getcoords";
             this.Button_getcoords.Size = new System.Drawing.Size(52, 23);
             this.Button_getcoords.TabIndex = 4;
             this.Button_getcoords.Text = "Get";
-            this.Button_getcoords.UseVisualStyleBackColor = true;
+            this.Button_getcoords.UseVisualStyleBackColor = false;
             this.Button_getcoords.Click += new System.EventHandler(this.button_setcoords_Click);
             // 
             // textbox_y
             // 
             this.textbox_y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_y.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_y.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textbox_y.Location = new System.Drawing.Point(40, 56);
             this.textbox_y.Name = "textbox_y";
-            this.textbox_y.Size = new System.Drawing.Size(31, 23);
+            this.textbox_y.Size = new System.Drawing.Size(31, 16);
             this.textbox_y.TabIndex = 2;
             // 
             // textbox_x
             // 
             this.textbox_x.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_x.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_x.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textbox_x.Location = new System.Drawing.Point(6, 56);
             this.textbox_x.Name = "textbox_x";
-            this.textbox_x.Size = new System.Drawing.Size(31, 23);
+            this.textbox_x.Size = new System.Drawing.Size(31, 16);
             this.textbox_x.TabIndex = 1;
             // 
             // label1
@@ -476,6 +535,7 @@
             // 
             // panel_referral
             // 
+            this.panel_referral.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_referral.Controls.Add(this.button_addref);
             this.panel_referral.Controls.Add(this.button_setref);
             this.panel_referral.Controls.Add(this.referral_txtdrop);
@@ -489,6 +549,12 @@
             // button_addref
             // 
             this.button_addref.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_addref.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_addref.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_addref.FlatAppearance.BorderSize = 3;
+            this.button_addref.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_addref.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_addref.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_addref.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_addref.Location = new System.Drawing.Point(72, 42);
             this.button_addref.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -496,11 +562,17 @@
             this.button_addref.Size = new System.Drawing.Size(55, 30);
             this.button_addref.TabIndex = 8;
             this.button_addref.Text = "Add";
-            this.button_addref.UseVisualStyleBackColor = true;
+            this.button_addref.UseVisualStyleBackColor = false;
             this.button_addref.Click += new System.EventHandler(this.button_addref_Click);
             // 
             // button_setref
             // 
+            this.button_setref.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_setref.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_setref.FlatAppearance.BorderSize = 3;
+            this.button_setref.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_setref.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_setref.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_setref.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_setref.Location = new System.Drawing.Point(11, 42);
             this.button_setref.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -508,20 +580,21 @@
             this.button_setref.Size = new System.Drawing.Size(55, 30);
             this.button_setref.TabIndex = 7;
             this.button_setref.Text = "Set";
-            this.button_setref.UseVisualStyleBackColor = true;
+            this.button_setref.UseVisualStyleBackColor = false;
             this.button_setref.Click += new System.EventHandler(this.button_setref_Click);
             // 
             // referral_txtdrop
             // 
             this.referral_txtdrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.referral_txtdrop.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.referral_txtdrop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
             this.referral_txtdrop.FormattingEnabled = true;
             this.referral_txtdrop.Location = new System.Drawing.Point(36, 11);
             this.referral_txtdrop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.referral_txtdrop.Name = "referral_txtdrop";
             this.referral_txtdrop.Size = new System.Drawing.Size(91, 24);
             this.referral_txtdrop.TabIndex = 7;
-            this.referral_txtdrop.Text = "Referrer";
             this.referral_txtdrop.TextChanged += new System.EventHandler(this.referral_txtdrop_TextChanged);
             this.referral_txtdrop.KeyDown += new System.Windows.Forms.KeyEventHandler(this.referral_txtdrop_KeyDown);
             // 
@@ -538,6 +611,7 @@
             // 
             // panel_urls
             // 
+            this.panel_urls.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_urls.Controls.Add(this.button_clearurl);
             this.panel_urls.Controls.Add(this.button_loadurllist);
             this.panel_urls.Controls.Add(this.button_addurl);
@@ -552,6 +626,12 @@
             // button_clearurl
             // 
             this.button_clearurl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_clearurl.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_clearurl.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_clearurl.FlatAppearance.BorderSize = 3;
+            this.button_clearurl.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_clearurl.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_clearurl.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_clearurl.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_clearurl.Location = new System.Drawing.Point(78, 111);
             this.button_clearurl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -559,12 +639,18 @@
             this.button_clearurl.Size = new System.Drawing.Size(55, 30);
             this.button_clearurl.TabIndex = 14;
             this.button_clearurl.Text = "Clear";
-            this.button_clearurl.UseVisualStyleBackColor = true;
+            this.button_clearurl.UseVisualStyleBackColor = false;
             this.button_clearurl.Click += new System.EventHandler(this.button_clearurl_Click);
             // 
             // button_loadurllist
             // 
             this.button_loadurllist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_loadurllist.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_loadurllist.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_loadurllist.FlatAppearance.BorderSize = 3;
+            this.button_loadurllist.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_loadurllist.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_loadurllist.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_loadurllist.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_loadurllist.Location = new System.Drawing.Point(9, 111);
             this.button_loadurllist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -572,12 +658,18 @@
             this.button_loadurllist.Size = new System.Drawing.Size(55, 30);
             this.button_loadurllist.TabIndex = 13;
             this.button_loadurllist.Text = "Load List";
-            this.button_loadurllist.UseVisualStyleBackColor = true;
+            this.button_loadurllist.UseVisualStyleBackColor = false;
             this.button_loadurllist.Click += new System.EventHandler(this.button_loadurllist_Click);
             // 
             // button_addurl
             // 
             this.button_addurl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button_addurl.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_addurl.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_addurl.FlatAppearance.BorderSize = 3;
+            this.button_addurl.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_addurl.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_addurl.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_addurl.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_addurl.Location = new System.Drawing.Point(44, 145);
             this.button_addurl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -585,13 +677,14 @@
             this.button_addurl.Size = new System.Drawing.Size(55, 30);
             this.button_addurl.TabIndex = 12;
             this.button_addurl.Text = "Add";
-            this.button_addurl.UseVisualStyleBackColor = true;
+            this.button_addurl.UseVisualStyleBackColor = false;
             this.button_addurl.Click += new System.EventHandler(this.button_addurl_Click);
             // 
             // textbox_url
             // 
             this.textbox_url.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_url.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.textbox_url.Location = new System.Drawing.Point(6, 185);
             this.textbox_url.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textbox_url.Name = "textbox_url";
@@ -608,17 +701,19 @@
             this.list_urls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.list_urls.BackColor = System.Drawing.Color.Turquoise;
+            this.list_urls.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.list_urls.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.list_urls.FormattingEnabled = true;
             this.list_urls.ItemHeight = 16;
             this.list_urls.Location = new System.Drawing.Point(0, -3);
             this.list_urls.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_urls.Name = "list_urls";
-            this.list_urls.Size = new System.Drawing.Size(142, 100);
+            this.list_urls.Size = new System.Drawing.Size(142, 96);
             this.list_urls.TabIndex = 10;
             // 
             // panel_agents
             // 
+            this.panel_agents.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_agents.Controls.Add(this.button_clearuseragents);
             this.panel_agents.Controls.Add(this.button_loaduseragentslist);
             this.panel_agents.Controls.Add(this.button_adduseragent);
@@ -633,6 +728,12 @@
             // button_clearuseragents
             // 
             this.button_clearuseragents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_clearuseragents.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_clearuseragents.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_clearuseragents.FlatAppearance.BorderSize = 3;
+            this.button_clearuseragents.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_clearuseragents.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_clearuseragents.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_clearuseragents.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_clearuseragents.Location = new System.Drawing.Point(80, 110);
             this.button_clearuseragents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -640,12 +741,18 @@
             this.button_clearuseragents.Size = new System.Drawing.Size(55, 30);
             this.button_clearuseragents.TabIndex = 19;
             this.button_clearuseragents.Text = "Clear";
-            this.button_clearuseragents.UseVisualStyleBackColor = true;
+            this.button_clearuseragents.UseVisualStyleBackColor = false;
             this.button_clearuseragents.Click += new System.EventHandler(this.button_clearuseragents_Click);
             // 
             // button_loaduseragentslist
             // 
             this.button_loaduseragentslist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_loaduseragentslist.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_loaduseragentslist.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_loaduseragentslist.FlatAppearance.BorderSize = 3;
+            this.button_loaduseragentslist.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_loaduseragentslist.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_loaduseragentslist.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_loaduseragentslist.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_loaduseragentslist.Location = new System.Drawing.Point(11, 110);
             this.button_loaduseragentslist.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -653,12 +760,18 @@
             this.button_loaduseragentslist.Size = new System.Drawing.Size(55, 30);
             this.button_loaduseragentslist.TabIndex = 4;
             this.button_loaduseragentslist.Text = "Load List";
-            this.button_loaduseragentslist.UseVisualStyleBackColor = true;
+            this.button_loaduseragentslist.UseVisualStyleBackColor = false;
             this.button_loaduseragentslist.Click += new System.EventHandler(this.button_loaduseragentslist_Click);
             // 
             // button_adduseragent
             // 
             this.button_adduseragent.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button_adduseragent.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_adduseragent.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_adduseragent.FlatAppearance.BorderSize = 3;
+            this.button_adduseragent.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_adduseragent.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_adduseragent.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_adduseragent.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_adduseragent.Location = new System.Drawing.Point(46, 144);
             this.button_adduseragent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -666,13 +779,14 @@
             this.button_adduseragent.Size = new System.Drawing.Size(55, 30);
             this.button_adduseragent.TabIndex = 17;
             this.button_adduseragent.Text = "Add";
-            this.button_adduseragent.UseVisualStyleBackColor = true;
+            this.button_adduseragent.UseVisualStyleBackColor = false;
             this.button_adduseragent.Click += new System.EventHandler(this.button_adduseragent_Click);
             // 
             // textbox_agent
             // 
             this.textbox_agent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_agent.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.textbox_agent.Location = new System.Drawing.Point(6, 184);
             this.textbox_agent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textbox_agent.Name = "textbox_agent";
@@ -689,17 +803,19 @@
             this.list_agents.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.list_agents.BackColor = System.Drawing.Color.Turquoise;
+            this.list_agents.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.list_agents.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.list_agents.FormattingEnabled = true;
             this.list_agents.ItemHeight = 16;
             this.list_agents.Location = new System.Drawing.Point(0, -4);
             this.list_agents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_agents.Name = "list_agents";
-            this.list_agents.Size = new System.Drawing.Size(141, 100);
+            this.list_agents.Size = new System.Drawing.Size(141, 96);
             this.list_agents.TabIndex = 15;
             // 
             // panel_proxies
             // 
+            this.panel_proxies.BackColor = System.Drawing.Color.CadetBlue;
             this.panel_proxies.Controls.Add(this.label_currentproxnum);
             this.panel_proxies.Controls.Add(this.list_proxies);
             this.panel_proxies.Controls.Add(this.label_proxiesformat);
@@ -731,13 +847,14 @@
             this.list_proxies.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.list_proxies.BackColor = System.Drawing.Color.Turquoise;
+            this.list_proxies.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.list_proxies.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.list_proxies.FormattingEnabled = true;
             this.list_proxies.ItemHeight = 16;
             this.list_proxies.Location = new System.Drawing.Point(0, -4);
             this.list_proxies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.list_proxies.Name = "list_proxies";
-            this.list_proxies.Size = new System.Drawing.Size(142, 100);
+            this.list_proxies.Size = new System.Drawing.Size(142, 96);
             this.list_proxies.TabIndex = 16;
             // 
             // label_proxiesformat
@@ -755,6 +872,12 @@
             // button_clearproxies
             // 
             this.button_clearproxies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_clearproxies.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_clearproxies.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_clearproxies.FlatAppearance.BorderSize = 3;
+            this.button_clearproxies.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_clearproxies.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_clearproxies.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_clearproxies.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_clearproxies.Location = new System.Drawing.Point(74, 137);
             this.button_clearproxies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -762,12 +885,18 @@
             this.button_clearproxies.Size = new System.Drawing.Size(55, 30);
             this.button_clearproxies.TabIndex = 10;
             this.button_clearproxies.Text = "Clear";
-            this.button_clearproxies.UseVisualStyleBackColor = true;
+            this.button_clearproxies.UseVisualStyleBackColor = false;
             this.button_clearproxies.Click += new System.EventHandler(this.button_clearproxies_Click);
             // 
             // button_loadproxies
             // 
             this.button_loadproxies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_loadproxies.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_loadproxies.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_loadproxies.FlatAppearance.BorderSize = 3;
+            this.button_loadproxies.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_loadproxies.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_loadproxies.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_loadproxies.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.button_loadproxies.Location = new System.Drawing.Point(10, 137);
             this.button_loadproxies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -775,7 +904,7 @@
             this.button_loadproxies.Size = new System.Drawing.Size(55, 30);
             this.button_loadproxies.TabIndex = 6;
             this.button_loadproxies.Text = "Load List";
-            this.button_loadproxies.UseVisualStyleBackColor = true;
+            this.button_loadproxies.UseVisualStyleBackColor = false;
             this.button_loadproxies.Click += new System.EventHandler(this.button_loadproxies_Click);
             // 
             // label_proxiesnum
@@ -816,6 +945,7 @@
             // 
             // panel_browser
             // 
+            this.panel_browser.BackColor = System.Drawing.Color.DarkRed;
             this.panel_browser.Controls.Add(this.geckoWebBrowser1);
             this.panel_browser.Controls.Add(this.statusstip_browser);
             this.panel_browser.Controls.Add(this.toolStrip1);
@@ -851,6 +981,7 @@
             // 
             // statusstip_browser
             // 
+            this.statusstip_browser.BackColor = System.Drawing.Color.CadetBlue;
             this.statusstip_browser.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusstip_browser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.progressbar_browser,
@@ -867,22 +998,24 @@
             // 
             this.progressbar_browser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.progressbar_browser.AutoSize = false;
+            this.progressbar_browser.ForeColor = System.Drawing.Color.DarkRed;
             this.progressbar_browser.MarqueeAnimationSpeed = 500;
             this.progressbar_browser.Name = "progressbar_browser";
             this.progressbar_browser.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.progressbar_browser.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.progressbar_browser.Size = new System.Drawing.Size(177, 29);
+            this.progressbar_browser.Size = new System.Drawing.Size(177, 27);
             this.progressbar_browser.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // label_statusbrowser
             // 
             this.label_statusbrowser.Name = "label_statusbrowser";
-            this.label_statusbrowser.Size = new System.Drawing.Size(151, 30);
+            this.label_statusbrowser.Size = new System.Drawing.Size(151, 29);
             this.label_statusbrowser.Text = "toolStripStatusLabel1";
             // 
             // toolStrip1
             // 
-            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.InfoText;
+            this.toolStrip1.CanOverflow = false;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -897,80 +1030,90 @@
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(760, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(760, 28);
+            this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // button_goback
             // 
+            this.button_goback.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_goback.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_goback.Image = global::MUIPRT.Properties.Resources.BACKWARD;
             this.button_goback.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_goback.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_goback.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_goback.Name = "button_goback";
-            this.button_goback.Size = new System.Drawing.Size(39, 28);
+            this.button_goback.Size = new System.Drawing.Size(39, 25);
             this.button_goback.Text = "toolStripButton1";
             this.button_goback.Click += new System.EventHandler(this.button_goback_Click);
             // 
             // button_goforward
             // 
+            this.button_goforward.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_goforward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_goforward.Image = global::MUIPRT.Properties.Resources.FORWARD;
             this.button_goforward.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_goforward.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_goforward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_goforward.Name = "button_goforward";
-            this.button_goforward.Size = new System.Drawing.Size(39, 28);
+            this.button_goforward.Size = new System.Drawing.Size(39, 25);
             this.button_goforward.Text = "toolStripButton2";
             this.button_goforward.Click += new System.EventHandler(this.button_goforward_Click);
             // 
             // button_refresh
             // 
+            this.button_refresh.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_refresh.Image = global::MUIPRT.Properties.Resources.refreshfin;
             this.button_refresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_refresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_refresh.Name = "button_refresh";
-            this.button_refresh.Size = new System.Drawing.Size(39, 28);
+            this.button_refresh.Size = new System.Drawing.Size(39, 25);
             this.button_refresh.Text = "toolStripButton3";
             this.button_refresh.Click += new System.EventHandler(this.button_refresh_Click);
             // 
             // button_stopnav
             // 
+            this.button_stopnav.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_stopnav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_stopnav.Image = global::MUIPRT.Properties.Resources.stop;
             this.button_stopnav.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_stopnav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_stopnav.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_stopnav.Name = "button_stopnav";
-            this.button_stopnav.Size = new System.Drawing.Size(39, 28);
+            this.button_stopnav.Size = new System.Drawing.Size(39, 25);
             this.button_stopnav.Text = "toolStripButton4";
             this.button_stopnav.Click += new System.EventHandler(this.button_stopnav_Click);
             // 
             // textbox_navigate
             // 
+            this.textbox_navigate.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textbox_navigate.AutoSize = false;
+            this.textbox_navigate.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_navigate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textbox_navigate.Name = "textbox_navigate";
-            this.textbox_navigate.Size = new System.Drawing.Size(480, 28);
+            this.textbox_navigate.Size = new System.Drawing.Size(560, 28);
             this.textbox_navigate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_navigate_KeyDown);
             // 
             // button_navigate
             // 
+            this.button_navigate.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.button_navigate.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_navigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_navigate.Image = global::MUIPRT.Properties.Resources.GO;
             this.button_navigate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_navigate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_navigate.Name = "button_navigate";
-            this.button_navigate.Size = new System.Drawing.Size(39, 28);
+            this.button_navigate.Size = new System.Drawing.Size(39, 25);
             this.button_navigate.Text = "toolStripButton5";
             this.button_navigate.Click += new System.EventHandler(this.button_navigate_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
             // 
             // timer_cleardata
             // 
@@ -1004,7 +1147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.CadetBlue;
+            this.BackColor = System.Drawing.Color.DarkRed;
             this.ClientSize = new System.Drawing.Size(782, 553);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1013,6 +1156,7 @@
             this.Name = "Main";
             this.Text = "MUIPRT";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.Resize += new System.EventHandler(this.Main_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picture_programbanner)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
