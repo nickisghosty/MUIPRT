@@ -121,29 +121,23 @@
   <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="refreshfin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="re" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refreshfin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="FORWARD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="fwd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FORWARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HEADER" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HEADER.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BACKWARD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="back" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BACKWARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FORWARD1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\FORWARD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Text_Running" xml:space="preserve">
     <value>Running</value>
@@ -195,5 +189,35 @@
   </data>
   <data name="Text_Redirecting" xml:space="preserve">
     <value>Redirecting...</value>
+  </data>
+  <data name="backd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\backwarddown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="backhov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\backwadhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fwdd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\forwarddown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fwdhov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\forwardhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="god" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\godown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gohov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\gohover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\refreshdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refhov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\refreshhover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stopd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\stopd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stophov" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\stophov.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -53,12 +53,8 @@ namespace MUIPRT
             this.label_status = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panel_scrape = new System.Windows.Forms.Panel();
-            this.Button_getcoords2 = new System.Windows.Forms.Button();
-            this.textbox_y2 = new System.Windows.Forms.TextBox();
-            this.textbox_x2 = new System.Windows.Forms.TextBox();
-            this.Button_getcoords = new System.Windows.Forms.Button();
-            this.textbox_y = new System.Windows.Forms.TextBox();
-            this.textbox_x = new System.Windows.Forms.TextBox();
+            this.comboBox_autoclick = new System.Windows.Forms.ComboBox();
+            this.textBox_autoclick = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel_referral = new System.Windows.Forms.Panel();
             this.button_addref = new System.Windows.Forms.Button();
@@ -92,13 +88,11 @@ namespace MUIPRT
             this.progressbar_browser = new System.Windows.Forms.ToolStripProgressBar();
             this.label_statusbrowser = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.button_goback = new System.Windows.Forms.ToolStripButton();
-            this.button_goforward = new System.Windows.Forms.ToolStripButton();
-            this.button_refresh = new System.Windows.Forms.ToolStripButton();
-            this.button_stopnav = new System.Windows.Forms.ToolStripButton();
+            this.button_goback = new System.Windows.Forms.ToolStripLabel();
+            this.button_goforward = new System.Windows.Forms.ToolStripLabel();
+            this.button_refresh = new System.Windows.Forms.ToolStripLabel();
             this.textbox_navigate = new System.Windows.Forms.ToolStripComboBox();
-            this.button_navigate = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.button_navigate = new System.Windows.Forms.ToolStripLabel();
             this.timer_cleardata = new System.Windows.Forms.Timer(this.components);
             this.timer_setcoords = new System.Windows.Forms.Timer(this.components);
             this.timer_clickcoords = new System.Windows.Forms.Timer(this.components);
@@ -435,12 +429,8 @@ namespace MUIPRT
             // panel_scrape
             // 
             this.panel_scrape.BackColor = System.Drawing.Color.CadetBlue;
-            this.panel_scrape.Controls.Add(this.Button_getcoords2);
-            this.panel_scrape.Controls.Add(this.textbox_y2);
-            this.panel_scrape.Controls.Add(this.textbox_x2);
-            this.panel_scrape.Controls.Add(this.Button_getcoords);
-            this.panel_scrape.Controls.Add(this.textbox_y);
-            this.panel_scrape.Controls.Add(this.textbox_x);
+            this.panel_scrape.Controls.Add(this.comboBox_autoclick);
+            this.panel_scrape.Controls.Add(this.textBox_autoclick);
             this.panel_scrape.Controls.Add(this.label1);
             this.panel_scrape.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_scrape.Location = new System.Drawing.Point(5, 5);
@@ -448,79 +438,35 @@ namespace MUIPRT
             this.panel_scrape.Size = new System.Drawing.Size(134, 127);
             this.panel_scrape.TabIndex = 0;
             // 
-            // Button_getcoords2
+            // comboBox_autoclick
             // 
-            this.Button_getcoords2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_getcoords2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Button_getcoords2.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Button_getcoords2.FlatAppearance.BorderSize = 3;
-            this.Button_getcoords2.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
-            this.Button_getcoords2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Button_getcoords2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Button_getcoords2.Location = new System.Drawing.Point(75, 90);
-            this.Button_getcoords2.Name = "Button_getcoords2";
-            this.Button_getcoords2.Size = new System.Drawing.Size(52, 23);
-            this.Button_getcoords2.TabIndex = 7;
-            this.Button_getcoords2.Text = "Get";
-            this.Button_getcoords2.UseVisualStyleBackColor = false;
-            this.Button_getcoords2.Click += new System.EventHandler(this.Button_getcoords2_Click);
+            this.comboBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.comboBox_autoclick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_autoclick.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.comboBox_autoclick.FormattingEnabled = true;
+            this.comboBox_autoclick.Items.AddRange(new object[] {
+            "class",
+            "id"});
+            this.comboBox_autoclick.Location = new System.Drawing.Point(14, 72);
+            this.comboBox_autoclick.Name = "comboBox_autoclick";
+            this.comboBox_autoclick.Size = new System.Drawing.Size(102, 24);
+            this.comboBox_autoclick.TabIndex = 2;
             // 
-            // textbox_y2
+            // textBox_autoclick
             // 
-            this.textbox_y2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textbox_y2.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textbox_y2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textbox_y2.Location = new System.Drawing.Point(40, 90);
-            this.textbox_y2.Name = "textbox_y2";
-            this.textbox_y2.Size = new System.Drawing.Size(31, 16);
-            this.textbox_y2.TabIndex = 6;
-            // 
-            // textbox_x2
-            // 
-            this.textbox_x2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textbox_x2.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textbox_x2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textbox_x2.Location = new System.Drawing.Point(6, 90);
-            this.textbox_x2.Name = "textbox_x2";
-            this.textbox_x2.Size = new System.Drawing.Size(31, 16);
-            this.textbox_x2.TabIndex = 5;
-            // 
-            // Button_getcoords
-            // 
-            this.Button_getcoords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_getcoords.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Button_getcoords.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Button_getcoords.FlatAppearance.BorderSize = 3;
-            this.Button_getcoords.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
-            this.Button_getcoords.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Button_getcoords.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Button_getcoords.Location = new System.Drawing.Point(75, 56);
-            this.Button_getcoords.Name = "Button_getcoords";
-            this.Button_getcoords.Size = new System.Drawing.Size(52, 23);
-            this.Button_getcoords.TabIndex = 4;
-            this.Button_getcoords.Text = "Get";
-            this.Button_getcoords.UseVisualStyleBackColor = false;
-            this.Button_getcoords.Click += new System.EventHandler(this.button_setcoords_Click);
-            // 
-            // textbox_y
-            // 
-            this.textbox_y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textbox_y.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textbox_y.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textbox_y.Location = new System.Drawing.Point(40, 56);
-            this.textbox_y.Name = "textbox_y";
-            this.textbox_y.Size = new System.Drawing.Size(31, 16);
-            this.textbox_y.TabIndex = 2;
-            // 
-            // textbox_x
-            // 
-            this.textbox_x.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textbox_x.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textbox_x.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textbox_x.Location = new System.Drawing.Point(6, 56);
-            this.textbox_x.Name = "textbox_x";
-            this.textbox_x.Size = new System.Drawing.Size(31, 16);
-            this.textbox_x.TabIndex = 1;
+            this.textBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBox_autoclick.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox_autoclick.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.textBox_autoclick.Location = new System.Drawing.Point(14, 102);
+            this.textBox_autoclick.Name = "textBox_autoclick";
+            this.textBox_autoclick.Size = new System.Drawing.Size(102, 19);
+            this.textBox_autoclick.TabIndex = 1;
+            this.textBox_autoclick.Text = "aad";
+            this.textBox_autoclick.Click += new System.EventHandler(this.textBox_autoclick_Click);
             // 
             // label1
             // 
@@ -528,9 +474,9 @@ namespace MUIPRT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Location = new System.Drawing.Point(6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 58);
+            this.label1.Size = new System.Drawing.Size(121, 87);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Auto click at coord (x. y)  on page load";
+            this.label1.Text = "Class name or ID of element to auto-click on page load";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // panel_referral
@@ -957,14 +903,12 @@ namespace MUIPRT
             // 
             // geckoWebBrowser1
             // 
-            this.geckoWebBrowser1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geckoWebBrowser1.FrameEventsPropagateToMainWindow = true;
-            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 31);
+            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 64);
             this.geckoWebBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(760, 126);
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(760, 88);
             this.geckoWebBrowser1.TabIndex = 15;
             this.geckoWebBrowser1.UseHttpActivityObserver = false;
             this.geckoWebBrowser1.Navigating += new System.EventHandler<Gecko.Events.GeckoNavigatingEventArgs>(this.geckoWebBrowser1_Navigating);
@@ -972,6 +916,8 @@ namespace MUIPRT
             this.geckoWebBrowser1.NavigationError += new System.EventHandler<Gecko.Events.GeckoNavigationErrorEventArgs>(this.geckoWebBrowser1_NavigationError);
             this.geckoWebBrowser1.Redirecting += new System.EventHandler<Gecko.GeckoRedirectingEventArgs>(this.geckoWebBrowser1_Redirecting);
             this.geckoWebBrowser1.DocumentCompleted += new System.EventHandler<Gecko.Events.GeckoDocumentCompletedEventArgs>(this.geckoWebBrowser1_DocumentCompleted);
+            this.geckoWebBrowser1.CanGoBackChanged += new System.EventHandler(this.geckoWebBrowser1_CanGoBackChanged);
+            this.geckoWebBrowser1.CanGoForwardChanged += new System.EventHandler(this.geckoWebBrowser1_CanGoForwardChanged);
             this.geckoWebBrowser1.ProgressChanged += new System.EventHandler<Gecko.GeckoProgressEventArgs>(this.geckoWebBrowser1_ProgressChanged);
             this.geckoWebBrowser1.CreateWindow += new System.EventHandler<Gecko.GeckoCreateWindowEventArgs>(this.geckoWebBrowser1_CreateWindow);
             this.geckoWebBrowser1.Load += new System.EventHandler<Gecko.DomEventArgs>(this.geckoWebBrowser1_Load);
@@ -1014,7 +960,8 @@ namespace MUIPRT
             // 
             // toolStrip1
             // 
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.InfoText;
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.toolStrip1.CanOverflow = false;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -1022,70 +969,76 @@ namespace MUIPRT
             this.button_goback,
             this.button_goforward,
             this.button_refresh,
-            this.button_stopnav,
             this.textbox_navigate,
-            this.button_navigate,
-            this.toolStripSeparator1});
+            this.button_navigate});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(760, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(760, 64);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // button_goback
             // 
+            this.button_goback.AutoSize = false;
             this.button_goback.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_goback.BackgroundImage = global::MUIPRT.Properties.Resources.back;
+            this.button_goback.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button_goback.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.button_goback.Image = global::MUIPRT.Properties.Resources.BACKWARD;
-            this.button_goback.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button_goback.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.button_goback.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_goback.Enabled = false;
+            this.button_goback.ImageTransparentColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_goback.Name = "button_goback";
-            this.button_goback.Size = new System.Drawing.Size(39, 25);
-            this.button_goback.Text = "toolStripButton1";
+            this.button_goback.Size = new System.Drawing.Size(60, 45);
             this.button_goback.Click += new System.EventHandler(this.button_goback_Click);
+            this.button_goback.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_goback_MouseDown);
+            this.button_goback.MouseEnter += new System.EventHandler(this.button_goback_MouseEnter);
+            this.button_goback.MouseLeave += new System.EventHandler(this.button_goback_MouseLeave);
+            this.button_goback.MouseHover += new System.EventHandler(this.button_goback_MouseEnter);
+            this.button_goback.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button_goback_MouseMove);
+            this.button_goback.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button_goback_MouseUp);
             // 
             // button_goforward
             // 
+            this.button_goforward.AutoSize = false;
             this.button_goforward.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_goforward.BackgroundImage = global::MUIPRT.Properties.Resources.fwd;
+            this.button_goforward.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button_goforward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.button_goforward.Image = global::MUIPRT.Properties.Resources.FORWARD;
-            this.button_goforward.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button_goforward.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.button_goforward.Enabled = false;
             this.button_goforward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_goforward.Name = "button_goforward";
-            this.button_goforward.Size = new System.Drawing.Size(39, 25);
+            this.button_goforward.Size = new System.Drawing.Size(60, 45);
             this.button_goforward.Text = "toolStripButton2";
             this.button_goforward.Click += new System.EventHandler(this.button_goforward_Click);
+            this.button_goforward.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_goforward_MouseDown);
+            this.button_goforward.MouseEnter += new System.EventHandler(this.button_goforward_MouseEnter);
+            this.button_goforward.MouseLeave += new System.EventHandler(this.button_goforward_MouseLeave);
+            this.button_goforward.MouseHover += new System.EventHandler(this.button_goforward_MouseEnter);
+            this.button_goforward.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button_goforward_MouseMove);
+            this.button_goforward.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button_goforward_MouseUp);
             // 
             // button_refresh
             // 
+            this.button_refresh.AutoSize = false;
             this.button_refresh.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_refresh.BackgroundImage = global::MUIPRT.Properties.Resources.re;
+            this.button_refresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.button_refresh.Image = global::MUIPRT.Properties.Resources.refreshfin;
             this.button_refresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button_refresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_refresh.Name = "button_refresh";
-            this.button_refresh.Size = new System.Drawing.Size(39, 25);
+            this.button_refresh.Size = new System.Drawing.Size(60, 45);
             this.button_refresh.Text = "toolStripButton3";
+            this.button_refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button_refresh.Click += new System.EventHandler(this.button_refresh_Click);
-            // 
-            // button_stopnav
-            // 
-            this.button_stopnav.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.button_stopnav.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.button_stopnav.Image = global::MUIPRT.Properties.Resources.stop;
-            this.button_stopnav.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button_stopnav.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.button_stopnav.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.button_stopnav.Name = "button_stopnav";
-            this.button_stopnav.Size = new System.Drawing.Size(39, 25);
-            this.button_stopnav.Text = "toolStripButton4";
-            this.button_stopnav.Click += new System.EventHandler(this.button_stopnav_Click);
+            this.button_refresh.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_refresh_MouseDown);
+            this.button_refresh.MouseEnter += new System.EventHandler(this.button_refresh_MouseEnter);
+            this.button_refresh.MouseLeave += new System.EventHandler(this.button_refresh_MouseLeave);
+            this.button_refresh.MouseHover += new System.EventHandler(this.button_refresh_MouseEnter);
+            this.button_refresh.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button_refresh_MouseMove);
+            this.button_refresh.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button_refresh_MouseUp);
             // 
             // textbox_navigate
             // 
@@ -1093,39 +1046,35 @@ namespace MUIPRT
             this.textbox_navigate.AutoSize = false;
             this.textbox_navigate.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.textbox_navigate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textbox_navigate.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.textbox_navigate.Name = "textbox_navigate";
-            this.textbox_navigate.Size = new System.Drawing.Size(560, 28);
+            this.textbox_navigate.Size = new System.Drawing.Size(515, 38);
             this.textbox_navigate.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_navigate_KeyDown);
             // 
             // button_navigate
             // 
             this.button_navigate.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.button_navigate.AutoSize = false;
             this.button_navigate.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_navigate.BackgroundImage = global::MUIPRT.Properties.Resources.go;
+            this.button_navigate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button_navigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.button_navigate.Image = global::MUIPRT.Properties.Resources.GO;
             this.button_navigate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_navigate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_navigate.Name = "button_navigate";
-            this.button_navigate.Size = new System.Drawing.Size(39, 25);
+            this.button_navigate.Size = new System.Drawing.Size(60, 45);
             this.button_navigate.Text = "toolStripButton5";
             this.button_navigate.Click += new System.EventHandler(this.button_navigate_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 28);
+            this.button_navigate.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseDown);
+            this.button_navigate.MouseEnter += new System.EventHandler(this.button_navigate_MouseEnter);
+            this.button_navigate.MouseLeave += new System.EventHandler(this.button_navigate_MouseLeave);
+            this.button_navigate.MouseHover += new System.EventHandler(this.button_navigate_MouseEnter);
+            this.button_navigate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseMove);
+            this.button_navigate.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseUp);
             // 
             // timer_cleardata
             // 
             this.timer_cleardata.Tick += new System.EventHandler(this.timer_cleardata_Tick);
-            // 
-            // timer_setcoords
-            // 
-            this.timer_setcoords.Tick += new System.EventHandler(this.timer_setcoords_Tick);
-            // 
-            // timer_clickcoords
-            // 
-            this.timer_clickcoords.Tick += new System.EventHandler(this.timer_clickcoords_Tick);
             // 
             // timer_refreshproxylist
             // 
@@ -1134,14 +1083,6 @@ namespace MUIPRT
             // timer_load
             // 
             this.timer_load.Tick += new System.EventHandler(this.timer_load_Tick);
-            // 
-            // timer_setcoords2
-            // 
-            this.timer_setcoords2.Tick += new System.EventHandler(this.timer_setcoords2_Tick);
-            // 
-            // timer_clickcoords2
-            // 
-            this.timer_clickcoords2.Tick += new System.EventHandler(this.timer_clickcoords2_Tick);
             // 
             // Main
             // 
@@ -1238,31 +1179,25 @@ namespace MUIPRT
         private System.Windows.Forms.ToolStripProgressBar progressbar_browser;
         private System.Windows.Forms.ToolStripStatusLabel label_statusbrowser;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton button_goback;
-        private System.Windows.Forms.ToolStripButton button_goforward;
-        private System.Windows.Forms.ToolStripButton button_refresh;
-        private System.Windows.Forms.ToolStripButton button_stopnav;
         private System.Windows.Forms.ToolStripComboBox textbox_navigate;
-        private System.Windows.Forms.ToolStripButton button_navigate;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ListBox list_agents;
         private System.Windows.Forms.Timer timer_cleardata;
-        private System.Windows.Forms.Button Button_getcoords;
-        private System.Windows.Forms.TextBox textbox_y;
-        private System.Windows.Forms.TextBox textbox_x;
         private System.Windows.Forms.Timer timer_setcoords;
         private System.Windows.Forms.Timer timer_clickcoords;
         private System.Windows.Forms.Label label_currentproxnum;
         private System.Windows.Forms.Label outof;
         private System.Windows.Forms.Timer timer_refreshproxylist;
         private System.Windows.Forms.Timer timer_load;
-        private System.Windows.Forms.TextBox textbox_y2;
-        private System.Windows.Forms.TextBox textbox_x2;
         private System.Windows.Forms.Timer timer_setcoords2;
         private System.Windows.Forms.Timer timer_clickcoords2;
-        private System.Windows.Forms.Button Button_getcoords2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_skip;
+        private ToolStripLabel button_goback;
+        private ToolStripLabel button_goforward;
+        private ToolStripLabel button_refresh;
+        private ToolStripLabel button_navigate;
+        private ComboBox comboBox_autoclick;
+        private TextBox textBox_autoclick;
     }
 }
 

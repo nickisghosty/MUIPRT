@@ -102,7 +102,6 @@ C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\bin\Debug\Costura.xml
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\bin\Debug\Geckofx-Core.pdb
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\bin\Debug\Geckofx-Winforms.pdb
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\bin\Debug\Resourcer.xml
-C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csprojAssemblyReference.cache
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.Main.resources
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.Properties.Resources.resources
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.GenerateResource.cache
@@ -111,3 +110,4 @@ C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csproj.CopyComplete
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.exe
 C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.pdb
+C:\Users\Ghosty\source\repos\nickisghosty\MUIPRT\MUIPRT\obj\Debug\MUIPRT.csprojAssemblyReference.cache

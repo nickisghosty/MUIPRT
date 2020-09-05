@@ -1,5 +1,6 @@
 ﻿using Gecko;
 using Gecko.Cache;
+using Gecko.DOM;
 using Gecko.Events;
 using MUIPRT.Properties;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,6 +23,7 @@ namespace MUIPRT
     {
         //variables
         public string Referrer;
+
         public string Agent;
         public string SUserAgent;
         public string Url;
@@ -28,8 +31,6 @@ namespace MUIPRT
         private char[] _delimiters;
         private string _value;
         private string[] _proxy;
-        private int beforeresize;
-        private int afterresize;
         private Point _clickLocation = new Point(0, 0);
         private Point _clickLocation2 = new Point(0, 0);
         private readonly Form _form2 = new Form();
@@ -77,7 +78,7 @@ namespace MUIPRT
                     {
                         foreach (ProcessThread thread in chrome.Threads)
                         {
-                            EnumThreadWindows((uint) thread.Id, EnumThreadCallback, IntPtr.Zero);
+                            EnumThreadWindows((uint)thread.Id, EnumThreadCallback, IntPtr.Zero);
                         }
                     }
                 }
@@ -125,6 +126,9 @@ namespace MUIPRT
             GeckoPreferences.Default["browser.cache.disk.enable"] = false;
             GeckoPreferences.User["browser.cache.disk.enable"] = false;
             GeckoPreferences.Default["browser.xul.error_pages.enabled"] = true;
+            GeckoPreferences.User["security.mixed_content.block_active_content"] = false;
+            GeckoPreferences.Default["security.mixed_content.block_active_content"] = false;
+
             // Loops through all the history entries
 
             geckoWebBrowser1.HistoryNewEntry += GeckoWebBrowser1_HistoryNewEntry;
@@ -134,7 +138,7 @@ namespace MUIPRT
             {
                 nsIWebBrowser
                     nsIWebBrowser =
-                        (nsIWebBrowser) field.GetValue(
+                        (nsIWebBrowser)field.GetValue(
                             geckoWebBrowser1); //this might be null if called right before initialization of browser
                 Xpcom.QueryInterface<nsILoadContext>(nsIWebBrowser).SetPrivateBrowsing(true);
             }
@@ -153,6 +157,9 @@ namespace MUIPRT
             button_adduseragent.Enabled = false;
             button_setref.Enabled = false;
             button_stop.Enabled = false;
+            comboBox_autoclick.SelectedItem = comboBox_autoclick.Items[0];
+            textBox_autoclick.Text = "advert";
+
             Onepage = 0;
         }
 
@@ -161,54 +168,61 @@ namespace MUIPRT
             AutoCompleteStringCollection hiStringCollection = new AutoCompleteStringCollection();
 
             historyList.Clear();
-            foreach (GeckoHistoryEntry entry in geckoWebBrowser1.History)
+            try
             {
-                // Gets the URL and adds it to the result
+                foreach (GeckoHistoryEntry entry in geckoWebBrowser1.History)
+                {
+                    // Gets the URL and adds it to the result
 
-                if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "http:\\www."))
-                {
-                    historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 11));
-                }
-                else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "https:\\www."))
-                {
-                    historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 12));
-                }
-                else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "http:\\"))
-                {
-                    historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 7));
-                }
-                else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "https:\\"))
-                {
-                    historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 8));
-                }
-                else
-                {
-                    historyList.Add((entry.Url.AbsoluteUri.ToString()));
+                    if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "http:\\www."))
+                    {
+                        historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 11));
+                    }
+                    else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "https:\\www."))
+                    {
+                        historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 12));
+                    }
+                    else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "http:\\"))
+                    {
+                        historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 7));
+                    }
+                    else if (entry.Url.AbsoluteUri.ToString().StartsWith(value: "https:\\"))
+                    {
+                        historyList.Add(entry.Url.AbsoluteUri.ToString().Substring(startIndex: 8));
+                    }
+                    else
+                    {
+                        historyList.Add((entry.Url.AbsoluteUri.ToString()));
+                    }
+
+                    // Sends the result to the console
                 }
 
-                // Sends the result to the console
+                textbox_navigate.Items.Clear();
+                textbox_navigate.AutoCompleteCustomSource.Clear();
+                foreach (string item in historyList)
+                {
+                    textbox_navigate.Items.Add(item.ToString());
+                    hiStringCollection.Add(item.ToString());
+                    textbox_navigate.AutoCompleteCustomSource.Add(item.ToString());
+                }
+
+                textbox_navigate.AutoCompleteCustomSource = hiStringCollection;
             }
-
-            textbox_navigate.Items.Clear();
-            textbox_navigate.AutoCompleteCustomSource.Clear();
-            foreach (string item in historyList)
+            catch (Exception exception)
             {
-                textbox_navigate.Items.Add(item.ToString());
-                hiStringCollection.Add(item.ToString());
-                textbox_navigate.AutoCompleteCustomSource.Add(item.ToString());
-
-
+                MessageBox.Show(exception.Source + "\n" + exception.InnerException + "\n" + exception.StackTrace + "\n" + exception.Message + "\n" + exception.TargetSite + "\n" + exception.HelpLink);
+                throw;
             }
-
-            textbox_navigate.AutoCompleteCustomSource = hiStringCollection;
         }
 
         #region Main function
 
         private void button_start_Click(object sender, EventArgs e)
         {
+            autoclick_textbox_clicked = false;
             // progress bar for application
-            progressbar_appprogress.Maximum = (int) numupdown_views.Value;
+            progressbar_appprogress.Maximum = (int)numupdown_views.Value;
             progressbar_appprogress.Minimum = 0;
             button_stop.Enabled = true;
             timer_load.Interval = 100;
@@ -387,7 +401,7 @@ namespace MUIPRT
 
             Url = list_urls.GetItemText(list_urls.SelectedItem);
             Agent = list_agents.GetItemText(list_agents.SelectedItem);
-            _delimiters = new[] {':', '@'};
+            _delimiters = new[] { ':', '@' };
             _value = list_proxies.SelectedItem.ToString();
             _proxy = _value.Split(_delimiters, StringSplitOptions.RemoveEmptyEntries); //split proxies at  :
 
@@ -416,7 +430,7 @@ namespace MUIPRT
                 null, null); //home page
             Onepage = 0;
 
-            timer_load.Interval = (int) numupdown_interval.Value;
+            timer_load.Interval = (int)numupdown_interval.Value;
         }
 
         private void timer_cleardata_Tick(object sender, EventArgs e) // clear cache cookies history etc
@@ -684,7 +698,7 @@ namespace MUIPRT
                 streamReader.Close();
                 proxies.Shuffle();
                 list_proxies.Items.AddRange(proxies.ToArray());
-                timer_refreshproxylist.Interval = (int) numupdown_interval.Value / 4;
+                timer_refreshproxylist.Interval = (int)numupdown_interval.Value / 4;
                 timer_refreshproxylist.Start();
             }
             else
@@ -808,6 +822,7 @@ namespace MUIPRT
 
         private void button_navigate_Click(object sender, EventArgs e)
         {
+            button_refresh.BackgroundImage = Resources.stop;
             geckoWebBrowser1.Navigate(textbox_navigate.Text,
                 (GeckoLoadFlags.ReplaceHistory | GeckoLoadFlags.BypassCache | GeckoLoadFlags.BypassProxy), Referrer,
                 null, null); //home page
@@ -823,12 +838,29 @@ namespace MUIPRT
 
         private void button_refresh_Click(object sender, EventArgs e)
         {
-            geckoWebBrowser1.Refresh();
-        }
-
-        private void button_stopnav_Click(object sender, EventArgs e)
-        {
-            geckoWebBrowser1.Stop();
+            if (button_refresh.BackgroundImage == Resources.re)
+            {
+                geckoWebBrowser1.Refresh();
+                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else if (button_refresh.BackgroundImage == Resources.refhov)
+            {
+                geckoWebBrowser1.Refresh();
+                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else if (button_refresh.BackgroundImage == Resources.refd)
+            {
+                geckoWebBrowser1.Refresh();
+                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                geckoWebBrowser1.Stop();
+                button_refresh.BackgroundImage = Resources.re;
+            }
         }
 
         private void button_goforward_Click(object sender, EventArgs e)
@@ -847,49 +879,69 @@ namespace MUIPRT
 
         private void Clickad()
         {
-            var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
-            Onepage = 1;
-            if (iframe != null)
+
+            var links = geckoWebBrowser1.Document.GetElementsByTagName("div");
+            foreach (GeckoHtmlElement link in links)
             {
-                iframe.ScrollIntoView(true);
-                iframe.Click();
-
-                timer_clickcoords.Interval = 3000;
-
-                if (textbox_y.Text != "" || textbox_x.Text != "")
+                if (link.GetAttribute(comboBox_autoclick.SelectedItem.ToString()) == textBox_autoclick.Text)
                 {
-                    timer_clickcoords.Start();
+                    Onepage = 1;
+
+                    string content = null;
+                    GeckoIFrameElement _E =
+                        geckoWebBrowser1.DomDocument.GetElementsByTagName("iframe")[0] as GeckoIFrameElement;
+
+                    var innerHTML = _E.ContentWindow.Document;
+
+                    GeckoAnchorElement a = innerHTML.GetElementsByTagName("a").Last() as GeckoAnchorElement;
+
+                    a.Click();
                 }
             }
-            else
-            {
-                timer_clickcoords.Interval = 3000;
-                if (textbox_y.Text != "" || textbox_x.Text != "")
-                {
-                    timer_clickcoords.Start();
-                }
-            }
-
-            /*if (textBox2.Text != "" || textBox1.Text != "")
-            {
-                //set cursor position to memorized location
-                Cursor.Position = clickLocation;
-                //set up the INPUT struct and fill it for the mouse down
-                INPUT i = new INPUT();
-                i.type = INPUT_MOUSE;
-                i.mi.dx = 0;
-                i.mi.dy = 0;
-                i.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-                i.mi.dwExtraInfo = IntPtr.Zero;
-                i.mi.mouseData = 0;
-                i.mi.time = 0;
-                //send the input
-                SendInput(1, ref i, Marshal.SizeOf(i));
-                //set the INPUT for mouse up and send it
-                i.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-                SendInput(1, ref i, Marshal.SizeOf(i));
-            */
         }
+
+        /*var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
+        Onepage = 1;
+        if (iframe != null)
+        {
+            iframe.ScrollIntoView(true);
+            iframe.Click();
+
+            timer_clickcoords.Interval = 3000;
+
+            if (textbox_y.Text != "" || textbox_x.Text != "")
+            {
+                timer_clickcoords.Start();
+            }
+        }
+        else
+        {
+            timer_clickcoords.Interval = 3000;
+            if (textbox_y.Text != "" || textbox_x.Text != "")
+            {
+                timer_clickcoords.Start();
+            }
+        }
+               */
+        /*if (textBox2.Text != "" || textBox1.Text != "")
+        {
+            //set cursor position to memorized location
+            Cursor.Position = clickLocation;
+            //set up the INPUT struct and fill it for the mouse down
+            INPUT i = new INPUT();
+            i.type = INPUT_MOUSE;
+            i.mi.dx = 0;
+            i.mi.dy = 0;
+            i.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            i.mi.dwExtraInfo = IntPtr.Zero;
+            i.mi.mouseData = 0;
+            i.mi.time = 0;
+            //send the input
+            SendInput(1, ref i, Marshal.SizeOf(i));
+            //set the INPUT for mouse up and send it
+            i.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+            SendInput(1, ref i, Marshal.SizeOf(i));
+        */
 
         [DllImport("User32.dll", SetLastError = true)]
         public static extern int SendInput(int nInputs, ref Input pInputs,
@@ -919,7 +971,7 @@ namespace MUIPRT
             public Mouseinput Mi;
         }
 
-        private void timer_setcoords_Tick(object sender, EventArgs e)
+        /*  private void timer_setcoords_Tick(object sender, EventArgs e)
         {
             _clickLocation = Cursor.Position;
             //show the location on window title
@@ -999,7 +1051,7 @@ namespace MUIPRT
             timer_setcoords2.Start();
         }
 
-        /* private void autocaptcha()
+         private void autocaptcha()
          {
              GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
 
@@ -1059,6 +1111,7 @@ namespace MUIPRT
                 GeckoPreferences.Default["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["general.useragent.override"] = Agent;
+
                 geckoWebBrowser2.Navigate(e.Uri);
                 if (iframe != null)
                 {
@@ -1096,6 +1149,7 @@ namespace MUIPRT
 
         private void geckoWebBrowser2_DocumentCompleted(object sender, GeckoDocumentCompletedEventArgs e)
         {
+            /*
             var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
 
             if (iframe == null)
@@ -1111,13 +1165,14 @@ namespace MUIPRT
                     CloseWindow(windowHandle);
                 }
             }
-
+                      */
             //else{
             //    autocaptcha()}
         }
 
         private void geckoWebBrowser1_DocumentCompleted(object sender, GeckoDocumentCompletedEventArgs e)
         {
+            button_refresh.BackgroundImage = Resources.re;
             label_statusbrowser.Text = Resources.Text_Done + geckoWebBrowser1.StatusText;
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             progressbar_browser.Value = 0;
@@ -1137,6 +1192,7 @@ namespace MUIPRT
 
         private void geckoWebBrowser1_DOMContentLoaded(object sender, DomEventArgs e)
         {
+            button_refresh.BackgroundImage = Resources.re;
             progressbar_browser.Value = 0;
         }
 
@@ -1150,6 +1206,7 @@ namespace MUIPRT
         {
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             label_statusbrowser.Text = geckoWebBrowser1.StatusText;
+            button_refresh.BackgroundImage = Resources.stop;
             //  clickad();
         }
 
@@ -1160,6 +1217,7 @@ namespace MUIPRT
 
         private void geckoWebBrowser1_Navigating(object sender, GeckoNavigatingEventArgs e)
         {
+            button_refresh.BackgroundImage = Resources.stop;
             GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
 
             if (ActiveControl == geckoWebBrowser1)
@@ -1221,7 +1279,7 @@ namespace MUIPRT
             {
                 if (e.CurrentProgress == 0)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
 
                 if (e.CurrentProgress < 0)
@@ -1231,7 +1289,7 @@ namespace MUIPRT
 
                 if (e.CurrentProgress > 0)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
 
                 if (e.CurrentProgress > 100)
@@ -1241,7 +1299,7 @@ namespace MUIPRT
 
                 if (e.CurrentProgress < 100)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
 
                 if (e.CurrentProgress == 100)
@@ -1251,7 +1309,7 @@ namespace MUIPRT
                 }
                 else if (progressbar_browser.Value == 0)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
                 else if (progressbar_browser.Value < 0)
                 {
@@ -1263,11 +1321,11 @@ namespace MUIPRT
                 }
                 else if (progressbar_browser.Value > 0)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
                 else if (progressbar_browser.Value < 100)
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
                 else if (progressbar_browser.Value == 100)
                 {
@@ -1275,7 +1333,7 @@ namespace MUIPRT
                 }
                 else
                 {
-                    progressbar_browser.Value = (int) (((double) e.CurrentProgress * 100) / e.MaximumProgress);
+                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
                 }
             }
             catch (Exception ex)
@@ -1301,10 +1359,210 @@ namespace MUIPRT
 
         private void Main_Resize(object sender, EventArgs e)
         {
-
-
             textbox_navigate.Width = (button_navigate.Bounds.Left - 2) - textbox_navigate.Bounds.Left;
+        }
 
+        private void button_goback_MouseEnter(object sender, EventArgs e)
+        {
+            button_goback.BackgroundImage = Resources.backhov;
+        }
+
+        private void button_goback_MouseDown(object sender, MouseEventArgs e)
+        {
+            button_goback.BackgroundImage = Resources.backd;
+        }
+
+        private void button_goback_MouseUp(object sender, MouseEventArgs e)
+        {
+            if ((Cursor.Position.X >= button_goback.ContentRectangle.X) &&
+                (Cursor.Position.X <= (button_goback.ContentRectangle.X + button_goback.ContentRectangle.Width)) &&
+                (Cursor.Position.Y >= button_goback.ContentRectangle.Y) && (Cursor.Position.Y <
+                                                                            (button_goback.ContentRectangle.Y +
+                                                                             button_goback.ContentRectangle.Height)))
+                button_goback.BackgroundImage = Resources.backhov;
+            else
+                button_goback.BackgroundImage = Resources.back;
+        }
+
+        private void button_goback_MouseLeave(object sender, EventArgs e)
+        {
+            button_goback.BackgroundImage = Resources.back;
+        }
+
+        private void button_goback_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Location.X >= button_goback.ContentRectangle.X) && (e.Location.X <= (button_goback.ContentRectangle.X + button_goback.ContentRectangle.Width)) && (e.Location.Y >= button_goback.ContentRectangle.Y) && (e.Location.Y < (button_goback.ContentRectangle.Y + button_goback.ContentRectangle.Height)))
+                button_goback.BackgroundImage = Resources.backhov;
+            else
+                button_goback.BackgroundImage = Resources.back;
+        }
+
+        private void geckoWebBrowser1_CanGoBackChanged(object sender, EventArgs e)
+        {
+            button_goback.Enabled = geckoWebBrowser1.CanGoBack;
+        }
+
+        private void geckoWebBrowser1_CanGoForwardChanged(object sender, EventArgs e)
+        {
+            button_goforward.Enabled = geckoWebBrowser1.CanGoForward;
+        }
+
+        private void button_goforward_MouseEnter(object sender, EventArgs e)
+        {
+            button_goforward.BackgroundImage = Resources.fwdhov;
+        }
+
+        private void button_goforward_MouseDown(object sender, MouseEventArgs e)
+        {
+            button_goforward.BackgroundImage = Resources.fwdd;
+        }
+
+        private void button_goforward_MouseUp(object sender, MouseEventArgs e)
+        {
+            if ((Cursor.Position.X >= button_goforward.ContentRectangle.X) &&
+                (Cursor.Position.X <= (button_goforward.ContentRectangle.X + button_goforward.ContentRectangle.Width)) &&
+                (Cursor.Position.Y >= button_goforward.ContentRectangle.Y) && (Cursor.Position.Y <
+                                                                               (button_goforward.ContentRectangle.Y +
+                                                                                   button_goforward.ContentRectangle.Height)))
+                button_goforward.BackgroundImage = Resources.fwdhov;
+            else
+                button_goforward.BackgroundImage = Resources.fwd;
+        }
+
+        private void button_goforward_MouseLeave(object sender, EventArgs e)
+        {
+            button_goforward.BackgroundImage = Resources.fwd;
+        }
+
+        private void button_goforward_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Location.X >= button_goforward.ContentRectangle.X) && (e.Location.X <= (button_goforward.ContentRectangle.X + button_goforward.ContentRectangle.Width)) && (e.Location.Y >= button_goforward.ContentRectangle.Y) && (e.Location.Y < (button_goforward.ContentRectangle.Y + button_goforward.ContentRectangle.Height)))
+                button_goforward.BackgroundImage = Resources.fwdhov;
+            else
+                button_goforward.BackgroundImage = Resources.fwd;
+        }
+
+        private void button_refresh_MouseEnter(object sender, EventArgs e)
+        {
+            if (geckoWebBrowser1.IsBusy)
+                button_refresh.BackgroundImage = Resources.stophov;
+            else
+                button_refresh.BackgroundImage = Resources.refhov;
+        }
+
+        private void button_refresh_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (geckoWebBrowser1.IsBusy)
+                button_refresh.BackgroundImage = Resources.stopd;
+            else
+                button_refresh.BackgroundImage = Resources.refd;
+        }
+
+        private void button_refresh_MouseUp(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) != 0)
+            {
+                if ((Cursor.Position.X >= button_refresh.ContentRectangle.X) &&
+                    (Cursor.Position.X <= (button_refresh.ContentRectangle.X + button_refresh.ContentRectangle.Width)) &&
+                    (Cursor.Position.Y >= button_refresh.ContentRectangle.Y) && (Cursor.Position.Y <
+                        (button_refresh.ContentRectangle.Y +
+                         button_refresh.ContentRectangle.Height)))
+                    button_refresh.BackgroundImage = Resources.stophov;
+                else
+                    button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                if ((Cursor.Position.X >= button_refresh.ContentRectangle.X) &&
+                    (Cursor.Position.X <=
+                     (button_refresh.ContentRectangle.X + button_refresh.ContentRectangle.Width)) &&
+                    (Cursor.Position.Y >= button_refresh.ContentRectangle.Y) && (Cursor.Position.Y <
+                        (button_refresh.ContentRectangle.Y +
+                         button_refresh.ContentRectangle.Height)))
+                    button_refresh.BackgroundImage = Resources.refhov;
+                else
+                    button_refresh.BackgroundImage = Resources.re;
+            }
+        }
+
+        private void button_refresh_MouseLeave(object sender, EventArgs e)
+        {
+            if (geckoWebBrowser1.IsBusy)
+                button_refresh.BackgroundImage = Resources.stop;
+            else
+                button_refresh.BackgroundImage = Resources.re;
+        }
+
+        private void button_refresh_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                if ((e.Location.X >= button_refresh.ContentRectangle.X) &&
+                    (e.Location.X <= (button_refresh.ContentRectangle.X + button_refresh.ContentRectangle.Width)) &&
+                    (e.Location.Y >= button_refresh.ContentRectangle.Y) && (e.Location.Y <
+                                                                            (button_refresh.ContentRectangle.Y +
+                                                                             button_refresh.ContentRectangle.Height)))
+                    button_refresh.BackgroundImage = Resources.stophov;
+                else
+                    button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                if ((e.Location.X >= button_refresh.ContentRectangle.X) &&
+                    (e.Location.X <= (button_refresh.ContentRectangle.X + button_refresh.ContentRectangle.Width)) &&
+                    (e.Location.Y >= button_refresh.ContentRectangle.Y) && (e.Location.Y <
+                                                                            (button_refresh.ContentRectangle.Y +
+                                                                             button_refresh.ContentRectangle.Height)))
+                    button_refresh.BackgroundImage = Resources.refhov;
+                else
+                    button_refresh.BackgroundImage = Resources.re;
+            }
+        }
+
+        private void button_navigate_MouseEnter(object sender, EventArgs e)
+        {
+            button_navigate.BackgroundImage = Resources.gohov;
+        }
+
+        private void button_navigate_MouseDown(object sender, MouseEventArgs e)
+        {
+            button_navigate.BackgroundImage = Resources.god;
+        }
+
+        private void button_navigate_MouseUp(object sender, MouseEventArgs e)
+        {
+            if ((Cursor.Position.X >= button_navigate.ContentRectangle.X) &&
+                (Cursor.Position.X <= (button_navigate.ContentRectangle.X + button_navigate.ContentRectangle.Width)) &&
+                (Cursor.Position.Y >= button_navigate.ContentRectangle.Y) && (Cursor.Position.Y <
+                                                                            (button_navigate.ContentRectangle.Y +
+                                                                             button_navigate.ContentRectangle.Height)))
+                button_navigate.BackgroundImage = Resources.gohov;
+            else
+                button_navigate.BackgroundImage = Resources.go;
+        }
+
+        private void button_navigate_MouseLeave(object sender, EventArgs e)
+        {
+            button_navigate.BackgroundImage = Resources.go;
+        }
+
+        private void button_navigate_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Location.X >= button_navigate.ContentRectangle.X) && (e.Location.X <= (button_navigate.ContentRectangle.X + button_navigate.ContentRectangle.Width)) && (e.Location.Y >= button_navigate.ContentRectangle.Y) && (e.Location.Y < (button_navigate.ContentRectangle.Y + button_navigate.ContentRectangle.Height)))
+                button_navigate.BackgroundImage = Resources.gohov;
+            else
+                button_navigate.BackgroundImage = Resources.go;
+        }
+
+        private bool autoclick_textbox_clicked = false;
+
+        private void textBox_autoclick_Click(object sender, EventArgs e)
+        {
+            if (!autoclick_textbox_clicked)
+            {
+                textBox_autoclick.Text = "";
+                autoclick_textbox_clicked = true;
+            }
         }
     }
 }
