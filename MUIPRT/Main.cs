@@ -34,7 +34,8 @@ namespace MUIPRT
         private Point _clickLocation = new Point(0, 0);
         private Point _clickLocation2 = new Point(0, 0);
         private readonly Form _form2 = new Form();
-
+        private string coordsX;
+        private string coordsY;
         [DllImport("user32.dll")]
         private static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
 
@@ -152,15 +153,17 @@ namespace MUIPRT
             button_clearurl.Enabled = false;
             button_clearproxies.Enabled = false;
             button_clearuseragents.Enabled = false;
-            button_addref.Enabled = false;
             button_addurl.Enabled = false;
             button_adduseragent.Enabled = false;
             button_setref.Enabled = false;
             button_stop.Enabled = false;
             comboBox_autoclick.SelectedItem = comboBox_autoclick.Items[0];
             textBox_autoclick.Text = "advert";
-
-            Onepage = 0;
+            textbox_x.Visible = false;
+            button_getcoords.Visible = false;
+            //set tooltips
+            
+Onepage = 0;   //makes auto-clicked ad only click once.
         }
 
         private void GeckoWebBrowser1_HistoryNewEntry(object sender, GeckoHistoryEventArgs e)
@@ -774,7 +777,6 @@ namespace MUIPRT
 
         private void button_addref_Click(object sender, EventArgs e)
         {
-            referral_txtdrop.Items.Add(referral_txtdrop.Text);
         }
 
         private void button_setref_Click(object sender, EventArgs e)
@@ -792,7 +794,6 @@ namespace MUIPRT
 
         private void referral_txtdrop_TextChanged(object sender, EventArgs e)
         {
-            button_addref.Enabled = true;
             button_setref.Enabled = true;
         }
 
@@ -879,50 +880,57 @@ namespace MUIPRT
 
         private void Clickad()
         {
-
-            var links = geckoWebBrowser1.Document.GetElementsByTagName("div");
-            foreach (GeckoHtmlElement link in links)
-            {
-                if (link.GetAttribute(comboBox_autoclick.SelectedItem.ToString()) == textBox_autoclick.Text)
+          
+                var links = geckoWebBrowser1.Document.GetElementsByTagName("div");
+                foreach (GeckoHtmlElement link in links)
                 {
-                    Onepage = 1;
+                    if (link.GetAttribute(comboBox_autoclick.SelectedItem.ToString()) == textBox_autoclick.Text)
+                    {
+                        Onepage = 1;
+                        if ((string) comboBox_autoclick.SelectedItem != "coordinates")
+                        {
 
-                    string content = null;
-                    GeckoIFrameElement _E =
-                        geckoWebBrowser1.DomDocument.GetElementsByTagName("iframe")[0] as GeckoIFrameElement;
+                            string content = null;
+                            GeckoIFrameElement _E =
+                                geckoWebBrowser1.DomDocument.GetElementsByTagName("iframe")[0] as GeckoIFrameElement;
 
-                    var innerHTML = _E.ContentWindow.Document;
+                            var innerHTML = _E.ContentWindow.Document;
 
-                    GeckoAnchorElement a = innerHTML.GetElementsByTagName("a").Last() as GeckoAnchorElement;
 
-                    a.Click();
+                            GeckoAnchorElement a = innerHTML.GetElementsByTagName("a").Last() as GeckoAnchorElement;
+
+                            a.Click();
+                        }
+                    }
+                    else
+                    {
+                       
+                        if (link.GetAttribute(comboBox_autoclick.SelectedItem.ToString()) == textBox_autoclick.Text)
+                        {
+                            link.ScrollIntoView(true);
+                            
+
+                            timer_clickcoords.Interval = 3000;
+
+                            if (textbox_y.Text != "" || textbox_x.Text != "")
+                            {
+                                timer_clickcoords.Start();
+                            }
+                        }
+                        else
+                        {
+                            timer_clickcoords.Interval = 3000;
+                            if (textbox_y.Text != "" || textbox_x.Text != "")
+                            {
+                                timer_clickcoords.Start();
+                            }
+                        }
+                    }
                 }
-            }
+            
+           
         }
 
-        /*var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
-        Onepage = 1;
-        if (iframe != null)
-        {
-            iframe.ScrollIntoView(true);
-            iframe.Click();
-
-            timer_clickcoords.Interval = 3000;
-
-            if (textbox_y.Text != "" || textbox_x.Text != "")
-            {
-                timer_clickcoords.Start();
-            }
-        }
-        else
-        {
-            timer_clickcoords.Interval = 3000;
-            if (textbox_y.Text != "" || textbox_x.Text != "")
-            {
-                timer_clickcoords.Start();
-            }
-        }
-               */
         /*if (textBox2.Text != "" || textBox1.Text != "")
         {
             //set cursor position to memorized location
@@ -944,34 +952,35 @@ namespace MUIPRT
         */
 
         [DllImport("User32.dll", SetLastError = true)]
-        public static extern int SendInput(int nInputs, ref Input pInputs,
+        public static extern int SendInput(int nInputs, ref INPUT pInputs,
             int cbSize);
 
         //mouse event constants
-        private const int MouseeventfLeftdown = 2;
+        private const int MOUSEEVENTF_LEFTDOWN = 2;
 
-        private const int MouseeventfLeftup = 4;
+        private const int MOUSEEVENTF_LEFTUP = 4;
 
         //input type constant
-        private const int InputMouse = 0;
+        private const int INPUT_MOUSE = 0;
 
         public struct Mouseinput
         {
-            public int Dx;
-            public int Dy;
-            public int MouseData;
-            public int DwFlags;
-            public int Time;
-            public IntPtr DwExtraInfo;
+            public int dx;
+            public int dy;
+            public int mouseData;
+            public int dwFlags;
+            public int time;
+            public IntPtr dwExtraInfo;
         }
+        
 
-        public struct Input
+        public struct INPUT
         {
-            public uint Type;
-            public Mouseinput Mi;
+            public uint type;
+            public Mouseinput mi;
         }
 
-        /*  private void timer_setcoords_Tick(object sender, EventArgs e)
+         private void timer_setcoords_Tick(object sender, EventArgs e)
         {
             _clickLocation = Cursor.Position;
             //show the location on window title
@@ -985,31 +994,24 @@ namespace MUIPRT
             //set cursor position to memorized location
             Cursor.Position = _clickLocation;
             //set up the INPUT struct and fill it for the mouse down
-            Input i = new Input
-            {
-                Type = InputMouse,
-                Mi =
-                {
-                    Dx = 0,
-                    Dy = 0,
-                    DwFlags = MouseeventfLeftdown,
-                    DwExtraInfo = IntPtr.Zero,
-                    MouseData = 0,
-                    Time = 0
-                }
-            };
+            INPUT i = new INPUT();
+            i.type = INPUT_MOUSE;
+            i.mi.dx = 0;
+            i.mi.dy = 0;
+            i.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+            i.mi.dwExtraInfo = IntPtr.Zero;
+            i.mi.mouseData = 0;
+            i.mi.time = 0;
             //send the input
             SendInput(1, ref i, Marshal.SizeOf(i));
             //set the INPUT for mouse up and send it
-            i.Mi.DwFlags = MouseeventfLeftup;
+            i.mi.dwFlags = MOUSEEVENTF_LEFTUP;
             SendInput(1, ref i, Marshal.SizeOf(i));
 
             timer_clickcoords.Stop();
-            timer_clickcoords2.Interval = 5000;
-            timer_clickcoords2.Start();
         }
 
-        private void timer_setcoords2_Tick(object sender, EventArgs e)
+          /*        private void timer_setcoords2_Tick(object sender, EventArgs e)
         {
             _clickLocation2 = Cursor.Position;
             //show the location on window title
@@ -1050,7 +1052,7 @@ namespace MUIPRT
             timer_setcoords2.Interval = 5000;
             timer_setcoords2.Start();
         }
-
+                  /*
          private void autocaptcha()
          {
              GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
@@ -1563,6 +1565,40 @@ namespace MUIPRT
                 textBox_autoclick.Text = "";
                 autoclick_textbox_clicked = true;
             }
+        }
+
+
+        private void referral_txtdrop_doubleclick(object sender, EventArgs e)
+        {
+            referral_txtdrop.Text = "";               
+        }
+
+        private void comboBox_autoclick_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if ((string)comboBox_autoclick.SelectedItem == "coordinates")
+               
+            {
+                textbox_x.Visible = true;
+                textbox_y.Visible = true;
+                button_getcoords.Visible = true;
+            }
+            else
+            {
+                textbox_x.Visible = false;
+                textbox_y.Visible = false;
+                button_getcoords.Visible = false;
+                
+            }
+        }
+
+        private void panel_referral_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox_autoclick_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -51,16 +51,6 @@ namespace MUIPRT
             this.label_statustext = new System.Windows.Forms.Label();
             this.progressbar_appprogress = new System.Windows.Forms.ProgressBar();
             this.label_status = new System.Windows.Forms.Label();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel_scrape = new System.Windows.Forms.Panel();
-            this.comboBox_autoclick = new System.Windows.Forms.ComboBox();
-            this.textBox_autoclick = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel_referral = new System.Windows.Forms.Panel();
-            this.button_addref = new System.Windows.Forms.Button();
-            this.button_setref = new System.Windows.Forms.Button();
-            this.referral_txtdrop = new System.Windows.Forms.ComboBox();
-            this.referalurl_label = new System.Windows.Forms.Label();
             this.panel_urls = new System.Windows.Forms.Panel();
             this.button_clearurl = new System.Windows.Forms.Button();
             this.button_loadurllist = new System.Windows.Forms.Button();
@@ -82,6 +72,16 @@ namespace MUIPRT
             this.label_proxiesnum = new System.Windows.Forms.Label();
             this.label_proxies = new System.Windows.Forms.Label();
             this.outof = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel_referral = new System.Windows.Forms.GroupBox();
+            this.referral_txtdrop = new System.Windows.Forms.TextBox();
+            this.button_setref = new System.Windows.Forms.Button();
+            this.panel_scrape = new System.Windows.Forms.GroupBox();
+            this.textbox_y = new System.Windows.Forms.TextBox();
+            this.button_getcoords = new System.Windows.Forms.Button();
+            this.textbox_x = new System.Windows.Forms.TextBox();
+            this.comboBox_autoclick = new System.Windows.Forms.ComboBox();
+            this.textBox_autoclick = new System.Windows.Forms.TextBox();
             this.panel_browser = new System.Windows.Forms.Panel();
             this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
             this.statusstip_browser = new System.Windows.Forms.StatusStrip();
@@ -100,6 +100,7 @@ namespace MUIPRT
             this.timer_load = new System.Windows.Forms.Timer(this.components);
             this.timer_setcoords2 = new System.Windows.Forms.Timer(this.components);
             this.timer_clickcoords2 = new System.Windows.Forms.Timer(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picture_programbanner)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -109,12 +110,12 @@ namespace MUIPRT
             ((System.ComponentModel.ISupportInitialize)(this.numupdown_interval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numupdown_views)).BeginInit();
             this.panel_status.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            this.panel_scrape.SuspendLayout();
-            this.panel_referral.SuspendLayout();
             this.panel_urls.SuspendLayout();
             this.panel_agents.SuspendLayout();
             this.panel_proxies.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel_referral.SuspendLayout();
+            this.panel_scrape.SuspendLayout();
             this.panel_browser.SuspendLayout();
             this.statusstip_browser.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -155,6 +156,7 @@ namespace MUIPRT
             this.picture_programbanner.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picture_programbanner.TabIndex = 47;
             this.picture_programbanner.TabStop = false;
+            this.toolTip1.SetToolTip(this.picture_programbanner, "http://warezthe.download || http://github.com/nickisghosty");
             // 
             // tableLayoutPanel2
             // 
@@ -185,18 +187,18 @@ namespace MUIPRT
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 4, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel_urls, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel_agents, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel_proxies, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel1, 4, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 5);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 238F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(760, 229);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
@@ -247,6 +249,7 @@ namespace MUIPRT
             this.button_skip.Size = new System.Drawing.Size(55, 30);
             this.button_skip.TabIndex = 12;
             this.button_skip.Text = "Skip";
+            this.toolTip1.SetToolTip(this.button_skip, "If a proxy isn\'t loading you can click skip to move on to the next.");
             this.button_skip.UseVisualStyleBackColor = false;
             this.button_skip.Click += new System.EventHandler(this.button_skip_Click);
             // 
@@ -261,26 +264,18 @@ namespace MUIPRT
             0,
             0,
             0});
-            this.numupdown_interval.Location = new System.Drawing.Point(56, 38);
+            this.numupdown_interval.Location = new System.Drawing.Point(57, 42);
             this.numupdown_interval.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numupdown_interval.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numupdown_interval.Minimum = new decimal(new int[] {
-            10000,
-            0,
+            1410065408,
+            2,
             0,
             0});
             this.numupdown_interval.Name = "numupdown_interval";
             this.numupdown_interval.Size = new System.Drawing.Size(77, 19);
             this.numupdown_interval.TabIndex = 2;
-            this.numupdown_interval.Value = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
+            this.numupdown_interval.ThousandsSeparator = true;
+            this.toolTip1.SetToolTip(this.numupdown_interval, "Time in MS you wish to spend on each iteration. (1000 MS is about 1 second)");
             // 
             // numupdown_views
             // 
@@ -293,16 +288,19 @@ namespace MUIPRT
             0,
             0,
             0});
-            this.numupdown_views.Location = new System.Drawing.Point(56, 6);
+            this.numupdown_views.Location = new System.Drawing.Point(57, 11);
             this.numupdown_views.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numupdown_views.Maximum = new decimal(new int[] {
-            100000,
+            10000000,
             0,
             0,
             0});
             this.numupdown_views.Name = "numupdown_views";
             this.numupdown_views.Size = new System.Drawing.Size(77, 19);
             this.numupdown_views.TabIndex = 1;
+            this.numupdown_views.ThousandsSeparator = true;
+            this.toolTip1.SetToolTip(this.numupdown_views, "Number of views you wish to generate at given URLs, if number is more than the nu" +
+        "mber of proxies, it will start proxy list over at second URL.");
             // 
             // label_interval
             // 
@@ -314,6 +312,7 @@ namespace MUIPRT
             this.label_interval.Size = new System.Drawing.Size(58, 17);
             this.label_interval.TabIndex = 11;
             this.label_interval.Text = "Interval:";
+            this.toolTip1.SetToolTip(this.label_interval, "Time in MS you wish to spend on each iteration. (1000 MS is about 1 second.\")");
             // 
             // label_views
             // 
@@ -325,6 +324,8 @@ namespace MUIPRT
             this.label_views.Size = new System.Drawing.Size(44, 17);
             this.label_views.TabIndex = 10;
             this.label_views.Text = "Views";
+            this.toolTip1.SetToolTip(this.label_views, "Number of views you wish to generate at given URLs, if number is more than the nu" +
+        "mber of proxies, it will start proxy list over at second URL.");
             // 
             // button_stop
             // 
@@ -409,152 +410,6 @@ namespace MUIPRT
             this.label_status.TabIndex = 13;
             this.label_status.Text = "Idle";
             // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.BackColor = System.Drawing.Color.CadetBlue;
-            this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.panel_scrape, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.panel_referral, 0, 1);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(610, 6);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(144, 229);
-            this.tableLayoutPanel5.TabIndex = 0;
-            // 
-            // panel_scrape
-            // 
-            this.panel_scrape.BackColor = System.Drawing.Color.CadetBlue;
-            this.panel_scrape.Controls.Add(this.comboBox_autoclick);
-            this.panel_scrape.Controls.Add(this.textBox_autoclick);
-            this.panel_scrape.Controls.Add(this.label1);
-            this.panel_scrape.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_scrape.Location = new System.Drawing.Point(5, 5);
-            this.panel_scrape.Name = "panel_scrape";
-            this.panel_scrape.Size = new System.Drawing.Size(134, 127);
-            this.panel_scrape.TabIndex = 0;
-            // 
-            // comboBox_autoclick
-            // 
-            this.comboBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.comboBox_autoclick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_autoclick.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBox_autoclick.FormattingEnabled = true;
-            this.comboBox_autoclick.Items.AddRange(new object[] {
-            "class",
-            "id"});
-            this.comboBox_autoclick.Location = new System.Drawing.Point(14, 72);
-            this.comboBox_autoclick.Name = "comboBox_autoclick";
-            this.comboBox_autoclick.Size = new System.Drawing.Size(102, 24);
-            this.comboBox_autoclick.TabIndex = 2;
-            // 
-            // textBox_autoclick
-            // 
-            this.textBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.textBox_autoclick.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_autoclick.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.textBox_autoclick.Location = new System.Drawing.Point(14, 102);
-            this.textBox_autoclick.Name = "textBox_autoclick";
-            this.textBox_autoclick.Size = new System.Drawing.Size(102, 19);
-            this.textBox_autoclick.TabIndex = 1;
-            this.textBox_autoclick.Text = "aad";
-            this.textBox_autoclick.Click += new System.EventHandler(this.textBox_autoclick_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(6, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 87);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Class name or ID of element to auto-click on page load";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // panel_referral
-            // 
-            this.panel_referral.BackColor = System.Drawing.Color.CadetBlue;
-            this.panel_referral.Controls.Add(this.button_addref);
-            this.panel_referral.Controls.Add(this.button_setref);
-            this.panel_referral.Controls.Add(this.referral_txtdrop);
-            this.panel_referral.Controls.Add(this.referalurl_label);
-            this.panel_referral.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_referral.Location = new System.Drawing.Point(5, 140);
-            this.panel_referral.Name = "panel_referral";
-            this.panel_referral.Size = new System.Drawing.Size(134, 84);
-            this.panel_referral.TabIndex = 0;
-            // 
-            // button_addref
-            // 
-            this.button_addref.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_addref.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.button_addref.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button_addref.FlatAppearance.BorderSize = 3;
-            this.button_addref.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
-            this.button_addref.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.button_addref.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_addref.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_addref.Location = new System.Drawing.Point(72, 42);
-            this.button_addref.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button_addref.Name = "button_addref";
-            this.button_addref.Size = new System.Drawing.Size(55, 30);
-            this.button_addref.TabIndex = 8;
-            this.button_addref.Text = "Add";
-            this.button_addref.UseVisualStyleBackColor = false;
-            this.button_addref.Click += new System.EventHandler(this.button_addref_Click);
-            // 
-            // button_setref
-            // 
-            this.button_setref.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.button_setref.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button_setref.FlatAppearance.BorderSize = 3;
-            this.button_setref.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
-            this.button_setref.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.button_setref.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button_setref.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.button_setref.Location = new System.Drawing.Point(11, 42);
-            this.button_setref.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button_setref.Name = "button_setref";
-            this.button_setref.Size = new System.Drawing.Size(55, 30);
-            this.button_setref.TabIndex = 7;
-            this.button_setref.Text = "Set";
-            this.button_setref.UseVisualStyleBackColor = false;
-            this.button_setref.Click += new System.EventHandler(this.button_setref_Click);
-            // 
-            // referral_txtdrop
-            // 
-            this.referral_txtdrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.referral_txtdrop.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.referral_txtdrop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
-            this.referral_txtdrop.FormattingEnabled = true;
-            this.referral_txtdrop.Location = new System.Drawing.Point(36, 11);
-            this.referral_txtdrop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.referral_txtdrop.Name = "referral_txtdrop";
-            this.referral_txtdrop.Size = new System.Drawing.Size(91, 24);
-            this.referral_txtdrop.TabIndex = 7;
-            this.referral_txtdrop.TextChanged += new System.EventHandler(this.referral_txtdrop_TextChanged);
-            this.referral_txtdrop.KeyDown += new System.Windows.Forms.KeyEventHandler(this.referral_txtdrop_KeyDown);
-            // 
-            // referalurl_label
-            // 
-            this.referalurl_label.AutoSize = true;
-            this.referalurl_label.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.referalurl_label.Location = new System.Drawing.Point(1, 16);
-            this.referalurl_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.referalurl_label.Name = "referalurl_label";
-            this.referalurl_label.Size = new System.Drawing.Size(40, 17);
-            this.referalurl_label.TabIndex = 0;
-            this.referalurl_label.Text = "URL:";
-            // 
             // panel_urls
             // 
             this.panel_urls.BackColor = System.Drawing.Color.CadetBlue;
@@ -623,6 +478,7 @@ namespace MUIPRT
             this.button_addurl.Size = new System.Drawing.Size(55, 30);
             this.button_addurl.TabIndex = 12;
             this.button_addurl.Text = "Add";
+            this.toolTip1.SetToolTip(this.button_addurl, "Add single URL to list of URLs to generate views for.");
             this.button_addurl.UseVisualStyleBackColor = false;
             this.button_addurl.Click += new System.EventHandler(this.button_addurl_Click);
             // 
@@ -637,6 +493,7 @@ namespace MUIPRT
             this.textbox_url.Size = new System.Drawing.Size(130, 23);
             this.textbox_url.TabIndex = 3;
             this.textbox_url.Text = "URLs to be viewed";
+            this.toolTip1.SetToolTip(this.textbox_url, "Add single URL to list of URLs to generate views for.");
             this.textbox_url.TextChanged += new System.EventHandler(this.textbox_url_TextChanged);
             this.textbox_url.Enter += new System.EventHandler(this.textbox_url_Enter);
             this.textbox_url.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_url_KeyDown);
@@ -656,6 +513,7 @@ namespace MUIPRT
             this.list_urls.Name = "list_urls";
             this.list_urls.Size = new System.Drawing.Size(142, 96);
             this.list_urls.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.list_urls, "URLs you wish to generate views for.");
             // 
             // panel_agents
             // 
@@ -706,6 +564,7 @@ namespace MUIPRT
             this.button_loaduseragentslist.Size = new System.Drawing.Size(55, 30);
             this.button_loaduseragentslist.TabIndex = 4;
             this.button_loaduseragentslist.Text = "Load List";
+            this.toolTip1.SetToolTip(this.button_loaduseragentslist, resources.GetString("button_loaduseragentslist.ToolTip"));
             this.button_loaduseragentslist.UseVisualStyleBackColor = false;
             this.button_loaduseragentslist.Click += new System.EventHandler(this.button_loaduseragentslist_Click);
             // 
@@ -725,6 +584,8 @@ namespace MUIPRT
             this.button_adduseragent.Size = new System.Drawing.Size(55, 30);
             this.button_adduseragent.TabIndex = 17;
             this.button_adduseragent.Text = "Add";
+            this.toolTip1.SetToolTip(this.button_adduseragent, "Add single UserAgent to the list of browser UserAgents you wish to show in the ht" +
+        "tp headers.");
             this.button_adduseragent.UseVisualStyleBackColor = false;
             this.button_adduseragent.Click += new System.EventHandler(this.button_adduseragent_Click);
             // 
@@ -739,6 +600,8 @@ namespace MUIPRT
             this.textbox_agent.Size = new System.Drawing.Size(130, 23);
             this.textbox_agent.TabIndex = 5;
             this.textbox_agent.Text = "Useragents to use";
+            this.toolTip1.SetToolTip(this.textbox_agent, "Add single UserAgent to the list of browser UserAgents you wish to show in the ht" +
+        "tp headers.");
             this.textbox_agent.TextChanged += new System.EventHandler(this.textbox_agent_TextChanged);
             this.textbox_agent.Enter += new System.EventHandler(this.textbox_agent_Enter);
             this.textbox_agent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_agent_KeyDown);
@@ -758,6 +621,7 @@ namespace MUIPRT
             this.list_agents.Name = "list_agents";
             this.list_agents.Size = new System.Drawing.Size(141, 96);
             this.list_agents.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.list_agents, resources.GetString("list_agents.ToolTip"));
             // 
             // panel_proxies
             // 
@@ -802,6 +666,7 @@ namespace MUIPRT
             this.list_proxies.Name = "list_proxies";
             this.list_proxies.Size = new System.Drawing.Size(142, 96);
             this.list_proxies.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.list_proxies, resources.GetString("list_proxies.ToolTip"));
             // 
             // label_proxiesformat
             // 
@@ -850,6 +715,7 @@ namespace MUIPRT
             this.button_loadproxies.Size = new System.Drawing.Size(55, 30);
             this.button_loadproxies.TabIndex = 6;
             this.button_loadproxies.Text = "Load List";
+            this.toolTip1.SetToolTip(this.button_loadproxies, resources.GetString("button_loadproxies.ToolTip"));
             this.button_loadproxies.UseVisualStyleBackColor = false;
             this.button_loadproxies.Click += new System.EventHandler(this.button_loadproxies_Click);
             // 
@@ -889,6 +755,181 @@ namespace MUIPRT
             this.outof.TabIndex = 18;
             this.outof.Text = "/";
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel1.Controls.Add(this.panel_referral);
+            this.panel1.Controls.Add(this.panel_scrape);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(610, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(144, 229);
+            this.panel1.TabIndex = 1;
+            // 
+            // panel_referral
+            // 
+            this.panel_referral.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_referral.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel_referral.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel_referral.Controls.Add(this.referral_txtdrop);
+            this.panel_referral.Controls.Add(this.button_setref);
+            this.panel_referral.Location = new System.Drawing.Point(0, 139);
+            this.panel_referral.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_referral.Name = "panel_referral";
+            this.panel_referral.Size = new System.Drawing.Size(144, 90);
+            this.panel_referral.TabIndex = 0;
+            this.panel_referral.TabStop = false;
+            this.panel_referral.Text = "Referral Url:";
+            this.panel_referral.Enter += new System.EventHandler(this.panel_referral_Enter);
+            // 
+            // referral_txtdrop
+            // 
+            this.referral_txtdrop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.referral_txtdrop.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.referral_txtdrop.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.referral_txtdrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.referral_txtdrop.Location = new System.Drawing.Point(6, 22);
+            this.referral_txtdrop.Name = "referral_txtdrop";
+            this.referral_txtdrop.Size = new System.Drawing.Size(132, 19);
+            this.referral_txtdrop.TabIndex = 9;
+            this.referral_txtdrop.Text = "https://google.com";
+            this.toolTip1.SetToolTip(this.referral_txtdrop, "Set this to the URL to use for the referrer to show in the HTTP headers.");
+            this.referral_txtdrop.WordWrap = false;
+            this.referral_txtdrop.TextChanged += new System.EventHandler(this.referral_txtdrop_TextChanged);
+            this.referral_txtdrop.DoubleClick += new System.EventHandler(this.referral_txtdrop_doubleclick);
+            this.referral_txtdrop.Enter += new System.EventHandler(this.referral_txtdrop_Enter);
+            this.referral_txtdrop.KeyDown += new System.Windows.Forms.KeyEventHandler(this.referral_txtdrop_KeyDown);
+            this.referral_txtdrop.Leave += new System.EventHandler(this.referral_txtdrop_Leave);
+            // 
+            // button_setref
+            // 
+            this.button_setref.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_setref.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_setref.FlatAppearance.BorderSize = 3;
+            this.button_setref.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_setref.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_setref.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_setref.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.button_setref.Location = new System.Drawing.Point(39, 49);
+            this.button_setref.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button_setref.Name = "button_setref";
+            this.button_setref.Size = new System.Drawing.Size(55, 30);
+            this.button_setref.TabIndex = 7;
+            this.button_setref.Text = "Set";
+            this.toolTip1.SetToolTip(this.button_setref, "Set the referral URL for the http headers.");
+            this.button_setref.UseVisualStyleBackColor = false;
+            this.button_setref.Click += new System.EventHandler(this.button_setref_Click);
+            // 
+            // panel_scrape
+            // 
+            this.panel_scrape.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_scrape.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel_scrape.BackColor = System.Drawing.Color.CadetBlue;
+            this.panel_scrape.Controls.Add(this.textbox_y);
+            this.panel_scrape.Controls.Add(this.button_getcoords);
+            this.panel_scrape.Controls.Add(this.textbox_x);
+            this.panel_scrape.Controls.Add(this.comboBox_autoclick);
+            this.panel_scrape.Controls.Add(this.textBox_autoclick);
+            this.panel_scrape.Location = new System.Drawing.Point(0, 0);
+            this.panel_scrape.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_scrape.Name = "panel_scrape";
+            this.panel_scrape.Size = new System.Drawing.Size(144, 140);
+            this.panel_scrape.TabIndex = 0;
+            this.panel_scrape.TabStop = false;
+            this.panel_scrape.Text = "Auto-Click";
+            // 
+            // textbox_y
+            // 
+            this.textbox_y.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_y.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_y.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textbox_y.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.textbox_y.Location = new System.Drawing.Point(44, 101);
+            this.textbox_y.Margin = new System.Windows.Forms.Padding(5);
+            this.textbox_y.Name = "textbox_y";
+            this.textbox_y.ReadOnly = true;
+            this.textbox_y.Size = new System.Drawing.Size(32, 19);
+            this.textbox_y.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.textbox_y, "Coordinate value y (read only)");
+            // 
+            // button_getcoords
+            // 
+            this.button_getcoords.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_getcoords.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_getcoords.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button_getcoords.FlatAppearance.BorderSize = 3;
+            this.button_getcoords.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
+            this.button_getcoords.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.button_getcoords.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_getcoords.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.button_getcoords.Location = new System.Drawing.Point(83, 101);
+            this.button_getcoords.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button_getcoords.Name = "button_getcoords";
+            this.button_getcoords.Size = new System.Drawing.Size(55, 30);
+            this.button_getcoords.TabIndex = 10;
+            this.button_getcoords.Text = "Set";
+            this.toolTip1.SetToolTip(this.button_getcoords, resources.GetString("button_getcoords.ToolTip"));
+            this.button_getcoords.UseVisualStyleBackColor = false;
+            this.button_getcoords.Click += new System.EventHandler(this.button_setcoords_Click);
+            // 
+            // textbox_x
+            // 
+            this.textbox_x.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textbox_x.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textbox_x.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textbox_x.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.textbox_x.Location = new System.Drawing.Point(7, 101);
+            this.textbox_x.Margin = new System.Windows.Forms.Padding(5);
+            this.textbox_x.Name = "textbox_x";
+            this.textbox_x.ReadOnly = true;
+            this.textbox_x.Size = new System.Drawing.Size(32, 19);
+            this.textbox_x.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.textbox_x, "Coordinate value x (read only)");
+            // 
+            // comboBox_autoclick
+            // 
+            this.comboBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.comboBox_autoclick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_autoclick.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox_autoclick.FormattingEnabled = true;
+            this.comboBox_autoclick.Items.AddRange(new object[] {
+            "class",
+            "id",
+            "coordinates"});
+            this.comboBox_autoclick.Location = new System.Drawing.Point(6, 31);
+            this.comboBox_autoclick.Name = "comboBox_autoclick";
+            this.comboBox_autoclick.Size = new System.Drawing.Size(132, 24);
+            this.comboBox_autoclick.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.comboBox_autoclick, "The method of finding the element you want clicked on. This is the class or ID of" +
+        " the div element containing the iFrame or other element you wish the coords to c" +
+        "lick.");
+            this.comboBox_autoclick.SelectedIndexChanged += new System.EventHandler(this.comboBox_autoclick_SelectedIndexChanged);
+            this.comboBox_autoclick.SelectedValueChanged += new System.EventHandler(this.comboBox_autoclick_SelectedValueChanged);
+            // 
+            // textBox_autoclick
+            // 
+            this.textBox_autoclick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_autoclick.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.textBox_autoclick.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox_autoclick.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.textBox_autoclick.Location = new System.Drawing.Point(7, 68);
+            this.textBox_autoclick.Margin = new System.Windows.Forms.Padding(5);
+            this.textBox_autoclick.Name = "textBox_autoclick";
+            this.textBox_autoclick.Size = new System.Drawing.Size(131, 19);
+            this.textBox_autoclick.TabIndex = 1;
+            this.textBox_autoclick.Text = "aad";
+            this.toolTip1.SetToolTip(this.textBox_autoclick, "Set this to the div element that either the iFrame or where the coordinates you w" +
+        "ish to auto click are.");
+            this.textBox_autoclick.Click += new System.EventHandler(this.textBox_autoclick_Click);
+            // 
             // panel_browser
             // 
             this.panel_browser.BackColor = System.Drawing.Color.DarkRed;
@@ -905,10 +946,10 @@ namespace MUIPRT
             // 
             this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geckoWebBrowser1.FrameEventsPropagateToMainWindow = true;
-            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 64);
+            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 42);
             this.geckoWebBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(760, 88);
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(760, 110);
             this.geckoWebBrowser1.TabIndex = 15;
             this.geckoWebBrowser1.UseHttpActivityObserver = false;
             this.geckoWebBrowser1.Navigating += new System.EventHandler<Gecko.Events.GeckoNavigatingEventArgs>(this.geckoWebBrowser1_Navigating);
@@ -963,6 +1004,7 @@ namespace MUIPRT
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.toolStrip1.CanOverflow = false;
+            this.toolStrip1.GripMargin = new System.Windows.Forms.Padding(0);
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -973,9 +1015,9 @@ namespace MUIPRT
             this.button_navigate});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(760, 64);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 4);
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStrip1.Size = new System.Drawing.Size(760, 42);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
@@ -990,7 +1032,7 @@ namespace MUIPRT
             this.button_goback.Enabled = false;
             this.button_goback.ImageTransparentColor = System.Drawing.SystemColors.ControlDarkDark;
             this.button_goback.Name = "button_goback";
-            this.button_goback.Size = new System.Drawing.Size(60, 45);
+            this.button_goback.Size = new System.Drawing.Size(60, 40);
             this.button_goback.Click += new System.EventHandler(this.button_goback_Click);
             this.button_goback.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_goback_MouseDown);
             this.button_goback.MouseEnter += new System.EventHandler(this.button_goback_MouseEnter);
@@ -1009,7 +1051,7 @@ namespace MUIPRT
             this.button_goforward.Enabled = false;
             this.button_goforward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_goforward.Name = "button_goforward";
-            this.button_goforward.Size = new System.Drawing.Size(60, 45);
+            this.button_goforward.Size = new System.Drawing.Size(60, 40);
             this.button_goforward.Text = "toolStripButton2";
             this.button_goforward.Click += new System.EventHandler(this.button_goforward_Click);
             this.button_goforward.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_goforward_MouseDown);
@@ -1029,7 +1071,7 @@ namespace MUIPRT
             this.button_refresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_refresh.Name = "button_refresh";
-            this.button_refresh.Size = new System.Drawing.Size(60, 45);
+            this.button_refresh.Size = new System.Drawing.Size(60, 40);
             this.button_refresh.Text = "toolStripButton3";
             this.button_refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.button_refresh.Click += new System.EventHandler(this.button_refresh_Click);
@@ -1046,6 +1088,7 @@ namespace MUIPRT
             this.textbox_navigate.AutoSize = false;
             this.textbox_navigate.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.textbox_navigate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textbox_navigate.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.textbox_navigate.Font = new System.Drawing.Font("Segoe UI", 13F);
             this.textbox_navigate.Name = "textbox_navigate";
             this.textbox_navigate.Size = new System.Drawing.Size(515, 38);
@@ -1062,7 +1105,7 @@ namespace MUIPRT
             this.button_navigate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_navigate.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_navigate.Name = "button_navigate";
-            this.button_navigate.Size = new System.Drawing.Size(60, 45);
+            this.button_navigate.Size = new System.Drawing.Size(60, 40);
             this.button_navigate.Text = "toolStripButton5";
             this.button_navigate.Click += new System.EventHandler(this.button_navigate_Click);
             this.button_navigate.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseDown);
@@ -1076,6 +1119,14 @@ namespace MUIPRT
             // 
             this.timer_cleardata.Tick += new System.EventHandler(this.timer_cleardata_Tick);
             // 
+            // timer_setcoords
+            // 
+            this.timer_setcoords.Tick += new System.EventHandler(this.timer_setcoords_Tick);
+            // 
+            // timer_clickcoords
+            // 
+            this.timer_clickcoords.Tick += new System.EventHandler(this.timer_clickcoords_Tick);
+            // 
             // timer_refreshproxylist
             // 
             this.timer_refreshproxylist.Tick += new System.EventHandler(this.timer1_Tick);
@@ -1083,6 +1134,13 @@ namespace MUIPRT
             // timer_load
             // 
             this.timer_load.Tick += new System.EventHandler(this.timer_load_Tick);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 750;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ReshowDelay = 250;
             // 
             // Main
             // 
@@ -1109,17 +1167,17 @@ namespace MUIPRT
             ((System.ComponentModel.ISupportInitialize)(this.numupdown_views)).EndInit();
             this.panel_status.ResumeLayout(false);
             this.panel_status.PerformLayout();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.panel_scrape.ResumeLayout(false);
-            this.panel_scrape.PerformLayout();
-            this.panel_referral.ResumeLayout(false);
-            this.panel_referral.PerformLayout();
             this.panel_urls.ResumeLayout(false);
             this.panel_urls.PerformLayout();
             this.panel_agents.ResumeLayout(false);
             this.panel_agents.PerformLayout();
             this.panel_proxies.ResumeLayout(false);
             this.panel_proxies.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel_referral.ResumeLayout(false);
+            this.panel_referral.PerformLayout();
+            this.panel_scrape.ResumeLayout(false);
+            this.panel_scrape.PerformLayout();
             this.panel_browser.ResumeLayout(false);
             this.panel_browser.PerformLayout();
             this.statusstip_browser.ResumeLayout(false);
@@ -1137,7 +1195,6 @@ namespace MUIPRT
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Panel panel_controls;
         private System.Windows.Forms.Label label_interval;
         private System.Windows.Forms.Label label_views;
@@ -1167,12 +1224,9 @@ namespace MUIPRT
         private System.Windows.Forms.Label label_proxiesnum;
         private System.Windows.Forms.Label label_proxies;
         private System.Windows.Forms.ListBox list_proxies;
-        private System.Windows.Forms.Panel panel_scrape;
-        private System.Windows.Forms.Panel panel_referral;
-        private System.Windows.Forms.Button button_addref;
+        private System.Windows.Forms.GroupBox panel_scrape;
+        private System.Windows.Forms.GroupBox panel_referral;
         private System.Windows.Forms.Button button_setref;
-        private System.Windows.Forms.ComboBox referral_txtdrop;
-        private System.Windows.Forms.Label referalurl_label;
         private System.Windows.Forms.Panel panel_browser;
         private Gecko.GeckoWebBrowser geckoWebBrowser1;
         private System.Windows.Forms.StatusStrip statusstip_browser;
@@ -1190,7 +1244,6 @@ namespace MUIPRT
         private System.Windows.Forms.Timer timer_load;
         private System.Windows.Forms.Timer timer_setcoords2;
         private System.Windows.Forms.Timer timer_clickcoords2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_skip;
         private ToolStripLabel button_goback;
         private ToolStripLabel button_goforward;
@@ -1198,6 +1251,12 @@ namespace MUIPRT
         private ToolStripLabel button_navigate;
         private ComboBox comboBox_autoclick;
         private TextBox textBox_autoclick;
+        private TextBox referral_txtdrop;
+        private ToolTip toolTip1;
+        private Button button_getcoords;
+        private TextBox textbox_x;
+        private Panel panel1;
+        private TextBox textbox_y;
     }
 }
 
