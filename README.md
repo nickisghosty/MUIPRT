@@ -49,4 +49,4 @@ Features:
 <Br>
 Screenshot:
 <Br>
-<a href="http://tinypic.com?ref=sops1g" target="_blank"><img src="http://i64.tinypic.com/sops1g.png" border="0" alt="Image and video hosting by TinyPic"></a>
+<img src="https://raw.githubusercontent.com/nickisghosty/MUIPRT/master/MUIPRT/screenshot.png" border="0">
