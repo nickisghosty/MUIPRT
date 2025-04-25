@@ -1,5 +1,6 @@
 ﻿using Gecko;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MUIPRT
@@ -14,7 +15,6 @@ namespace MUIPRT
         {
             PromptFactory.PromptServiceCreator();
             Xpcom.EnableProfileMonitoring = false;
-            
             Xpcom.Initialize("Firefox");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

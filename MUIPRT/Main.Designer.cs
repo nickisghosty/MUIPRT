@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using Gecko;
 using MUIPRT.Properties;
 
 namespace MUIPRT
@@ -944,6 +945,7 @@ namespace MUIPRT
             // 
             // geckoWebBrowser1
             // 
+            this.geckoWebBrowser1.ConsoleMessageEventReceivesConsoleLogCalls = true;
             this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geckoWebBrowser1.FrameEventsPropagateToMainWindow = true;
             this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 42);
@@ -959,10 +961,13 @@ namespace MUIPRT
             this.geckoWebBrowser1.DocumentCompleted += new System.EventHandler<Gecko.Events.GeckoDocumentCompletedEventArgs>(this.geckoWebBrowser1_DocumentCompleted);
             this.geckoWebBrowser1.CanGoBackChanged += new System.EventHandler(this.geckoWebBrowser1_CanGoBackChanged);
             this.geckoWebBrowser1.CanGoForwardChanged += new System.EventHandler(this.geckoWebBrowser1_CanGoForwardChanged);
+            this.geckoWebBrowser1.RequestProgressChanged += new System.EventHandler<Gecko.GeckoRequestProgressEventArgs>(this.geckoWebBrowser1_RequestProgressChanged);
             this.geckoWebBrowser1.ProgressChanged += new System.EventHandler<Gecko.GeckoProgressEventArgs>(this.geckoWebBrowser1_ProgressChanged);
             this.geckoWebBrowser1.CreateWindow += new System.EventHandler<Gecko.GeckoCreateWindowEventArgs>(this.geckoWebBrowser1_CreateWindow);
+            this.geckoWebBrowser1.WindowClosed += new System.EventHandler(this.geckoWebBrowser1_WindowClosed);
             this.geckoWebBrowser1.Load += new System.EventHandler<Gecko.DomEventArgs>(this.geckoWebBrowser1_Load);
             this.geckoWebBrowser1.DOMContentLoaded += new System.EventHandler<Gecko.DomEventArgs>(this.geckoWebBrowser1_DOMContentLoaded);
+            this.geckoWebBrowser1.ReadyStateChange += new System.EventHandler<Gecko.DomEventArgs>(this.geckoWebBrowser1_ReadyStateChange);
             this.geckoWebBrowser1.LocationChanged += new System.EventHandler(this.geckoWebBrowser1_LocationChanged);
             this.geckoWebBrowser1.MouseHover += new System.EventHandler(this.geckoWebBrowser1_MouseHover);
             // 
@@ -990,13 +995,13 @@ namespace MUIPRT
             this.progressbar_browser.Name = "progressbar_browser";
             this.progressbar_browser.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.progressbar_browser.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.progressbar_browser.Size = new System.Drawing.Size(177, 27);
+            this.progressbar_browser.Size = new System.Drawing.Size(177, 29);
             this.progressbar_browser.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
             // label_statusbrowser
             // 
             this.label_statusbrowser.Name = "label_statusbrowser";
-            this.label_statusbrowser.Size = new System.Drawing.Size(151, 29);
+            this.label_statusbrowser.Size = new System.Drawing.Size(151, 30);
             this.label_statusbrowser.Text = "toolStripStatusLabel1";
             // 
             // toolStrip1
@@ -1031,6 +1036,7 @@ namespace MUIPRT
             this.button_goback.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_goback.Enabled = false;
             this.button_goback.ImageTransparentColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.button_goback.IsLink = true;
             this.button_goback.Name = "button_goback";
             this.button_goback.Size = new System.Drawing.Size(60, 40);
             this.button_goback.Click += new System.EventHandler(this.button_goback_Click);
@@ -1050,6 +1056,7 @@ namespace MUIPRT
             this.button_goforward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_goforward.Enabled = false;
             this.button_goforward.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_goforward.IsLink = true;
             this.button_goforward.Name = "button_goforward";
             this.button_goforward.Size = new System.Drawing.Size(60, 40);
             this.button_goforward.Text = "toolStripButton2";
@@ -1070,6 +1077,7 @@ namespace MUIPRT
             this.button_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_refresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_refresh.IsLink = true;
             this.button_refresh.Name = "button_refresh";
             this.button_refresh.Size = new System.Drawing.Size(60, 40);
             this.button_refresh.Text = "toolStripButton3";
@@ -1104,6 +1112,7 @@ namespace MUIPRT
             this.button_navigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.button_navigate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.button_navigate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_navigate.IsLink = true;
             this.button_navigate.Name = "button_navigate";
             this.button_navigate.Size = new System.Drawing.Size(60, 40);
             this.button_navigate.Text = "toolStripButton5";
@@ -1114,6 +1123,7 @@ namespace MUIPRT
             this.button_navigate.MouseHover += new System.EventHandler(this.button_navigate_MouseEnter);
             this.button_navigate.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseMove);
             this.button_navigate.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button_navigate_MouseUp);
+
             // 
             // timer_cleardata
             // 
@@ -1154,6 +1164,8 @@ namespace MUIPRT
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Main";
             this.Text = "MUIPRT";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
             this.Load += new System.EventHandler(this.Main_Load);
             this.Resize += new System.EventHandler(this.Main_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Resourcer.Fody.1.8.0\build\Resourcer.Fody.props" Condition="Exists('..\packages\Resourcer.Fody.1.8.0\build\Resourcer.Fody.props')" />
-  <Import Project="..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" />
+  <Import Project="..\packages\Resourcer.Fody.1.8.1\build\Resourcer.Fody.props" Condition="Exists('..\packages\Resourcer.Fody.1.8.1\build\Resourcer.Fody.props')" />
+  <Import Project="..\packages\Costura.Fody.6.0.0\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.6.0.0\build\Costura.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>MUIPRT</RootNamespace>
     <AssemblyName>MUIPRT</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -84,8 +84,8 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
+    <Reference Include="Costura, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.6.0.0\lib\netstandard2.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="Costura.Fody">
       <HintPath>..\packages\Costura.Fody.1.6.2\Costura.Fody.dll</HintPath>
@@ -93,14 +93,14 @@
     <Reference Include="Costura.Tasks">
       <HintPath>..\packages\Costura.Fody.1.6.2\Costura.Tasks.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Core, Version=45.0.34.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
-      <HintPath>..\packages\Geckofx45.45.0.34\lib\net45\Geckofx-Core.dll</HintPath>
+    <Reference Include="Geckofx-Core, Version=60.0.55.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+      <HintPath>..\packages\Geckofx60.32.60.0.55\lib\net45\Geckofx-Core.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Winforms, Version=45.0.34.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
-      <HintPath>..\packages\Geckofx45.45.0.34\lib\net45\Geckofx-Winforms.dll</HintPath>
+    <Reference Include="Geckofx-Winforms, Version=60.0.55.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
+      <HintPath>..\packages\Geckofx60.32.60.0.55\lib\net45\Geckofx-Winforms.dll</HintPath>
     </Reference>
-    <Reference Include="Resourcer, Version=1.8.0.0, Culture=neutral, PublicKeyToken=409b3227471b0f0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Resourcer.Fody.1.8.0\lib\net452\Resourcer.dll</HintPath>
+    <Reference Include="Resourcer, Version=1.8.1.0, Culture=neutral, PublicKeyToken=409b3227471b0f0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Resourcer.Fody.1.8.1\lib\net452\Resourcer.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll</HintPath>
@@ -139,31 +139,79 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Firefox\application.ini" />
-    <None Include="Firefox\crashreporter.ini" />
-    <None Include="Firefox\libfreebl3.chk" />
-    <None Include="Firefox\libfreebl3.so" />
-    <None Include="Firefox\libgeckofix.so" />
-    <None Include="Firefox\liblgpllibs.so" />
-    <None Include="Firefox\libmozsqlite3.so" />
-    <None Include="Firefox\libnspr4.so" />
-    <None Include="Firefox\libnss3.so" />
-    <None Include="Firefox\libnssckbi.so" />
-    <None Include="Firefox\libnssdbm3.chk" />
-    <None Include="Firefox\libnssdbm3.so" />
-    <None Include="Firefox\libnssutil3.so" />
-    <None Include="Firefox\libplc4.so" />
-    <None Include="Firefox\libplds4.so" />
-    <None Include="Firefox\libsmime3.so" />
-    <None Include="Firefox\libsoftokn3.chk" />
-    <None Include="Firefox\libsoftokn3.so" />
-    <None Include="Firefox\libssl3.so" />
-    <None Include="Firefox\libxul.so" />
+    <None Include="Firefox\application.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\crashreporter.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libfreebl3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libfreebl3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libgeckofix.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\liblgpllibs.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libmozsqlite3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnspr4.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnss3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnssckbi.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnssdbm3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnssdbm3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libnssutil3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libplc4.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libplds4.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libsmime3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libsoftokn3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libsoftokn3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libssl3.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\libxul.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Firefox\omni.ja" />
-    <None Include="Firefox\platform.ini" />
-    <None Include="Firefox\plugin-container" />
-    <None Include="Firefox\update-settings.ini" />
-    <None Include="Firefox\updater.ini" />
+    <None Include="Firefox\platform.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\plugin-container">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\update-settings.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Firefox\updater.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -174,19 +222,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="xulrunner\chrome.manifest" />
+    <None Include="xulrunner\chrome.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="xulrunner\chrome\classic.manifest" />
     <None Include="xulrunner\chrome\comm.manifest" />
     <None Include="xulrunner\chrome\en-US.manifest" />
     <None Include="xulrunner\chrome\pippki.manifest" />
     <None Include="xulrunner\chrome\toolkit.manifest" />
-    <None Include="xulrunner\crashreporter.ini" />
-    <None Include="xulrunner\dependentlibs.list" />
-    <None Include="xulrunner\freebl3.chk" />
-    <None Include="xulrunner\LICENSE" />
-    <None Include="xulrunner\nssdbm3.chk" />
-    <None Include="xulrunner\platform.ini" />
-    <None Include="xulrunner\precomplete" />
+    <None Include="xulrunner\crashreporter.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\dependentlibs.list">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\freebl3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\nssdbm3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\platform.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\precomplete">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="xulrunner\res\charsetalias.properties" />
     <None Include="xulrunner\res\charsetData.properties" />
     <None Include="xulrunner\res\dtd\mathml.dtd" />
@@ -212,8 +276,12 @@
     <None Include="xulrunner\res\language.properties" />
     <None Include="xulrunner\res\viewer.properties" />
     <None Include="xulrunner\res\wincharset.properties" />
-    <None Include="xulrunner\softokn3.chk" />
-    <None Include="xulrunner\update.locale" />
+    <None Include="xulrunner\softokn3.chk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xulrunner\update.locale">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -266,23 +334,24 @@
     <None Include="FodyWeavers.xml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Firefox\AccessibleHandler.dll" />
     <Content Include="Firefox\AccessibleMarshal.dll" />
     <Content Include="Firefox\breakpadinjector.dll" />
     <Content Include="Firefox\d3dcompiler_47.dll" />
     <Content Include="Firefox\freebl3.dll" />
-    <Content Include="Firefox\icudt58.dll" />
-    <Content Include="Firefox\icuin58.dll" />
-    <Content Include="Firefox\icuuc58.dll" />
+    <Content Include="Firefox\IA2Marshal.dll" />
     <Content Include="Firefox\lgpllibs.dll" />
     <Content Include="Firefox\libEGL.dll" />
     <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozavcodec.dll" />
+    <Content Include="Firefox\mozavutil.dll" />
     <Content Include="Firefox\mozglue.dll" />
     <Content Include="Firefox\nss3.dll" />
     <Content Include="Firefox\nssckbi.dll" />
     <Content Include="Firefox\nssdbm3.dll" />
     <Content Include="Firefox\plugin-container.exe" />
     <Content Include="Firefox\plugin-hang-ui.exe" />
-    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\qipcap.dll" />
     <Content Include="Firefox\softokn3.dll" />
     <Content Include="Firefox\xul.dll" />
     <Content Include="Resources\BACKWADHOVER.png" />
@@ -301,38 +370,88 @@
     <Content Include="Resources\STOPDOWN.png" />
     <Content Include="Resources\stophov.png" />
     <Content Include="Resources\STOPHOVER.png" />
-    <Content Include="xulrunner\AccessibleMarshal.dll" />
+    <Content Include="xulrunner\AccessibleMarshal.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="xulrunner\chrome\chromelist.txt" />
     <Content Include="xulrunner\chrome\classic.jar" />
     <Content Include="xulrunner\chrome\comm.jar" />
     <Content Include="xulrunner\chrome\en-US.jar" />
     <Content Include="xulrunner\chrome\pippki.jar" />
     <Content Include="xulrunner\chrome\toolkit.jar" />
-    <Content Include="xulrunner\crashreporter.exe" />
-    <Content Include="xulrunner\D3DCompiler_43.dll" />
-    <Content Include="xulrunner\d3dx9_43.dll" />
-    <Content Include="xulrunner\freebl3.dll" />
-    <Content Include="xulrunner\IA2Marshal.dll" />
-    <Content Include="xulrunner\js.exe" />
-    <Content Include="xulrunner\libEGL.dll" />
-    <Content Include="xulrunner\libGLESv2.dll" />
-    <Content Include="xulrunner\mozalloc.dll" />
-    <Content Include="xulrunner\mozcpp19.dll" />
-    <Content Include="xulrunner\mozcrt19.dll" />
-    <Content Include="xulrunner\mozjs.dll" />
-    <Content Include="xulrunner\mozsqlite3.dll" />
-    <Content Include="xulrunner\nspr4.dll" />
-    <Content Include="xulrunner\nss3.dll" />
-    <Content Include="xulrunner\nssckbi.dll" />
-    <Content Include="xulrunner\nssdbm3.dll" />
-    <Content Include="xulrunner\nssutil3.dll" />
-    <Content Include="xulrunner\omni.jar" />
-    <Content Include="xulrunner\plc4.dll" />
-    <Content Include="xulrunner\plds4.dll" />
-    <Content Include="xulrunner\plugin-container.exe" />
+    <Content Include="xulrunner\crashreporter.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\D3DCompiler_43.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\d3dx9_43.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\freebl3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\IA2Marshal.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\js.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\libEGL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\libGLESv2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\mozalloc.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\mozcpp19.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\mozcrt19.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\mozjs.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\mozsqlite3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\nspr4.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\nss3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\nssckbi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\nssdbm3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\nssutil3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\omni.jar">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\plc4.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\plds4.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\plugin-container.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="xulrunner\plugins\npnul32.dll" />
-    <Content Include="xulrunner\README.txt" />
-    <Content Include="xulrunner\redit.exe" />
+    <Content Include="xulrunner\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\redit.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="xulrunner\res\arrow.gif" />
     <Content Include="xulrunner\res\arrowd.gif" />
     <Content Include="xulrunner\res\bloatcycle.html" />
@@ -377,17 +496,39 @@
     <Content Include="xulrunner\res\table-remove-row.gif" />
     <Content Include="xulrunner\res\ua.css" />
     <Content Include="xulrunner\res\viewsource.css" />
-    <Content Include="xulrunner\Skybound.Gecko.dll" />
-    <Content Include="xulrunner\smime3.dll" />
-    <Content Include="xulrunner\softokn3.dll" />
-    <Content Include="xulrunner\ssl3.dll" />
-    <Content Include="xulrunner\updater.exe" />
-    <Content Include="xulrunner\xpcom.dll" />
-    <Content Include="xulrunner\xpcshell.exe" />
-    <Content Include="xulrunner\xpidl.exe" />
-    <Content Include="xulrunner\xul.dll" />
-    <Content Include="xulrunner\xulrunner-stub.exe" />
-    <Content Include="xulrunner\xulrunner.exe" />
+    <Content Include="xulrunner\Skybound.Gecko.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\smime3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\softokn3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\ssl3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\updater.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xpcom.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xpcshell.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xpidl.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xul.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xulrunner-stub.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xulrunner\xulrunner.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="xulrunner\components\" />
@@ -398,15 +539,17 @@
     <Folder Include="xulrunner\greprefs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.6.2.4\build\Fody.targets" Condition="Exists('..\packages\Fody.6.2.4\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.6.2.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.2.4\build\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\Geckofx45.45.0.34\build\Geckofx45.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx45.45.0.34\build\Geckofx45.targets'))" />
-    <Error Condition="!Exists('..\packages\Resourcer.Fody.1.8.0\build\Resourcer.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Resourcer.Fody.1.8.0\build\Resourcer.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.9.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.9.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.6.0.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.6.0.0\build\Costura.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.6.0.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.6.0.0\build\Costura.Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Resourcer.Fody.1.8.1\build\Resourcer.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Resourcer.Fody.1.8.1\build\Resourcer.Fody.props'))" />
+    <Error Condition="!Exists('..\packages\Geckofx60.32.60.0.55\build\Geckofx60.32.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Geckofx60.32.60.0.55\build\Geckofx60.32.targets'))" />
   </Target>
-  <Import Project="..\packages\Geckofx45.45.0.34\build\Geckofx45.targets" Condition="Exists('..\packages\Geckofx45.45.0.34\build\Geckofx45.targets')" />
+  <Import Project="..\packages\Fody.6.9.2\build\Fody.targets" Condition="Exists('..\packages\Fody.6.9.2\build\Fody.targets')" />
+  <Import Project="..\packages\Costura.Fody.6.0.0\build\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.6.0.0\build\Costura.Fody.targets')" />
+  <Import Project="..\packages\Geckofx60.32.60.0.55\build\Geckofx60.32.targets" Condition="Exists('..\packages\Geckofx60.32.60.0.55\build\Geckofx60.32.targets')" />
 </Project>

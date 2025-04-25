@@ -34,6 +34,7 @@ namespace MUIPRT
         private Point _clickLocation = new Point(0, 0);
         private Point _clickLocation2 = new Point(0, 0);
         private readonly Form _form2 = new Form();
+        private GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
         private string coordsX;
         private string coordsY;
         [DllImport("user32.dll")]
@@ -436,20 +437,24 @@ Onepage = 0;   //makes auto-clicked ad only click once.
             timer_load.Interval = (int)numupdown_interval.Value;
         }
 
-        private void timer_cleardata_Tick(object sender, EventArgs e) // clear cache cookies history etc
+        private void timer_cleardata_Tick(object sender, EventArgs e) // clear cache cookies history etc  
         {
             nsIBrowserHistory historyMan = Xpcom.GetService<nsIBrowserHistory>(Contracts.NavHistoryService);
             historyMan = Xpcom.QueryInterface<nsIBrowserHistory>(historyMan);
-            historyMan.RemoveAllPages();
+
+            // Fix for CS1061: Replace the non-existent 'RemoveAllPages' method with 'RemovePagesByTimeframe'  
+            long beginTime = 0; // Start of the epoch  
+            long endTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); // Current time in milliseconds  
+
+            historyMan.RemovePagesByTimeframe(beginTime, endTime);
 
             var cookieMan = Xpcom.GetService<nsICookieManager>("@mozilla.org/cookiemanager;1");
             cookieMan = Xpcom.QueryInterface<nsICookieManager>(cookieMan);
             cookieMan.RemoveAll();
 
-            // https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/imgICache
+            // Clear image and cache  
             ImageCache.ClearCache(true);
             ImageCache.ClearCache(false);
-            //            Gecko.Cache.CacheService.Clear(new CacheStoragePolicy());
 
             var cache = Xpcom.GetService<nsICacheStorageService>("@mozilla.org/netwerk/cache-storage-service;1");
             try
@@ -701,7 +706,14 @@ Onepage = 0;   //makes auto-clicked ad only click once.
                 streamReader.Close();
                 proxies.Shuffle();
                 list_proxies.Items.AddRange(proxies.ToArray());
-                timer_refreshproxylist.Interval = (int)numupdown_interval.Value / 4;
+                if ((int)numupdown_interval.Value == 0)
+                {
+                    timer_refreshproxylist.Interval = 3000; //default interval if user sets 0
+                }
+                else
+                {
+                    timer_refreshproxylist.Interval = (int)numupdown_interval.Value / 4;
+                }
                 timer_refreshproxylist.Start();
             }
             else
@@ -839,28 +851,13 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void button_refresh_Click(object sender, EventArgs e)
         {
-            if (button_refresh.BackgroundImage == Resources.re)
+            if(geckoWebBrowser1.IsBusy)
             {
-                geckoWebBrowser1.Refresh();
-                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
-                button_refresh.BackgroundImage = Resources.stop;
-            }
-            else if (button_refresh.BackgroundImage == Resources.refhov)
-            {
-                geckoWebBrowser1.Refresh();
-                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
-                button_refresh.BackgroundImage = Resources.stop;
-            }
-            else if (button_refresh.BackgroundImage == Resources.refd)
-            {
-                geckoWebBrowser1.Refresh();
-                geckoWebBrowser1.Reload(flags: GeckoLoadFlags.IsRefresh);
-                button_refresh.BackgroundImage = Resources.stop;
+                geckoWebBrowser1.Stop();
             }
             else
             {
-                geckoWebBrowser1.Stop();
-                button_refresh.BackgroundImage = Resources.re;
+                geckoWebBrowser1.Reload();
             }
         }
 
@@ -1055,7 +1052,7 @@ Onepage = 0;   //makes auto-clicked ad only click once.
                   /*
          private void autocaptcha()
          {
-             GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
+ 
 
              var audiobutton = geckoWebBrowser2.Document.GetElementsByClassName("rc-button goog-inline-block rc-button-audio");
              Gecko.DOM.GeckoButtonElement next = new Gecko.DOM.GeckoButtonElement(audiobutton.ElementAt(1).DomObject);
@@ -1068,15 +1065,15 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser1_CreateWindow(object sender, GeckoCreateWindowEventArgs e)
         {
+
             // Full Screen
             var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
             // var close = "data:text/html,<script>self.close()</script>";
 
-            GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
 
             Rectangle rect = Screen.GetWorkingArea(this);
 
-            geckoWebBrowser2.Navigating += geckoWebBrowser1_Navigating;
+            geckoWebBrowser2.Navigating += geckoWebBrowser2_Navigating;
             geckoWebBrowser2.DocumentCompleted += geckoWebBrowser2_DocumentCompleted;
             geckoWebBrowser2.Dock = DockStyle.Fill;
             geckoWebBrowser2.CreateControl();
@@ -1088,7 +1085,8 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
             if (list_proxies.Items.Count == 0)
             {
-                geckoWebBrowser2.Navigate(e.Uri);
+                
+                geckoWebBrowser2.Navigate(e.ToString());
                 e.InitialWidth = Width;
                 e.InitialHeight = Height;
             }
@@ -1114,7 +1112,7 @@ Onepage = 0;   //makes auto-clicked ad only click once.
                 GeckoPreferences.User["browser.cache.disk.enable"] = false;
                 GeckoPreferences.User["general.useragent.override"] = Agent;
 
-                geckoWebBrowser2.Navigate(e.Uri);
+                geckoWebBrowser2.Navigate(e.ToString());
                 if (iframe != null)
                 {
                     e.InitialWidth = Width;
@@ -1126,7 +1124,7 @@ Onepage = 0;   //makes auto-clicked ad only click once.
                     e.InitialHeight = Height;
                 }
             }
-        }
+        }   
 
         private void CloseWindow()
         {
@@ -1151,6 +1149,7 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser2_DocumentCompleted(object sender, GeckoDocumentCompletedEventArgs e)
         {
+            geckoWebBrowser1_DocumentCompleted(geckoWebBrowser2, e);
             /*
             var iframe = geckoWebBrowser1.Document.GetHtmlElementById("aads");
 
@@ -1174,7 +1173,10 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser1_DocumentCompleted(object sender, GeckoDocumentCompletedEventArgs e)
         {
-            button_refresh.BackgroundImage = Resources.re;
+           
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            
             label_statusbrowser.Text = Resources.Text_Done + geckoWebBrowser1.StatusText;
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             progressbar_browser.Value = 0;
@@ -1194,18 +1196,42 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser1_DOMContentLoaded(object sender, DomEventArgs e)
         {
+            
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            
             button_refresh.BackgroundImage = Resources.re;
             progressbar_browser.Value = 0;
         }
 
         private void geckoWebBrowser1_LocationChanged(object sender, EventArgs e)
         {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            }
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             label_statusbrowser.Text = Resources.Text_Moved + geckoWebBrowser1.StatusText;
         }
 
         private void geckoWebBrowser1_Load(object sender, DomEventArgs e)
         {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            }
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             label_statusbrowser.Text = geckoWebBrowser1.StatusText;
             button_refresh.BackgroundImage = Resources.stop;
@@ -1219,8 +1245,16 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser1_Navigating(object sender, GeckoNavigatingEventArgs e)
         {
-            button_refresh.BackgroundImage = Resources.stop;
-            GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
+            if (geckoWebBrowser1.IsBusy)
+            {
+             statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re; 
+            }
 
             if (ActiveControl == geckoWebBrowser1)
             {
@@ -1252,6 +1286,16 @@ Onepage = 0;   //makes auto-clicked ad only click once.
 
         private void geckoWebBrowser1_NavigationError(object sender, GeckoNavigationErrorEventArgs e)
         {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            }
             label_statusbrowser.Text = Resources.Text_Error_loading;
         }
 
@@ -1260,11 +1304,16 @@ Onepage = 0;   //makes auto-clicked ad only click once.
             //clickad();
             label_statusbrowser.Text = Resources.Text_Done;
             progressbar_browser.Value = 0;
+            button_refresh.BackgroundImage = Resources.re;
+         
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            
+
         }
 
         private void geckoWebBrowser2_Navigating(object sender, GeckoNavigatingEventArgs e)
         {
-            GeckoWebBrowser geckoWebBrowser2 = new GeckoWebBrowser();
 
             //throw new NotImplementedException();
             geckoWebBrowser1_Navigating(geckoWebBrowser2, e);
@@ -1276,76 +1325,98 @@ Onepage = 0;   //makes auto-clicked ad only click once.
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
             progressbar_browser.Maximum = 100;
             progressbar_browser.Minimum = 0;
+            if(geckoWebBrowser1.IsBusy)
+            {
+                button_refresh.BackgroundImage = Resources.stop;
+                        statusstip_browser.Visible = true;
+
+            }
+            else
+            {
+                button_refresh.BackgroundImage = Resources.re;
+                statusstip_browser.Visible = false;
+
+            }
 
             try
-            {
-                if (e.CurrentProgress == 0)
                 {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
+                    if (e.CurrentProgress == 0)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
 
-                if (e.CurrentProgress < 0)
-                {
-                    progressbar_browser.Value = 0;
-                }
+                    if (e.CurrentProgress < 0)
+                    {
+                        progressbar_browser.Value = 0;
+                    }
 
-                if (e.CurrentProgress > 0)
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
+                    if (e.CurrentProgress > 0)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
 
-                if (e.CurrentProgress > 100)
-                {
-                    progressbar_browser.Value = 100;
-                }
+                    if (e.CurrentProgress > 100)
+                    {
+                        progressbar_browser.Value = 100;
+                    }
 
-                if (e.CurrentProgress < 100)
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
+                    if (e.CurrentProgress < 100)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
 
-                if (e.CurrentProgress == 100)
-                {
-                    label_statusbrowser.Text = Resources.Text_Done_Loading;
-                    progressbar_browser.Value = 0;
+                    if (e.CurrentProgress == 100)
+                    {
+                        label_statusbrowser.Text = Resources.Text_Done_Loading;
+                        progressbar_browser.Value = 0;
                 }
-                else if (progressbar_browser.Value == 0)
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    else if (progressbar_browser.Value == 0)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
+                    else if (progressbar_browser.Value < 0)
+                    {
+                        progressbar_browser.Value = 0;
+                    }
+                    else if (progressbar_browser.Value > 100)
+                    {
+                        progressbar_browser.Value = 100;
+                    }
+                    else if (progressbar_browser.Value > 0)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
+                    else if (progressbar_browser.Value < 100)
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
+                    else if (progressbar_browser.Value == 100)
+                    {
+                        progressbar_browser.Value = 0;
+                    }
+                    else
+                    {
+                        progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
+                    }
                 }
-                else if (progressbar_browser.Value < 0)
+                catch (Exception ex)
                 {
-                    progressbar_browser.Value = 0;
+                    Console.WriteLine(ex.Message);
                 }
-                else if (progressbar_browser.Value > 100)
-                {
-                    progressbar_browser.Value = 100;
-                }
-                else if (progressbar_browser.Value > 0)
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
-                else if (progressbar_browser.Value < 100)
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
-                else if (progressbar_browser.Value == 100)
-                {
-                    progressbar_browser.Value = 0;
-                }
-                else
-                {
-                    progressbar_browser.Value = (int)(((double)e.CurrentProgress * 100) / e.MaximumProgress);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
         private void geckoWebBrowser1_Redirecting(object sender, GeckoRedirectingEventArgs e)
         {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            }
             label_statusbrowser.Text = Resources.Text_Redirecting + geckoWebBrowser1.StatusText;
             textbox_navigate.Text = geckoWebBrowser1.Url.AbsoluteUri;
         }
@@ -1599,6 +1670,74 @@ Onepage = 0;   //makes auto-clicked ad only click once.
         private void comboBox_autoclick_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            geckoWebBrowser1.Navigate("about:blank", GeckoLoadFlags.None, null, null, null);
+            if (geckoWebBrowser2 != null)
+            {
+                geckoWebBrowser2.Navigate("about:blank", GeckoLoadFlags.None, null, null, null);
+            }
+            geckoWebBrowser1.Stop();
+            if (geckoWebBrowser2 != null)
+            {
+                geckoWebBrowser2.Stop();
+            }
+
+
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Dispose();
+
+        }
+
+        private void geckoWebBrowser1_WindowClosed(object sender, EventArgs e)
+        {
+            geckoWebBrowser1.Navigate("about:blank", GeckoLoadFlags.None, null, null, null);
+            if (geckoWebBrowser2 != null)
+            {
+                geckoWebBrowser2.Navigate("about:blank", GeckoLoadFlags.None, null, null, null);
+            }
+            geckoWebBrowser1.Stop();
+            if (geckoWebBrowser2 != null)
+            {
+                geckoWebBrowser2.Stop();
+            }
+        }
+
+        private void geckoWebBrowser1_ReadyStateChange(object sender, DomEventArgs e)
+        {
+            if (!geckoWebBrowser1.IsBusy)
+            {
+                button_refresh.BackgroundImage = Resources.re;
+                label_statusbrowser.Text = Resources.Text_Done_Loading;
+                progressbar_browser.Value = 0;
+                statusstip_browser.Visible = false;
+            }
+            else
+            {
+                button_refresh.BackgroundImage = Resources.stop;
+                label_statusbrowser.Text = geckoWebBrowser1.Document.ReadyState.ToString();
+                progressbar_browser.Value = 0;
+                statusstip_browser.Visible = true;
+            }
+        }
+
+        private void geckoWebBrowser1_RequestProgressChanged(object sender, GeckoRequestProgressEventArgs e)
+        {
+            if (geckoWebBrowser1.IsBusy)
+            {
+                statusstip_browser.Visible = true;
+                button_refresh.BackgroundImage = Resources.stop;
+            }
+            else
+            {
+                statusstip_browser.Visible = false;
+                button_refresh.BackgroundImage = Resources.re;
+            }
         }
     }
 }
